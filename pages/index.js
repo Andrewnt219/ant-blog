@@ -5,7 +5,11 @@ const Editor = dynamic(() => import("../components/Editor"), {
 });
 
 const Index = () => {
-  return <Editor />;
+  return (
+    <div style={{ width: "70%", margin: "0 auto" }}>
+      <Editor />
+    </div>
+  );
 };
 
 export default Index;

@@ -14,10 +14,12 @@
     "@sanity/client": "^2.0.1",
     "@sanity/image-url": "^0.140.19",
     "axios": "^0.20.0",
+    "get-youtube-id": "^1.0.1",
     "next": "9.5.5",
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-instagram-embed": "^1.5.0",
+    "react-youtube": "^7.13.0",
     "rss-parser": "^3.9.0"
   },
   "devDependencies": {

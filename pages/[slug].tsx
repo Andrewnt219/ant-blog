@@ -3,11 +3,23 @@ import React from "react";
 import client from "../client";
 import imageUrlBuilder from "@sanity/image-url";
 import BlockContent from "@sanity/block-content-to-react";
+import YouTube from "react-youtube";
+import getYouTubeID from "get-youtube-id";
 
 const builder = imageUrlBuilder(client);
 function urlFor(source) {
   return builder.image(source);
 }
+
+const serializers = {
+  types: {
+    youtube: ({ node }) => {
+      const { url } = node;
+      const id = getYouTubeID(url);
+      return <YouTube videoId={id} />;
+    },
+  },
+};
 
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
@@ -30,6 +42,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
         blocks={post.body}
         projectId={client.config().projectId}
         dataset={client.config().dataset}
+        serializers={serializers}
       />
     </div>
   );

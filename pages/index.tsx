@@ -23,6 +23,8 @@ const Index = ({
         </a>
       </h1>
 
+      <h2>This site is not mobile-friendly, yet</h2>
+
       <Link href="/guu">
         <a style={{ textDecoration: "underline" }}>
           Checkout your Guu.vn's feed

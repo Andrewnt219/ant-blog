@@ -5,12 +5,17 @@ import React, { useEffect, useState } from "react";
 
 const Index = () => {
   const [guuFeeds, setGuuFeeds] = useState<GuuArticle[]>([]);
+  const [url, setUrl] = useState("");
 
   useEffect(() => {
     Axios.get<GuuArticle[]>("/api/guu")
       .then((res) => setGuuFeeds(res.data))
       .catch((error) => console.log((error as ApiError).message));
   }, []);
+
+  const onArticleClicked = (url: string) => {
+    setUrl(url);
+  };
 
   return (
     <>
@@ -33,10 +38,11 @@ const Index = () => {
         {guuFeeds.map((guu) => (
           <article key={guu.guid}>
             <a
+              onClick={() => onArticleClicked(guu.link)}
               dangerouslySetInnerHTML={{
                 __html: trimAdvertisement(guu.content, "<br>"),
               }}
-              href={guu.link}
+              href="#"
             />
             <h2>{guu.title}</h2>
             <p>{trimAdvertisement(guu.contentSnippet, "\n")}</p>
@@ -50,6 +56,22 @@ const Index = () => {
           Read more on Guu.vn
         </a>
       </div>
+
+      {url && (
+        <iframe
+          style={{
+            position: "fixed",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "80%",
+            height: "90%",
+            boxShadow:
+              "0 0.2rem 0.4rem rgba(0,0,0,0.4), -0.2rem 0 0.4rem rgba(0,0,0,0.4)",
+          }}
+          src={url}
+        ></iframe>
+      )}
     </>
   );
 };

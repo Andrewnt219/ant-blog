@@ -7,7 +7,6 @@ const Index = ({
   posts: fetchedPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [posts, setPosts] = useState(fetchedPosts);
-  console.log(posts);
 
   return (
     <div style={{ width: "80%", margin: "0  auto" }}>

@@ -18,6 +18,9 @@ const serializers = {
       const id = getYouTubeID(url);
       return <YouTube videoId={id} opts={{ width: "100%" }} />;
     },
+    image: ({ node }) => {
+      return <img src={urlFor(node.asset).url()} style={{ width: "100%" }} />;
+    },
   },
 };
 
@@ -104,7 +107,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths = posts.map((post) => ({ params: { slug: post.slug.current } }));
 
-  console.log(paths);
   return {
     paths,
     fallback: false,

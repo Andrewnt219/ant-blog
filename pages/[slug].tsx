@@ -16,18 +16,18 @@ const serializers = {
     youtube: ({ node }) => {
       const { url } = node;
       const id = getYouTubeID(url);
-      return <YouTube videoId={id} />;
+      return <YouTube videoId={id} opts={{ width: "100%" }} />;
     },
   },
 };
 
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <div style={{ width: "80ch", margin: "2rem auto" }}>
+    <div style={{ width: "80ch", maxWidth: "80%", margin: "2rem auto" }}>
       <img
         style={{ width: "100%", height: "30rem", objectFit: "cover" }}
         alt="hero-post-image"
-        src={urlFor(post.mainImage).width(500).url()}
+        src={urlFor(post.mainImage).url()}
       />
       <h1>{post.title}</h1>
       <div style={{ display: "flex", alignItems: "center" }}>
@@ -43,6 +43,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
         projectId={client.config().projectId}
         dataset={client.config().dataset}
         serializers={serializers}
+        imageOptions={{ fit: "clip", w: 300, auto: "format" }}
       />
     </div>
   );
@@ -92,6 +93,7 @@ export const getStaticProps: GetStaticProps<
 
   return {
     props: { post: posts[0] },
+    revalidate: 1,
   };
 };
 

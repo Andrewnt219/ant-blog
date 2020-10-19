@@ -1,0 +1,99 @@
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import React from "react";
+import client from "../client";
+import imageUrlBuilder from "@sanity/image-url";
+import BlockContent from "@sanity/block-content-to-react";
+
+const builder = imageUrlBuilder(client);
+function urlFor(source) {
+  return builder.image(source);
+}
+
+const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  return (
+    <div style={{ width: "80ch", margin: "2rem auto" }}>
+      <img
+        style={{ width: "100%", height: "30rem", objectFit: "cover" }}
+        alt="hero-post-image"
+        src={urlFor(post.mainImage).width(500).url()}
+      />
+      <h1>{post.title}</h1>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <img
+          style={{ borderRadius: "50%", marginRight: "1em" }}
+          alt={post.name}
+          src={urlFor(post.authorImage).width(50).url()}
+        />
+        <span>{post.name}</span>
+      </div>
+      <BlockContent
+        blocks={post.body}
+        projectId={client.config().projectId}
+        dataset={client.config().dataset}
+      />
+    </div>
+  );
+};
+
+type Post = {
+  title: string;
+  slug: {
+    current: string;
+    _type: "slug";
+  };
+  mainImage: {
+    asset: {
+      url: string;
+      _id: string;
+    };
+  };
+  body: any;
+  name: string;
+  authorImage: string;
+};
+
+export const getStaticProps: GetStaticProps<
+  { post: Post },
+  { slug: string }
+> = async ({ params }) => {
+  const posts = await client.fetch<Post[]>(
+    `
+        *[slug.current == $slug] {
+            title,
+            slug,
+            mainImage {
+                asset -> {
+                    _id,
+                    url
+                }
+            },
+            body,
+            "name": author->name,
+            "authorImage": author->image
+        }
+    `,
+    {
+      slug: params.slug,
+    }
+  );
+
+  return {
+    props: { post: posts[0] },
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await client.fetch<{ slug: { current: string } }[]>(
+    `*[_type == "post"]{slug{current}}`
+  );
+
+  const paths = posts.map((post) => ({ params: { slug: post.slug.current } }));
+
+  console.log(paths);
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export default Post;

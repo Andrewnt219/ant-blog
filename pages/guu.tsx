@@ -7,6 +7,7 @@ const Index = () => {
   const [guuFeeds, setGuuFeeds] = useState<GuuArticle[]>([]);
   const [url, setUrl] = useState("");
 
+  // TODO: change to getStaticProps (incremental)
   useEffect(() => {
     Axios.get<GuuArticle[]>("/api/guu")
       .then((res) => setGuuFeeds(res.data))

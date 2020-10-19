@@ -10,9 +10,11 @@
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^23.0.0",
     "@ckeditor/ckeditor5-react": "^2.1.0",
+    "axios": "^0.20.0",
     "next": "9.5.5",
     "react": "16.14.0",
-    "react-dom": "16.14.0"
+    "react-dom": "16.14.0",
+    "rss-parser": "^3.9.0"
   },
   "devDependencies": {
     "@types/node": "^14.11.10",

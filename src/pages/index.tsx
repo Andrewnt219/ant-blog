@@ -36,6 +36,12 @@ const Index = ({
             Checkout your Guu.vn&apos;s feed
           </a>
         </Link>
+        <br />
+        <br />
+        <Link href="/not-exist">
+          <a style={{ textDecoration: "underline" }}>Whoops...</a>
+        </Link>
+
         <div
           style={{
             display: "flex",

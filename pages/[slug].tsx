@@ -5,6 +5,8 @@ import imageUrlBuilder from "@sanity/image-url";
 import BlockContent from "@sanity/block-content-to-react";
 import YouTube from "react-youtube";
 import getYouTubeID from "get-youtube-id";
+import { BlockRenderer } from "../components/BlockRenderer";
+import Head from "next/head";
 
 const builder = imageUrlBuilder(client);
 function urlFor(source) {
@@ -18,37 +20,65 @@ const serializers = {
       const id = getYouTubeID(url);
       return <YouTube videoId={id} opts={{ width: "100%" }} />;
     },
-    image: ({ node }) => {
-      return <img src={urlFor(node.asset).url()} style={{ width: "100%" }} />;
+    image: (props) => {
+      const { node } = props;
+
+      return (
+        <figure style={{ margin: 0, width: "100%" }}>
+          <img
+            src={urlFor(node.asset)
+              .withOptions(props.options.imageOptions)
+              .url()}
+            style={{ width: "100%" }}
+            alt={node.alt}
+          />
+          <figcaption style={{ color: "#aaa", fontStyle: "italic" }}>
+            {node.caption}
+          </figcaption>
+        </figure>
+      );
     },
+    block: BlockRenderer,
   },
 };
 
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
-    <div style={{ width: "80ch", maxWidth: "80%", margin: "2rem auto" }}>
-      <img
-        style={{ width: "100%", height: "30rem", objectFit: "cover" }}
-        alt="hero-post-image"
-        src={urlFor(post.mainImage).url()}
-      />
-      <h1>{post.title}</h1>
-      <div style={{ display: "flex", alignItems: "center" }}>
+    <>
+      <Head>
+        <title>{post.title}</title>
+      </Head>
+
+      <div style={{ width: "80ch", maxWidth: "80%", margin: "2rem auto" }}>
         <img
-          style={{ borderRadius: "50%", marginRight: "1em" }}
-          alt={post.name}
-          src={urlFor(post.authorImage).width(50).url()}
+          style={{ width: "100%", height: "30rem", objectFit: "cover" }}
+          alt="hero-post-image"
+          src={urlFor(post.mainImage).url()}
         />
-        <span>{post.name}</span>
+        <h1 style={{ fontSize: "3em" }}>{post.title}</h1>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+        >
+          <img
+            style={{ borderRadius: "50%", marginRight: "1em" }}
+            alt={post.name}
+            src={urlFor(post.authorImage).width(50).url()}
+          />
+          <span>{post.name}</span>
+        </div>
+        <BlockContent
+          blocks={post.body}
+          projectId={client.config().projectId}
+          dataset={client.config().dataset}
+          serializers={serializers}
+          imageOptions={{ fit: "clip", w: 300, auto: "format" }}
+        />
       </div>
-      <BlockContent
-        blocks={post.body}
-        projectId={client.config().projectId}
-        dataset={client.config().dataset}
-        serializers={serializers}
-        imageOptions={{ fit: "clip", w: 300, auto: "format" }}
-      />
-    </div>
+    </>
   );
 };
 

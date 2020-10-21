@@ -14,19 +14,21 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/base": "^2.0.4",
+    "@sanity/base": "^2.0.5",
     "@sanity/block-content-to-react": "^2.0.7",
-    "@sanity/components": "^2.0.4",
-    "@sanity/core": "^2.0.1",
-    "@sanity/default-layout": "^2.0.4",
-    "@sanity/default-login": "^2.0.1",
-    "@sanity/desk-tool": "^2.0.4",
-    "@sanity/vision": "^2.0.1",
+    "@sanity/components": "^2.0.5",
+    "@sanity/core": "^2.0.5",
+    "@sanity/default-layout": "^2.0.5",
+    "@sanity/default-login": "^2.0.5",
+    "@sanity/desk-tool": "^2.0.5",
+    "@sanity/vision": "^2.0.5",
     "get-youtube-id": "^1.0.1",
     "prop-types": "^15.6",
     "react": "^16.2",
     "react-dom": "^16.2",
-    "react-youtube": "^7.13.0"
+    "react-youtube": "^7.13.0",
+    "sanity-plugin-color-list": "^1.2.1",
+    "sanity-plugin-seo-tools": "^1.0.6"
   },
   "devDependencies": {}
 }

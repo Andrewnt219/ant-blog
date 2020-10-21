@@ -26,8 +26,8 @@ const Index = () => {
         generated!
       </h1>
       <h2>
-        Post an article on Guu.vn and checkback after 24 hours (and no, it's not
-        because I have to code it)
+        Post an article on Guu.vn and checkback after 24 hours (and no,
+        it&apos;s not because I have to code it)
       </h2>
       <div
         style={{
@@ -60,6 +60,7 @@ const Index = () => {
 
       {url && (
         <iframe
+          title="guu-post"
           style={{
             position: "fixed",
             top: "50%",
@@ -77,7 +78,7 @@ const Index = () => {
   );
 };
 
-function trimAdvertisement(string: string, token) {
+function trimAdvertisement(string: string, token: string) {
   return string.substr(0, string.indexOf(token));
 }
 

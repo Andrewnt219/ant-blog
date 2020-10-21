@@ -3,6 +3,7 @@ import Link from "next/link";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import client from "../client";
 import Head from "next/head";
+import NotFound from "@src/components/NotFound";
 
 const Index = ({
   posts: fetchedPosts,
@@ -21,7 +22,7 @@ const Index = ({
           <a
             href="http://rosedang.sanity.studio/"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             style={{ textDecoration: "underline" }}
           >
             studio
@@ -32,7 +33,7 @@ const Index = ({
 
         <Link href="/guu">
           <a style={{ textDecoration: "underline" }}>
-            Checkout your Guu.vn's feed
+            Checkout your Guu.vn&apos;s feed
           </a>
         </Link>
         <div
@@ -62,6 +63,7 @@ const Index = ({
           ))}
         </div>
       </div>
+      <NotFound />
     </>
   );
 };

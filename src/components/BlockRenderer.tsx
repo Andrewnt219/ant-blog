@@ -1,7 +1,7 @@
 import React from "react";
 import BlockContent from "@sanity/block-content-to-react";
 
-export const BlockRenderer = (props) => {
+export const BlockRenderer = (props: any) => {
   const { style = "normal" } = props.node;
 
   //   if (/^h\d/.test(style)) {
@@ -28,5 +28,5 @@ export const BlockRenderer = (props) => {
   }
 
   // Fall back to default handling
-  return BlockContent.defaultSerializers.types.block(props);
+  return (BlockContent as any).defaultSerializers.types.block(props);
 };

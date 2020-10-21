@@ -18,12 +18,10 @@ export default async (
       );
       return res.status(200).json(feed.items as GuuArticle[]);
     } catch (error) {
-      res
-        .status(500)
-        .json({
-          message: "Cannot fetch GUU feed",
-          error: (error as AxiosError).response.data,
-        });
+      res.status(500).json({
+        message: "Cannot fetch GUU feed",
+        error: (error as AxiosError).response?.data,
+      });
     }
   }
 

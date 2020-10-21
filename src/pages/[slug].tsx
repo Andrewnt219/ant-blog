@@ -7,35 +7,36 @@ import YouTube from "react-youtube";
 import getYouTubeID from "get-youtube-id";
 import { BlockRenderer } from "../components/BlockRenderer";
 import Head from "next/head";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import NotFound from "@src/components/NotFound";
 
 const builder = imageUrlBuilder(client);
-function urlFor(source) {
+function urlFor(source: SanityImageSource) {
   return builder.image(source);
 }
 
 const serializers = {
   types: {
-    youtube: ({ node }) => {
+    youtube: ({ node }: { node: { url: string } }) => {
       const { url } = node;
       const id = getYouTubeID(url);
-      return <YouTube videoId={id} opts={{ width: "100%" }} />;
+      return <YouTube videoId={id ?? "dQw4w9WgXcQ"} opts={{ width: "100%" }} />;
     },
-    image: (props) => {
+    image: (props: any) => {
       const { node } = props;
+      const imgSrc = urlFor(node.asset)
+        .withOptions(props.options.imageOptions)
+        .url();
 
-      return (
+      return imgSrc ? (
         <figure style={{ margin: 0, width: "100%" }}>
-          <img
-            src={urlFor(node.asset)
-              .withOptions(props.options.imageOptions)
-              .url()}
-            style={{ width: "100%" }}
-            alt={node.alt}
-          />
+          <img src={imgSrc} style={{ width: "100%" }} alt={node.alt} />
           <figcaption style={{ color: "#aaa", fontStyle: "italic" }}>
             {node.caption}
           </figcaption>
         </figure>
+      ) : (
+        <NotFound />
       );
     },
     block: BlockRenderer,
@@ -43,6 +44,9 @@ const serializers = {
 };
 
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const authorImageSource = urlFor(post.authorImage).width(50).url();
+  const heroImageSource = urlFor(post.mainImage).url();
+
   return (
     <>
       <Head>
@@ -50,11 +54,15 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
       </Head>
 
       <div style={{ width: "80ch", maxWidth: "80%", margin: "2rem auto" }}>
-        <img
-          style={{ width: "100%", height: "30rem", objectFit: "cover" }}
-          alt="hero-post-image"
-          src={urlFor(post.mainImage).url()}
-        />
+        {heroImageSource ? (
+          <img
+            style={{ width: "100%", height: "30rem", objectFit: "cover" }}
+            alt="Hero"
+            src={heroImageSource}
+          />
+        ) : (
+          <NotFound />
+        )}
         <h1 style={{ fontSize: "3em" }}>{post.title}</h1>
         <div
           style={{
@@ -63,11 +71,15 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
             justifyContent: "flex-end",
           }}
         >
-          <img
-            style={{ borderRadius: "50%", marginRight: "1em" }}
-            alt={post.name}
-            src={urlFor(post.authorImage).width(50).url()}
-          />
+          {authorImageSource ? (
+            <img
+              style={{ borderRadius: "50%", marginRight: "1em" }}
+              alt={post.name}
+              src={authorImageSource}
+            />
+          ) : (
+            <NotFound />
+          )}
           <span>{post.name}</span>
         </div>
         <BlockContent
@@ -75,8 +87,9 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
           projectId={client.config().projectId}
           dataset={client.config().dataset}
           serializers={serializers}
-          imageOptions={{ fit: "clip", w: 300, auto: "format" }}
+          imageOptions={{ fit: "clip", auto: "format" }}
         />
+        <NotFound />
       </div>
     </>
   );
@@ -120,7 +133,7 @@ export const getStaticProps: GetStaticProps<
         }
     `,
     {
-      slug: params.slug,
+      slug: params?.slug,
     }
   );
 

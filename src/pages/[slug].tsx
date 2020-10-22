@@ -9,6 +9,7 @@ import { BlockRenderer } from "../components/BlockRenderer";
 import Head from "next/head";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import Loading from "@src/components/Loading";
+import RenderedYoutube from "@src/components/RenderedYoutube";
 
 const builder = imageUrlBuilder(client);
 function urlFor(source: SanityImageSource) {
@@ -20,7 +21,7 @@ const serializers = {
 		youtube: ({ node }: { node: { url: string } }) => {
 			const { url } = node;
 			const id = getYouTubeID(url);
-			return <YouTube videoId={id ?? "dQw4w9WgXcQ"} opts={{ width: "100%" }} />;
+			return <RenderedYoutube youtubeVideoId={id ?? "dQw4w9WgXcQ"} />;
 		},
 		image: (props: any) => {
 			const { node } = props;

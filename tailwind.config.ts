@@ -251,8 +251,8 @@ module.exports = {
 			default: "1",
 		},
 		fontFamily: {
-			heading: ["Poppins", "Roboto", "sans-serif"],
-			body: ["PT Serif", "serif"],
+			heading: ["Nunito", "sans-serif"],
+			body: ["Montserrat", "san-serif"],
 		},
 		fontSize: {
 			xs: "0.75rem",

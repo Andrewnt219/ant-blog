@@ -1,48 +1,11 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import React from "react";
 import client from "../client";
-import imageUrlBuilder from "@sanity/image-url";
 import BlockContent from "@sanity/block-content-to-react";
-import YouTube from "react-youtube";
-import getYouTubeID from "get-youtube-id";
-import { BlockRenderer } from "../components/BlockRenderer";
 import Head from "next/head";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import Loading from "@src/components/Loading";
-import RenderedYoutube from "@src/components/RenderedYoutube";
-
-const builder = imageUrlBuilder(client);
-function urlFor(source: SanityImageSource) {
-	return builder.image(source);
-}
-
-const serializers = {
-	types: {
-		youtube: ({ node }: { node: { url: string } }) => {
-			const { url } = node;
-			const id = getYouTubeID(url);
-			return <RenderedYoutube youtubeVideoId={id ?? "dQw4w9WgXcQ"} />;
-		},
-		image: (props: any) => {
-			const { node } = props;
-			const imgSrc = urlFor(node.asset)
-				.withOptions(props.options.imageOptions)
-				.url();
-
-			return imgSrc ? (
-				<figure style={{ margin: 0, width: "100%" }}>
-					<img src={imgSrc} style={{ width: "100%" }} alt={node.alt} />
-					<figcaption style={{ color: "#aaa", fontStyle: "italic" }}>
-						{node.caption}
-					</figcaption>
-				</figure>
-			) : (
-				<Loading />
-			);
-		},
-		block: BlockRenderer,
-	},
-};
+import { urlFor } from "@src/utils/sanityUtils";
+import { postSerializer } from "@src/serializers/postSerializer";
 
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const authorImageSource = urlFor(post.authorImage).width(50).url();
@@ -87,7 +50,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 					blocks={post.body}
 					projectId={client.config().projectId}
 					dataset={client.config().dataset}
-					serializers={serializers}
+					serializers={postSerializer}
 					imageOptions={{ fit: "clip", auto: "format" }}
 				/>
 			</div>

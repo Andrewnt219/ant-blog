@@ -230,4 +230,8 @@ export default css`
 		font-family: "Nunito", sans-serif;
 		font-weight: 700;
 	}
+
+	p {
+		line-height: 2;
+	}
 `;

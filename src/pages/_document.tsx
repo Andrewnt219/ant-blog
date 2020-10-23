@@ -13,6 +13,8 @@ type GetInitialPropsReturn = {
 	html: string;
 	head?: (ReactElement | null)[] | undefined;
 };
+
+// TODO Check server render style
 export default class MyDocument extends Document {
 	static async getInitialProps(
 		ctx: DocumentContext

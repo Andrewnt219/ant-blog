@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
 import client from "../client";
 import Head from "next/head";
 import EmbeddedSpotify from "@src/components/EmbeddedSpotify";
 
 const Index = ({
 	posts: fetchedPosts,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [posts, setPosts] = useState(fetchedPosts);
 	const [spotifyLink, setSpotifyLink] = useState(
-		"https://open.spotify.com/playlist/37i9dQZF1E8KGHbufkQgiX?si=iMBddiQvTzuaMxuteyBR2w"
+		"https://open.spotify.com/playlist/37i9dQZF1E8Q4xPKHvaoQw?si=heu9Nd1vQPqWR3t6w0dQiA"
 	);
 
 	return (
@@ -98,7 +98,7 @@ type Post = {
 	};
 };
 
-export const getServerSideProps: GetServerSideProps<{
+export const getStaticProps: GetStaticProps<{
 	posts: Post[];
 }> = async () => {
 	const posts = await client.fetch<Post[]>(
@@ -107,6 +107,7 @@ export const getServerSideProps: GetServerSideProps<{
 
 	return {
 		props: { posts },
+		revalidate: 1,
 	};
 };
 

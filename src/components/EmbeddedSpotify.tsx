@@ -22,7 +22,10 @@ function EmbeddedSpotify({
 				src={embeddedLink}
 				allowTransparency
 				allow="encrypted-media"
-				isPlaylist={spotifyShareLink.includes("playlist")}
+				higher={
+					spotifyShareLink.includes("playlist") ||
+					spotifyShareLink.includes("show")
+				}
 			/>
 			{spotifyUri && <a href={spotifyUri}>Open in spotify</a>}
 		</>
@@ -30,11 +33,11 @@ function EmbeddedSpotify({
 }
 
 type SpotifyPlayerProps = {
-	isPlaylist: boolean;
+	higher: boolean;
 };
 const SpotifyPlayer = styled.iframe<SpotifyPlayerProps>`
 	width: 100%;
-	height: ${(p) => (p.isPlaylist ? "300px" : "80px")};
+	height: ${(p) => (p.higher ? "300px" : "80px")};
 `;
 
 export default EmbeddedSpotify;

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import client from "../client";
 import Head from "next/head";
 import EmbeddedSpotify from "@src/components/EmbeddedSpotify";
 
 const Index = ({
 	posts: fetchedPosts,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const [posts, setPosts] = useState(fetchedPosts);
 	const [spotifyLink, setSpotifyLink] = useState(
 		"https://open.spotify.com/playlist/37i9dQZF1E8KGHbufkQgiX?si=iMBddiQvTzuaMxuteyBR2w"
@@ -33,17 +33,8 @@ const Index = ({
 				</h1>
 
 				<h2>This site is not mobile-friendly, yet</h2>
-
-				<Link href="/guu">
-					<a style={{ textDecoration: "underline" }}>
-						Checkout your Guu.vn&apos;s feed
-					</a>
-				</Link>
 				<br />
 				<br />
-				<Link href="/not-exist">
-					<a style={{ textDecoration: "underline" }}>Whoops...</a>
-				</Link>
 
 				<div
 					style={{
@@ -107,7 +98,7 @@ type Post = {
 	};
 };
 
-export const getStaticProps: GetStaticProps<{
+export const getServerSideProps: GetServerSideProps<{
 	posts: Post[];
 }> = async () => {
 	const posts = await client.fetch<Post[]>(
@@ -116,7 +107,6 @@ export const getStaticProps: GetStaticProps<{
 
 	return {
 		props: { posts },
-		revalidate: 1,
 	};
 };
 

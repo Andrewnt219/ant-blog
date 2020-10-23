@@ -13,4 +13,8 @@ export const routesData: Route[] = [
 		text: "About me",
 		href: "/about-me",
 	},
+	{
+		text: "Guu",
+		href: "/guu",
+	},
 ];

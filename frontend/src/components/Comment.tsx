@@ -1,3 +1,4 @@
+import db from "@src/lib/firebase/db";
 import Axios, { AxiosError } from "axios";
 import React, { ReactElement } from "react";
 import { useForm } from "react-hook-form";
@@ -8,25 +9,34 @@ type FormValues = {
 	text: string;
 };
 
-type Comment = FormValues & {
+export type FirestoreComment = FormValues & {
 	_postId: string;
+	_createdAt: number;
 };
 
 type Props = {
 	_postId: string;
-	submitHandler?: (data: Comment) => void;
+	submitHandler?: (data: FirestoreComment) => void;
 };
 
 function Comment({ _postId, submitHandler }: Props): ReactElement {
-	const { register, handleSubmit, errors } = useForm<FormValues>();
+	const { register, handleSubmit, errors, reset } = useForm<FormValues>();
+
 	const onSubmit = handleSubmit(async (data) => {
-		const submittedData = { ...data, _postId };
+		reset();
+
+		const submittedData: FirestoreComment = {
+			...data,
+			_postId,
+			_createdAt: Date.now(),
+		};
 
 		try {
-			await Axios.post("/api/create-comment", submittedData);
+			db.collection("comments").add(submittedData);
 			submitHandler && submitHandler(submittedData);
 		} catch (error) {
 			console.log((error as AxiosError).message);
+			console.log(error);
 		}
 	});
 

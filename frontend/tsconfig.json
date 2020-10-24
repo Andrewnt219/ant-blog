@@ -17,9 +17,9 @@
     "paths": {
       "@src/*": ["src/*"],
       "@components/*": ["src/components/*"]
-    }
-    
+    },
   },
+  
   "files": [
     "@types/block-content-to-react.d.ts"
   ],

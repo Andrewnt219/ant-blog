@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import sanityClient from "@src/lib/sanity";
 import BlockContent from "@sanity/block-content-to-react";
@@ -6,25 +6,37 @@ import Head from "next/head";
 import Loading from "@src/components/Loading";
 import { urlFor } from "@src/utils/sanityUtils";
 import { postSerializer } from "@src/serializers/postSerializer";
-import Comment from "@src/components/Comment";
+import Comment, { FirestoreComment } from "@src/components/Comment";
+import db from "@src/lib/firebase/db";
+
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const authorImageSource = urlFor(post.authorImage).width(50).url();
 	const heroImageSource = urlFor(post.mainImage).url();
-	const [temporaryComment, setTemporaryComment] = useState<PostComment | null>(
-		null
-	);
-	const onCommentSubmitted = (
-		data: Omit<PostComment, "_id" | "_createdAt">
-	) => {
-		setTemporaryComment({
-			...data,
-			_id: new Date().toLocaleDateString() + Math.floor(Math.random() * 10),
-			_createdAt: new Date().toLocaleDateString(),
-		});
-	};
-	const concatedPostComments: PostComment[] = temporaryComment
-		? [temporaryComment, ...post.comments]
-		: post.comments;
+	const [comments, setComments] = useState<PostComment[]>([]);
+
+	useEffect(() => {
+		const unsubscribe = db
+			.collection("comments")
+			.where("_postId", "==", post._id)
+			.orderBy("_createdAt", "desc")
+			.onSnapshot(
+				(snapshot) => {
+					const comments = snapshot.docs.map((doc) => ({
+						...doc.data(),
+						id: doc.id,
+					})) as PostComment[];
+					setComments(comments);
+				},
+				(error) => {
+					setComments([]);
+					console.log(error);
+				}
+			);
+
+		return () => {
+			unsubscribe();
+		};
+	}, [post._id]);
 
 	return (
 		<>
@@ -69,26 +81,24 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 					imageOptions={{ fit: "clip", auto: "format" }}
 				/>
 			</div>
-			<Comment _postId={post._id} submitHandler={onCommentSubmitted} />
-			{/* TODO use onSnapShot from firebase instead */}
-			{concatedPostComments.map((comment) => (
-				<>
-					<li key={comment._id}>
+			<Comment _postId={post._id} />
+
+			{comments.map((comment) => (
+				<React.Fragment key={comment.id}>
+					<li>
 						<h3>{comment.name}</h3>
 						<p>{comment.text}</p>
+						<span>{new Date(comment._createdAt).toLocaleDateString()}</span>
 					</li>
 					<hr />
-				</>
+				</React.Fragment>
 			))}
 		</>
 	);
 };
 
-type PostComment = {
-	_id: string;
-	name: string;
-	text: string;
-	_createdAt: string;
+type PostComment = FirestoreComment & {
+	id: string;
 };
 
 type Post = {
@@ -107,14 +117,13 @@ type Post = {
 	body: any;
 	name: string;
 	authorImage: string;
-	comments: PostComment[];
 };
 
 export const getStaticProps: GetStaticProps<
 	{ post: Post },
 	{ slug: string }
 > = async ({ params }) => {
-	const posts = await sanityClient.fetch<Post[]>(
+	const posts = await sanityClient.fetch<Omit<Post, "comments">[]>(
 		`
         *[slug.current == $slug] {
 						_id,
@@ -127,12 +136,6 @@ export const getStaticProps: GetStaticProps<
                 }
             },
 						body,
-						"comments": *[_type == "comment" && post._ref == ^._id] {
-							_id,
-							name,
-							text,
-							_createdAt
-						},
             "name": author->name,
             "authorImage": author->image
         }

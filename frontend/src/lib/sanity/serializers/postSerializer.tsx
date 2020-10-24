@@ -1,7 +1,7 @@
 import { BlockRenderer } from "@src/components/BlockRenderer";
 import Loading from "@src/components/Loading";
 import RenderedYoutube from "@src/components/RenderedYoutube";
-import { urlFor } from "@src/utils/sanityUtils";
+import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
 import getYouTubeID from "get-youtube-id";
 
 export const postSerializer = {

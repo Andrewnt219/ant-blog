@@ -4,7 +4,7 @@ import tw, { styled } from "twin.macro";
 type Props = {};
 
 function Music({}: Props): ReactElement {
-	return <Container>Nghe nhạc cùng Phương</Container>;
+	return <Container>Music</Container>;
 }
 
 type ContainerProps = {};

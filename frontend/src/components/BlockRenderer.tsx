@@ -5,19 +5,6 @@ import { styled } from "twin.macro";
 export const BlockRenderer = (props: any) => {
 	const { style = "normal" } = props.node;
 
-	//   if (/^h\d/.test(style)) {
-	//     const level = style.replace(/[^\d]/g, "");
-	//     return React.createElement(
-	//       style,
-	//       { className: `heading-${level}` },
-	//       props.children
-	//     );
-	//   }
-
-	//   if (style === "h2") {
-	//     return <h2 style={{ fontSize: "em" }}>{props.children}</h2>;
-	//   }
-
 	if (style === "normal") {
 		return <Normal>{props.children}</Normal>;
 	}

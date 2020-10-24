@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import sanityClient from "@src/lib/sanity";
+import sanityClient from "@src/lib/sanity/client";
 import BlockContent from "@sanity/block-content-to-react";
 import Head from "next/head";
 import Loading from "@src/components/Loading";
-import { urlFor } from "@src/utils/sanityUtils";
-import { postSerializer } from "@src/serializers/postSerializer";
+import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
+import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
 import Comment, { FirestoreComment } from "@src/components/Comment";
 import db from "@src/lib/firebase/db";
 

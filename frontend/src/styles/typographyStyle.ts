@@ -208,7 +208,7 @@ const rootFontSizeScaleQueries = css`
 export default css`
 	:root {
 		font-family: "Roboto", sans-serif;
-		line-height: 180%;
+		line-height: 1.8;
 
 		${bodyFontImport}
 		${headingFontImport}
@@ -219,7 +219,6 @@ export default css`
 	blockquote {
 		font-family: "IBM Plex Serif", serif;
 		font-weight: 500;
-		line-height: 180%;
 	}
 
 	h1,
@@ -229,5 +228,6 @@ export default css`
 	h5,
 	h6 {
 		font-weight: 700;
+		line-height: 1.4;
 	}
 `;

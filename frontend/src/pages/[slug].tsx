@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import client from "../client";
+import sanityClient from "@src/lib/sanity";
 import BlockContent from "@sanity/block-content-to-react";
 import Head from "next/head";
 import Loading from "@src/components/Loading";
@@ -63,8 +63,8 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 				</div>
 				<BlockContent
 					blocks={post.body}
-					projectId={client.config().projectId}
-					dataset={client.config().dataset}
+					projectId={sanityClient.config().projectId}
+					dataset={sanityClient.config().dataset}
 					serializers={postSerializer}
 					imageOptions={{ fit: "clip", auto: "format" }}
 				/>
@@ -114,7 +114,7 @@ export const getStaticProps: GetStaticProps<
 	{ post: Post },
 	{ slug: string }
 > = async ({ params }) => {
-	const posts = await client.fetch<Post[]>(
+	const posts = await sanityClient.fetch<Post[]>(
 		`
         *[slug.current == $slug] {
 						_id,
@@ -149,7 +149,7 @@ export const getStaticProps: GetStaticProps<
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const posts = await client.fetch<{ slug: { current: string } }[]>(
+	const posts = await sanityClient.fetch<{ slug: { current: string } }[]>(
 		`*[_type == "post"]{slug{current}}`
 	);
 

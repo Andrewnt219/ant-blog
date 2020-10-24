@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import client from "@src/client";
+import sanityClient from "@src/lib/sanity";
 import { ApiError } from "api";
 import { AxiosError } from "axios";
 
@@ -11,7 +11,7 @@ export default async (req: NextApiRequest, res: NextApiResponse<ApiError>) => {
 		const { name, text, _postId } = req.body;
 
 		try {
-			client
+			sanityClient
 				.config({
 					token: process.env.SANITY_API_TOKEN,
 					useCdn: false,

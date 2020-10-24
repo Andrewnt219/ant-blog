@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import client from "../client";
+import sanityClient from "@src/lib/sanity";
 import Head from "next/head";
 import EmbeddedSpotify from "@src/components/EmbeddedSpotify";
 
@@ -101,7 +101,7 @@ type Post = {
 export const getStaticProps: GetStaticProps<{
 	posts: Post[];
 }> = async () => {
-	const posts = await client.fetch<Post[]>(
+	const posts = await sanityClient.fetch<Post[]>(
 		`*[_type == "post"]{title, slug, mainImage {asset -> {_id, url}}}`
 	);
 

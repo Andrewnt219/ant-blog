@@ -1,4 +1,3 @@
-// TODO: add isArchived
 export default {
 	name: "post",
 	title: "Post",
@@ -17,6 +16,11 @@ export default {
 				source: "title",
 				maxLength: 96,
 			},
+		},
+		{
+			name: "snippet",
+			title: "Content snippet",
+			type: "text",
 		},
 		{
 			name: "author",
@@ -47,6 +51,11 @@ export default {
 			name: "body",
 			title: "Body",
 			type: "blockContent",
+		},
+		{
+			name: "isArchived",
+			title: "Archived",
+			type: "boolean",
 		},
 	],
 

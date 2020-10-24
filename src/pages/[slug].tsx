@@ -1,15 +1,30 @@
+import React, { useState } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import React from "react";
 import client from "../client";
 import BlockContent from "@sanity/block-content-to-react";
 import Head from "next/head";
 import Loading from "@src/components/Loading";
 import { urlFor } from "@src/utils/sanityUtils";
 import { postSerializer } from "@src/serializers/postSerializer";
-
+import Comment from "@src/components/Comment";
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const authorImageSource = urlFor(post.authorImage).width(50).url();
 	const heroImageSource = urlFor(post.mainImage).url();
+	const [temporaryComment, setTemporaryComment] = useState<PostComment | null>(
+		null
+	);
+	const onCommentSubmitted = (
+		data: Omit<PostComment, "_id" | "_createdAt">
+	) => {
+		setTemporaryComment({
+			...data,
+			_id: new Date().toLocaleDateString() + Math.floor(Math.random() * 10),
+			_createdAt: new Date().toLocaleDateString(),
+		});
+	};
+	const concatedPostComments: PostComment[] = temporaryComment
+		? [temporaryComment, ...post.comments]
+		: post.comments;
 
 	return (
 		<>
@@ -54,11 +69,30 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 					imageOptions={{ fit: "clip", auto: "format" }}
 				/>
 			</div>
+			<Comment _postId={post._id} submitHandler={onCommentSubmitted} />
+			{/* TODO use onSnapShot from firebase instead */}
+			{concatedPostComments.map((comment) => (
+				<>
+					<li key={comment._id}>
+						<h3>{comment.name}</h3>
+						<p>{comment.text}</p>
+					</li>
+					<hr />
+				</>
+			))}
 		</>
 	);
 };
 
+type PostComment = {
+	_id: string;
+	name: string;
+	text: string;
+	_createdAt: string;
+};
+
 type Post = {
+	_id: string;
 	title: string;
 	slug: {
 		current: string;
@@ -73,6 +107,7 @@ type Post = {
 	body: any;
 	name: string;
 	authorImage: string;
+	comments: PostComment[];
 };
 
 export const getStaticProps: GetStaticProps<
@@ -82,6 +117,7 @@ export const getStaticProps: GetStaticProps<
 	const posts = await client.fetch<Post[]>(
 		`
         *[slug.current == $slug] {
+						_id,
             title,
             slug,
             mainImage {
@@ -90,7 +126,13 @@ export const getStaticProps: GetStaticProps<
                     url
                 }
             },
-            body,
+						body,
+						"comments": *[_type == "comment" && post._ref == ^._id] {
+							_id,
+							name,
+							text,
+							_createdAt
+						},
             "name": author->name,
             "authorImage": author->image
         }

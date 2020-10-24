@@ -128,6 +128,16 @@ const headingFontImport = css`
 			/* Chrome 26+, Opera 23+, Firefox 39+ */
 				url("/fonts/roboto-v20-vietnamese_latin-900italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 	}
+	/* roboto-regular - vietnamese_latin */
+	@font-face {
+		font-family: "Roboto";
+		font-style: normal;
+		font-weight: 400;
+		src: local("Roboto"), local("Roboto-Regular"),
+			url("/fonts/roboto-v20-vietnamese_latin-regular.woff2") format("woff2"),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */
+				url("/fonts/roboto-v20-vietnamese_latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
 `;
 
 const blockquoteFontImport = css`
@@ -197,7 +207,8 @@ const rootFontSizeScaleQueries = css`
 
 export default css`
 	:root {
-		font-family: "Lora", serif;
+		font-family: "Roboto", sans-serif;
+		line-height: 180%;
 
 		${bodyFontImport}
 		${headingFontImport}
@@ -217,12 +228,6 @@ export default css`
 	h4,
 	h5,
 	h6 {
-		font-family: "Roboto", sans-serif;
 		font-weight: 700;
-	}
-
-	p {
-		line-height: 180%;
-		margin-bottom: 1rem;
 	}
 `;

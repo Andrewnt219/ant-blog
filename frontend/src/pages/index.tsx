@@ -9,9 +9,7 @@ const Index = ({
 	posts: fetchedPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [posts, setPosts] = useState(fetchedPosts);
-	const [spotifyLink, setSpotifyLink] = useState(
-		"https://open.spotify.com/playlist/37i9dQZF1E8Q4xPKHvaoQw?si=heu9Nd1vQPqWR3t6w0dQiA"
-	);
+	const [spotifyLink, setSpotifyLink] = useState("temporary blocked");
 
 	return (
 		<>
@@ -77,8 +75,9 @@ const Index = ({
 						display: "block",
 						width: "100%",
 					}}
+					readOnly
 				/>
-				<EmbeddedSpotify spotifyShareLink={spotifyLink} />
+				<EmbeddedSpotify spotifyShareLink="https://open.spotify.com/playlist/2AwCV9pHpQHFjn2UOeClsy?si=3_WRZnkrTZOX8FDfmOis5g" />
 			</div>
 		</>
 	);

@@ -20,7 +20,6 @@ function EmbeddedSpotify({
 			<SpotifyPlayer
 				title="embedded-spotify"
 				src={embeddedLink}
-				allowTransparency
 				allow="encrypted-media"
 				higher={
 					spotifyShareLink.includes("playlist") ||

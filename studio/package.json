@@ -21,6 +21,7 @@
     "@sanity/default-layout": "^2.0.7",
     "@sanity/default-login": "^2.0.5",
     "@sanity/desk-tool": "^2.0.8",
+    "@sanity/rich-date-input": "^2.0.5",
     "@sanity/vision": "^2.0.5",
     "get-youtube-id": "^1.0.1",
     "prop-types": "^15.6",

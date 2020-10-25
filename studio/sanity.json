@@ -14,7 +14,8 @@
     "@sanity/default-login",
     "@sanity/desk-tool",
     "seo-tools",
-    "color-list"
+    "color-list",
+    "@sanity/rich-date-input"
   ],
   "env": {
     "development": {

@@ -5,11 +5,9 @@ import sanityClient from "@src/lib/sanity/client";
 import Head from "next/head";
 import EmbeddedSpotify from "@src/components/EmbeddedSpotify";
 import { styled } from "twin.macro";
-
-const Index = ({
-	posts: fetchedPosts,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const [posts, setPosts] = useState(fetchedPosts);
+import dayjs from "dayjs";
+import { calculateReadingMinutes } from "@src/utils";
+const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [spotifyLink, setSpotifyLink] = useState(
 		"https://open.spotify.com/playlist/2AwCV9pHpQHFjn2UOeClsy?si=iQVkTAM1RS6F_p5P3ZHLTg"
 	);
@@ -38,7 +36,7 @@ const Index = ({
 
 			<div>
 				{posts.map((post) => (
-					<article key={post.slug.current} style={{ margin: "2rem" }}>
+					<article key={post.slug} style={{ margin: "2rem" }}>
 						<img
 							alt={post.title}
 							src={post.mainImage.asset.url}
@@ -47,12 +45,16 @@ const Index = ({
 								width: "auto",
 							}}
 						/>
-
+						<span>{post.categories[0]}</span>
 						<h2>
-							<Link href={"/" + post.slug.current}>
+							<Link href={"/" + post.slug}>
 								<a>{post.title}</a>
 							</Link>
 						</h2>
+
+						<p>{post.author}</p>
+						<p>{dayjs(post.publishedAt).format("MMM DD YYYY").toUpperCase()}</p>
+						<p>{calculateReadingMinutes(post.rawContent)}</p>
 					</article>
 				))}
 			</div>
@@ -79,11 +81,14 @@ const Index = ({
 
 type Post = {
 	title: string;
-	slug: {
-		_type: "slug";
-		current: string;
-	};
+	slug: string;
+	publishedAt: string;
+	categories: string[];
+	contentSnippet: string;
+	author: string;
+	rawContent: string;
 	mainImage: {
+		alt?: string;
 		asset: {
 			_id: string;
 			url: string;
@@ -95,7 +100,23 @@ export const getStaticProps: GetStaticProps<{
 	posts: Post[];
 }> = async () => {
 	const posts = await sanityClient.fetch<Post[]>(
-		`*[_type == "post"]{title, slug, mainImage {asset -> {_id, url}}}`
+		`
+			*[_type == "post" && !isArchived]{
+				title,
+				"slug": slug.current,
+				publishedAt,
+				"categories": categories[] -> title,
+				"author": author -> name,
+				rawContent,
+				mainImage {
+					alt,
+					asset -> {
+						_id, 
+						url
+					}
+				}
+			}
+		`
 	);
 
 	return {

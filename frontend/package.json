@@ -10,6 +10,7 @@
     "full": "concurrently \"yarn dev\" \"yarn sanity\""
   },
   "dependencies": {
+    "@asbjorn/eslint-plugin-groq": "^1.0.0",
     "@next/bundle-analyzer": "^9.5.5",
     "@sanity/block-content-to-react": "^2.0.7",
     "@sanity/client": "^2.0.1",
@@ -17,8 +18,10 @@
     "@types/react-lottie": "^1.2.5",
     "@types/styled-components": "^5.1.4",
     "axios": "^0.20.0",
+    "dayjs": "^1.9.4",
     "firebase": "7.24.0",
     "get-youtube-id": "^1.0.1",
+    "groq": "^2.0.1",
     "next": "9.5.5",
     "next-compose-plugins": "^2.2.0",
     "next-pwa": "^3.1.5",

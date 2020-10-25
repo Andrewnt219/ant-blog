@@ -28,6 +28,14 @@
     {
       "name": "part:@sanity/base/schema",
       "path": "./schemas/schema"
+    },
+    {
+      "name": "part:@sanity/base/initial-value-templates",
+      "path": "./initialValueTemplates.js"
+    },
+    {
+      "implements": "part:@sanity/base/document-actions/resolver", 
+      "path": "./document-actions/"
     }
   ]
 }

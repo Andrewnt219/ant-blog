@@ -58,7 +58,7 @@ export default {
 			description: "A short introduction about the post",
 			validation: (Rule) => [
 				Rule.required().error("Vì tính thẩm mỹ của web, em nên ghi cái này."),
-				Rule.max(150).warning("Ngắn ngắn thôi em, 150 letters đổ lại."),
+				Rule.max(200).warning("Ngắn ngắn thôi em, 200 letters đổ lại."),
 			],
 			rows: 3,
 		},
@@ -76,6 +76,16 @@ export default {
 			name: "mainImage",
 			title: "Main image",
 			type: "image",
+			fields: [
+				{
+					name: "alt",
+					title: "Alternate text",
+					type: "string",
+					options: {
+						isHightlighted: true,
+					},
+				},
+			],
 			options: {
 				hotspot: true,
 			},
@@ -134,6 +144,17 @@ export default {
 
 					return true;
 				}),
+		},
+		{
+			name: "rawContent",
+			title: "Raw Content",
+			description: "Dùng để tính thời gian đọc",
+			type: "string",
+
+			validation: (Rule) =>
+				Rule.required().error(
+					"Em copy nội dung từ body vào ô này nhé (Pro tip: dùng Ctrl + A)"
+				),
 		},
 	],
 

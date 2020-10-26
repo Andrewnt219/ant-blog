@@ -1,10 +1,6 @@
 import React, { ReactElement } from "react";
 import tw, { css, styled } from "twin.macro";
-import {
-	MdKeyboardArrowLeft,
-	MdKeyboardArrowRight,
-	MdTimeToLeave,
-} from "react-icons/md";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 type Props = {
 	isNextArrow?: boolean;
@@ -14,7 +10,7 @@ type Props = {
 };
 
 function SlickArrow({ isNextArrow, ...slickProps }: Props): ReactElement {
-	const { className, style, onClick } = slickProps;
+	const { onClick } = slickProps;
 
 	const arrow = isNextArrow ? (
 		<MdKeyboardArrowRight />

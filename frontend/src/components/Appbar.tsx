@@ -1,11 +1,11 @@
 import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import { styled } from "twin.macro";
 import { routesData } from "@src/assets/data/routesData";
 import Link from "next/link";
 
 type Props = {};
 
-function Appbar({}: Props): ReactElement {
+function Appbar(): ReactElement {
 	return (
 		<Header>
 			<Nav>

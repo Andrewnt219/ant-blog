@@ -139,7 +139,4 @@ const Main = styled.main<MainProps>`
 	margin: 0 auto;
 `;
 
-type PinnedPostsProps = {};
-const PinnedPosts = styled.div<PinnedPostsProps>``;
-
 export default Index;

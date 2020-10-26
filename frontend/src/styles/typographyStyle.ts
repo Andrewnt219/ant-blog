@@ -1,4 +1,4 @@
-import { theme, css } from "twin.macro";
+import { css } from "twin.macro";
 
 const bodyFontImport = css`
 	/* lora-regular - latin */

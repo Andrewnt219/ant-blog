@@ -1,10 +1,10 @@
 import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import { styled } from "twin.macro";
 import Loading from "./Loading";
 
 type Props = {};
 
-function Footer({}: Props): ReactElement {
+function Footer(): ReactElement {
 	return (
 		<Container>
 			<Loading />

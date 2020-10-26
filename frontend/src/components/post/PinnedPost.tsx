@@ -1,14 +1,11 @@
+import { trimLastWord } from "@src/utils";
 import Link from "next/link";
 import React, { ReactElement } from "react";
-import tw, { css, styled, theme } from "twin.macro";
-import dayjs from "dayjs";
+import tw, { styled } from "twin.macro";
 
 type Props = {
-	isMain: boolean;
 	data: {
 		category: string;
-		author: string;
-		publishedAt: string;
 		title: string;
 		image: {
 			url: string;
@@ -18,8 +15,20 @@ type Props = {
 	};
 };
 
-function PinnedPost({ data, isMain }: Props): ReactElement {
-	const { category, author, publishedAt, title, image, slug } = data;
+function PinnedPost({ data }: Props): ReactElement {
+	const { title, image, slug, category } = data;
+	let renderedTitle = <Title>{title}</Title>;
+
+	const [titleHead, titleTail] = trimLastWord(title);
+	if (titleHead) {
+		renderedTitle = (
+			<Title>
+				{titleHead}
+				&nbsp;
+				{titleTail}
+			</Title>
+		);
+	}
 
 	return (
 		<Container>
@@ -31,12 +40,7 @@ function PinnedPost({ data, isMain }: Props): ReactElement {
 
 			<Info>
 				<Category>{category}</Category>
-				<Title isMain={isMain}>{title}</Title>
-				<SubInfo isMain={isMain}>
-					<AuthorName>{author}</AuthorName>
-					&nbsp;&nbsp;-&nbsp;&nbsp;
-					<Date>{dayjs(publishedAt).format("MMM DD YYYY")}</Date>
-				</SubInfo>
+				{renderedTitle}
 			</Info>
 		</Container>
 	);
@@ -44,54 +48,26 @@ function PinnedPost({ data, isMain }: Props): ReactElement {
 
 type ContainerProps = {};
 const Container = styled.article<ContainerProps>`
-	${tw`text-primary relative w-full h-full flex flex-col justify-end p-3`}
+	${tw`text-primary relative w-full h-full flex flex-col justify-end mx-2`}
+	height: 12rem;
 `;
 
 type InfoProps = {};
 const Info = styled.div<InfoProps>`
-	${tw`relative z-10 space-y-1`}
+	${tw`relative z-10 space-y-1 p-3 relative`}
+	background: rgba(0,0,0,.6);
 `;
 
 type CategoryProps = {};
 const Category = styled.span<CategoryProps>`
-	${tw`uppercase font-500 bg-accent`}
-	padding: 0.1rem 0.2rem;
+	${tw`uppercase font-500 bg-accent absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
+	font-size: .5rem;
+	padding: 0 0.5em;
 `;
 
-type TitleProps = {
-	isMain: boolean;
-};
+type TitleProps = {};
 const Title = styled.h2<TitleProps>`
-	${tw`text-primary font-600 text-xl`}
-	width: max-content;
-	max-width: 100%;
-
-	${(p) =>
-		!p.isMain &&
-		css`
-			${tw`text-lg`}
-		`}
-`;
-
-type SubInfoProps = {
-	isMain: boolean;
-};
-const SubInfo = styled.div<SubInfoProps>`
-	display: ${(p) => !p.isMain && "none"};
-
-	@media screen and (min-width: ${theme`screens.lgMobile`}) {
-		display: inline-block;
-	}
-`;
-
-type AuthorNameProps = {};
-const AuthorName = styled.span<AuthorNameProps>`
-	${tw`uppercase font-500`}
-`;
-
-type DateProps = {};
-const Date = styled.time<DateProps>`
-	${tw`uppercase font-500`}
+	${tw`text-primary font-600 text-center`}
 `;
 
 type ThumbnailProps = {};

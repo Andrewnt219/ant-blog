@@ -30,5 +30,7 @@ module.exports = {
 		"react/display-name": 0,
 		"@typescript-eslint/no-explicit-any": 0,
 		"jsx-a11y/anchor-is-valid": 0,
+		"@typescript-eslint/ban-ts-ignore": 0,
+		"@typescript-eslint/ban-ts-comment": 0,
 	},
 };

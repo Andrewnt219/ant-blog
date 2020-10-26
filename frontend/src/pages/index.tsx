@@ -5,6 +5,8 @@ import Head from "next/head";
 import EmbeddedSpotify from "@src/components/EmbeddedSpotify";
 import { styled, theme } from "twin.macro";
 import PinnedPost from "@src/components/post/PinnedPost";
+import "@brainhubeu/react-carousel/lib/style.css";
+import Carousel from "@brainhubeu/react-carousel";
 
 const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [spotifyLink, setSpotifyLink] = useState(
@@ -33,15 +35,14 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<br />
 			<br />
 
-			<PinnedPosts>
+			<Carousel arrows slidesPerPage={3} infinite>
 				{posts
 					.filter((post) => post.isPinned)
-					.map((post, index) => (
-						<li key={post.slug}>
-							<PinnedPost data={post} isMain={index === 0} />
-						</li>
+					.map((post) => (
+						<PinnedPost key={post.slug} data={post} />
 					))}
-			</PinnedPosts>
+			</Carousel>
+
 			<label htmlFor="spotify-link">Enter spotify share link</label>
 
 			<input
@@ -112,21 +113,6 @@ const Main = styled.main<MainProps>`
 `;
 
 type PinnedPostsProps = {};
-const PinnedPosts = styled.ul<PinnedPostsProps>`
-	width: 100%;
-	/* font-size: 0.75rem; */
-	display: grid;
-	/* height: 35rem;
-	grid-template-rows: 1.5fr 1fr 1fr;
-	grid-template-areas:
-		"first "
-		"second"
-		"third";
- */
-	gap: 0.1rem;
-	grid-template-columns: 2fr 1fr 1fr;
-	height: 15rem;
-	font-size: 0.5rem;
-`;
+const PinnedPosts = styled.div<PinnedPostsProps>``;
 
 export default Index;

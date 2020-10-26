@@ -16,27 +16,32 @@ export default {
 			name: "isPinned",
 			title: "Pinned Post",
 			type: "boolean",
-			description: "Nếu bật thì bài post sẽ là 1 trong 3 tấm ở đầu trang chủ.",
-			validation: (Rule) =>
-				Rule.required().custom(() =>
-					client
-						.fetch(
-							`
-								*[_type == 'post' && isPinned].isPinned
-							`
-						)
-						.then((post) =>
-							post.length > 3
-								? "Em pin tối đa 03 bài thôi nha, tham thì thâm đó =))."
-								: true
-						)
-				),
+			description: "Nếu bật thì bài post sẽ nằm trong slider ở đầu trang chủ.",
+			// validation: (Rule) =>
+			// 	Rule.required().custom(() =>
+			// 		client
+			// 			.fetch(
+			// 				`
+			// 					*[_type == 'post' && isPinned].isPinned
+			// 				`
+			// 			)
+			// 			.then((post) =>
+			// 				post.length > 3
+			// 					? "Em pin tối đa 03 bài thôi nha, tham thì thâm đó =))."
+			// 					: true
+			// 			)
+			// 	),
 		},
 		{
 			name: "title",
 			title: "Title",
 			type: "string",
-			validation: (Rule) => Rule.required().error("Em quên đặt tựa nè."),
+			validation: (Rule) => [
+				Rule.required().error("Em quên đặt tựa nè."),
+				Rule.max(55).warning(
+					"Tựa quá dài có thể ảnh hưởng tới thẩm mỹ của web, cơ mà tùy em =))"
+				),
+			],
 		},
 		{
 			name: "slug",

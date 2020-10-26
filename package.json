@@ -1,0 +1,12 @@
+{
+  "name": "next-rose",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Andrewnt219/rosedang.git",
+  "author": "Tuan Phong Nguyen <phongnguyentuan20@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "cd ./frontend && yarn dev",
+    "start": "cd ./studio && sanity start"
+  }
+}

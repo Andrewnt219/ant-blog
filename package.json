@@ -8,5 +8,6 @@
   "scripts": {
     "dev": "cd ./frontend && yarn dev",
     "start": "cd ./studio && sanity start"
-  }
+  },
+  "dependencies": {}
 }

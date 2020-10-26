@@ -9,6 +9,7 @@ import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
 import Comment, { FirestoreComment } from "@src/components/Comment";
 import db from "@src/lib/firebase/db";
 
+// TODO: router.fallback
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const authorImageSource = urlFor(post.authorImage).width(50).url();
 	const heroImageSource = urlFor(post.mainImage).url();

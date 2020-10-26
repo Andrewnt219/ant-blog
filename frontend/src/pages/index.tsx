@@ -3,10 +3,10 @@ import { GetStaticProps, InferGetStaticPropsType } from "next";
 import sanityClient from "@src/lib/sanity/client";
 import Head from "next/head";
 import EmbeddedSpotify from "@src/components/EmbeddedSpotify";
-import { styled, theme } from "twin.macro";
+import { styled } from "twin.macro";
 import PinnedPost from "@src/components/post/PinnedPost";
-import "@brainhubeu/react-carousel/lib/style.css";
-import Carousel from "@brainhubeu/react-carousel";
+import Slider from "react-slick";
+import SlickArrow from "@src/components/SlickArrow";
 
 const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [spotifyLink, setSpotifyLink] = useState(
@@ -35,13 +35,37 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<br />
 			<br />
 
-			<Carousel arrows slidesPerPage={3} infinite>
+			<Slider
+				infinite
+				slidesToShow={3}
+				accessibility
+				arrows
+				pauseOnHover
+				autoplay
+				autoplaySpeed={3000}
+				nextArrow={<SlickArrow isNextArrow />}
+				prevArrow={<SlickArrow />}
+				responsive={[
+					{
+						breakpoint: 768,
+						settings: {
+							slidesToShow: 2,
+						},
+					},
+					{
+						breakpoint: 480,
+						settings: {
+							slidesToShow: 1,
+						},
+					},
+				]}
+			>
 				{posts
 					.filter((post) => post.isPinned)
 					.map((post) => (
 						<PinnedPost key={post.slug} data={post} />
 					))}
-			</Carousel>
+			</Slider>
 
 			<label htmlFor="spotify-link">Enter spotify share link</label>
 
@@ -68,7 +92,10 @@ type Post = {
 	title: string;
 	slug: string;
 	publishedAt: string;
-	category: string;
+	category: {
+		title: string;
+		slug: string;
+	};
 	contentSnippet: string;
 	author: string;
 	rawContent: string;
@@ -88,7 +115,7 @@ export const getStaticProps: GetStaticProps<{
 				title,
 				"slug": slug.current,
 				publishedAt,
-				"category": categories[] -> title[0],
+				"category": categories[] -> {title, "slug": slug.current}[0],
 				"author": author -> name,
 				rawContent,
 				"image": mainImage {

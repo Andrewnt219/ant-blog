@@ -53,6 +53,11 @@ textarea {
     overflow-y: hidden;
 }
 
+/* Margin between slides */
+.slick-slide > div {
+  padding: 0 0.25rem;
+}
+
 ${typographyStyle}
 
 /* * { background-color: rgba(255,0,0,.2); }

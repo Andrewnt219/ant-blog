@@ -5,7 +5,10 @@ import tw, { styled } from "twin.macro";
 
 type Props = {
 	data: {
-		category: string;
+		category: {
+			title: string;
+			slug: string;
+		};
 		title: string;
 		image: {
 			url: string;
@@ -14,7 +17,7 @@ type Props = {
 		slug: string;
 	};
 };
-
+// TODO clarify hovering category
 function PinnedPost({ data }: Props): ReactElement {
 	const { title, image, slug, category } = data;
 	let renderedTitle = <Title>{title}</Title>;
@@ -30,17 +33,24 @@ function PinnedPost({ data }: Props): ReactElement {
 		);
 	}
 
+	const linkToPost = `/${slug}`;
+
 	return (
 		<Container>
-			<Link href={`/${slug}`} passHref>
+			<Link href={linkToPost} passHref>
 				<Thumbnail>
 					<img src={image.url} alt={image.alt ?? "Pinned post thumbnail"} />
 				</Thumbnail>
 			</Link>
 
 			<Info>
-				<Category>{category}</Category>
-				{renderedTitle}
+				<Link href={`/category/${category.slug}`} passHref>
+					<Category>{category.title}</Category>
+				</Link>
+
+				<Link href={linkToPost}>
+					<a>{renderedTitle}</a>
+				</Link>
 			</Info>
 		</Container>
 	);
@@ -48,18 +58,31 @@ function PinnedPost({ data }: Props): ReactElement {
 
 type ContainerProps = {};
 const Container = styled.article<ContainerProps>`
-	${tw`text-primary relative w-full h-full flex flex-col justify-end mx-2`}
+	${tw`text-primary relative w-full h-full flex flex-col justify-end relative`}
 	height: 12rem;
+
+	::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 90%;
+		height: 90%;
+		border: 1px solid white;
+		transform: translate(-50%, -50%);
+		${tw`z-10`}
+		pointer-events: none;
+	}
 `;
 
 type InfoProps = {};
 const Info = styled.div<InfoProps>`
-	${tw`relative z-10 space-y-1 p-3 relative`}
+	${tw`relative z-10 space-y-1 px-3 pt-3 pb-8 relative`}
 	background: rgba(0,0,0,.6);
 `;
 
 type CategoryProps = {};
-const Category = styled.span<CategoryProps>`
+const Category = styled.a<CategoryProps>`
 	${tw`uppercase font-500 bg-accent absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
 	font-size: .5rem;
 	padding: 0 0.5em;
@@ -67,7 +90,7 @@ const Category = styled.span<CategoryProps>`
 
 type TitleProps = {};
 const Title = styled.h2<TitleProps>`
-	${tw`text-primary font-600 text-center`}
+	${tw`text-primary font-600 text-center mt-3`}
 `;
 
 type ThumbnailProps = {};

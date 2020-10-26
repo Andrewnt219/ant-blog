@@ -38,7 +38,7 @@ export default {
 			type: "string",
 			validation: (Rule) => [
 				Rule.required().error("Em quên đặt tựa nè."),
-				Rule.max(55).warning(
+				Rule.max(70).warning(
 					"Tựa quá dài có thể ảnh hưởng tới thẩm mỹ của web, cơ mà tùy em =))"
 				),
 			],
@@ -140,7 +140,7 @@ export default {
 			title: "Archived",
 			type: "boolean",
 			description:
-				"An archived post will be removed from the site, but stay in the studio.",
+				"Nếu bật thì post này sẽ không xuất hiện trên web nữa, nhưng vẫn còn ở trong studio",
 			validation: (Rule) =>
 				Rule.custom((isArchived, context) => {
 					if (context.document.isPinned && isArchived) {
@@ -153,7 +153,7 @@ export default {
 		{
 			name: "rawContent",
 			title: "Raw Content",
-			description: "Dùng để tính thời gian đọc",
+			description: "Dùng để tính thời gian đọc và search keyword",
 			type: "string",
 
 			validation: (Rule) =>

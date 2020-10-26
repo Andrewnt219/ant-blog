@@ -29,6 +29,6 @@
     "**/*.tsx",
     "public/scripts/theme.script.js",
     "@types/twin.d.ts"
-  ],
+, "tailwind.config.js"  ],
   "exclude": ["node_modules", "tailwind.config.ts"]
 }

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Link from "next/link";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import sanityClient from "@src/lib/sanity/client";
 import Head from "next/head";
 import EmbeddedSpotify from "@src/components/EmbeddedSpotify";
-import { styled } from "twin.macro";
-import dayjs from "dayjs";
-import { calculateReadingMinutes } from "@src/utils";
+import { styled, theme } from "twin.macro";
+import PinnedPost from "@src/components/post/PinnedPost";
+
 const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [spotifyLink, setSpotifyLink] = useState(
 		"https://open.spotify.com/playlist/2AwCV9pHpQHFjn2UOeClsy?si=iQVkTAM1RS6F_p5P3ZHLTg"
@@ -34,31 +33,15 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<br />
 			<br />
 
-			<div>
-				{posts.map((post) => (
-					<article key={post.slug} style={{ margin: "2rem" }}>
-						<img
-							alt={post.title}
-							src={post.mainImage.asset.url}
-							style={{
-								height: "200px",
-								width: "auto",
-							}}
-						/>
-						<span>{post.categories[0]}</span>
-						<h2>
-							<Link href={"/" + post.slug}>
-								<a>{post.title}</a>
-							</Link>
-						</h2>
-
-						<p>{post.author}</p>
-						<p>{dayjs(post.publishedAt).format("MMM DD YYYY").toUpperCase()}</p>
-						<p>{calculateReadingMinutes(post.rawContent)}</p>
-					</article>
-				))}
-			</div>
-
+			<PinnedPosts>
+				{posts
+					.filter((post) => post.isPinned)
+					.map((post, index) => (
+						<li key={post.slug}>
+							<PinnedPost data={post} isMain={index === 0} />
+						</li>
+					))}
+			</PinnedPosts>
 			<label htmlFor="spotify-link">Enter spotify share link</label>
 
 			<input
@@ -80,19 +63,17 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 };
 
 type Post = {
+	isPinned: boolean;
 	title: string;
 	slug: string;
 	publishedAt: string;
-	categories: string[];
+	category: string;
 	contentSnippet: string;
 	author: string;
 	rawContent: string;
-	mainImage: {
+	image: {
 		alt?: string;
-		asset: {
-			_id: string;
-			url: string;
-		};
+		url: string;
 	};
 };
 
@@ -102,18 +83,16 @@ export const getStaticProps: GetStaticProps<{
 	const posts = await sanityClient.fetch<Post[]>(
 		`
 			*[_type == "post" && !isArchived]{
+				isPinned,
 				title,
 				"slug": slug.current,
 				publishedAt,
-				"categories": categories[] -> title,
+				"category": categories[] -> title[0],
 				"author": author -> name,
 				rawContent,
-				mainImage {
+				"image": mainImage {
 					alt,
-					asset -> {
-						_id, 
-						url
-					}
+					"url": asset -> url
 				}
 			}
 		`
@@ -127,8 +106,27 @@ export const getStaticProps: GetStaticProps<{
 
 type MainProps = {};
 const Main = styled.main<MainProps>`
-	width: 75%;
+	/* max-width: max(1200px, 80%); */
+	width: 90%;
 	margin: 0 auto;
+`;
+
+type PinnedPostsProps = {};
+const PinnedPosts = styled.ul<PinnedPostsProps>`
+	width: 100%;
+	/* font-size: 0.75rem; */
+	display: grid;
+	/* height: 35rem;
+	grid-template-rows: 1.5fr 1fr 1fr;
+	grid-template-areas:
+		"first "
+		"second"
+		"third";
+ */
+	gap: 0.1rem;
+	grid-template-columns: 2fr 1fr 1fr;
+	height: 15rem;
+	font-size: 0.5rem;
 `;
 
 export default Index;

@@ -1,24 +1,19 @@
 import { createGlobalStyle } from "styled-components";
-import { normalize } from "styled-normalize";
 import typographyStyle from "./typographyStyle";
 
 export default createGlobalStyle`
-${normalize}
-
 :root {
-    --accent-color: #006ae6;
-    --accent-color-rgb: 0, 106, 230;
+    --accent-color: #2d53fe;
+    --accent-color-rgb: 45, 83, 254;
     --primary-color: #fff;
     --primary-color-rgb:   255, 255, 255;
-    --primary-color-light: #F6F8FE;
+    --primary-color-light: #F6f6f6;
     --primary-color-light-rgb: 246, 248, 254;
-    --secondary-color: #751bba;
-    --secondary-color-rgb: 117, 27, 186;
     --text-color: #000;
     --text-color-rgb: 0, 0, 0;
     --text-color-light: #717172;
     --text-color-light-rgb: 113, 113, 114;
-    --border-color: #d6dbe6;
+        
     box-sizing: border-box;
     scroll-behavior: smooth;  
 }

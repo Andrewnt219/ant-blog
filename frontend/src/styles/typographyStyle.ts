@@ -166,54 +166,15 @@ const blockquoteFontImport = css`
 	}
 `;
 
-const rootFontSizeScaleQueries = css`
-	@media screen and (min-width: ${theme`screens.mdMobile`}) {
-		font-size: 106.25%;
-	}
-	@media screen and (min-width: ${theme`screens.lgMobile`}) {
-		font-size: 112.5%;
-	}
-	@media screen and (min-width: ${theme`screens.smTablet`}) {
-		font-size: 118.75%;
-	}
-	@media screen and (min-width: ${theme`screens.mdTablet`}) {
-		font-size: 143.75%;
-	}
-	@media screen and (min-width: ${theme`screens.lgTablet`}) {
-		font-size: 156.25%;
-	}
-	@media screen and (min-width: ${theme`screens.smDesktop`}) {
-		font-size: 168.75%;
-	}
-	@media screen and (min-width: ${theme`screens.mdDesktop`}) {
-		font-size: 181.25%;
-	}
-	@media screen and (min-width: ${theme`screens.lgDesktop`}) {
-		font-size: 231.25%;
-	}
-	@media screen and (min-width: ${theme`screens.wqhd`}) {
-		font-size: 281.25%;
-	}
-	@media screen and (min-width: ${theme`screens.uhd4`}) {
-		font-size: 437.5%;
-	}
-	@media screen and (min-width: ${theme`screens.uhd5`}) {
-		font-size: 562.5%;
-	}
-	@media screen and (min-width: ${theme`screens.uhd8`}) {
-		font-size: 875%;
-	}
-`;
-
 export default css`
 	:root {
 		font-family: "Roboto", sans-serif;
+		font-size: max(2vw, 16px);
 		line-height: 1.8;
 
 		${bodyFontImport}
 		${headingFontImport}
 		${blockquoteFontImport}
-		${rootFontSizeScaleQueries}
 	}
 
 	blockquote {

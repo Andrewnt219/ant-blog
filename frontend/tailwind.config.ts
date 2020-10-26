@@ -26,10 +26,8 @@ module.exports = {
 			accent: "var(--accent-color)",
 			primary: "var(--primary-color)",
 			lprimary: "var(--primary-color-light)",
-			secondary: "var(--secondary-color)",
 			textColor: "var(--text-color)",
 			ltextColor: "var(--text-color-light)",
-			borderColor: "var(--border-color)",
 
 			black: "#000",
 			white: "#fff",
@@ -251,8 +249,9 @@ module.exports = {
 			default: "1",
 		},
 		fontFamily: {
-			heading: ["Nunito", "sans-serif"],
-			body: ["Montserrat", "san-serif"],
+			heading: ["Roboto", "sans-serif"],
+			body: ["Lora", "serif"],
+			quote: ["IBM Plex Serif", "sans-serif"],
 		},
 		fontSize: {
 			xs: "0.75rem",
@@ -267,9 +266,11 @@ module.exports = {
 			"6xl": "4rem",
 		},
 		fontWeight: {
-			normal: "400",
-			bold: "700",
-			black: "900",
+			"400": "400",
+			"500": "500",
+			"600": "600",
+			"700": "700",
+			"900": "900",
 		},
 		height: (theme) => ({
 			auto: "auto",

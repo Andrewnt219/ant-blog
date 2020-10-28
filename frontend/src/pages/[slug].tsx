@@ -8,6 +8,7 @@ import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
 import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
 import Comment, { FirestoreComment } from "@src/components/Comment";
 import db from "@src/lib/firebase/db";
+import Image from "next/image";
 
 // TODO: router.fallback
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -47,10 +48,11 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 			<div style={{ width: "80ch", maxWidth: "80%", margin: "2rem auto" }}>
 				{heroImageSource ? (
-					<img
+					<Image
 						style={{ width: "100%", height: "30rem", objectFit: "cover" }}
 						alt="Hero"
 						src={heroImageSource}
+						unsized
 					/>
 				) : (
 					<Loading />

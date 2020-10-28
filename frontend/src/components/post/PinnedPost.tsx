@@ -2,6 +2,7 @@ import { trimLastWord } from "@src/utils";
 import Link from "next/link";
 import React, { ReactElement } from "react";
 import tw, { styled } from "twin.macro";
+import Image from "next/image";
 
 type Props = {
 	data: {
@@ -39,7 +40,11 @@ function PinnedPost({ data }: Props): ReactElement {
 		<Container>
 			<Link href={linkToPost} passHref>
 				<Thumbnail>
-					<img src={image.url} alt={image.alt ?? "Pinned post thumbnail"} />
+					<Image
+						src={image.url}
+						alt={image.alt ?? "Pinned post thumbnail"}
+						unsized
+					/>
 				</Thumbnail>
 			</Link>
 
@@ -77,20 +82,20 @@ const Container = styled.article<ContainerProps>`
 
 type InfoProps = {};
 const Info = styled.div<InfoProps>`
-	${tw`relative z-10 space-y-1 px-3 pt-3 pb-8 relative`}
+	${tw`relative z-10 space-y-1 px-6 pt-3 pb-8 relative`}
 	background: rgba(0,0,0,.6);
 `;
 
 type CategoryProps = {};
 const Category = styled.a<CategoryProps>`
-	${tw`uppercase font-500 bg-accent absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2`}
-	font-size: .5rem;
+	${tw`uppercase font-500 bg-accent absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-xs`}
+
 	padding: 0 0.5em;
 `;
 
 type TitleProps = {};
 const Title = styled.h2<TitleProps>`
-	${tw`text-primary font-600 text-center mt-3`}
+	${tw`text-primary font-600 text-center mt-3 text-lg`}
 `;
 
 type ThumbnailProps = {};

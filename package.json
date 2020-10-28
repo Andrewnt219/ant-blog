@@ -9,5 +9,8 @@
     "dev": "cd ./frontend && yarn dev",
     "start": "cd ./studio && sanity start"
   },
-  "dependencies": {}
+  "dependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
 }

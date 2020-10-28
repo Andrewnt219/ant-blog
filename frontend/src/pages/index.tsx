@@ -31,7 +31,9 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 				</a>
 			</h1>
 
-			<h2>This site is not mobile-friendly, yet</h2>
+			<h2>
+				This site is not mobile-friendly, yet. Color palette does not make sense
+			</h2>
 			<br />
 			<br />
 

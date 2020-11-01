@@ -16,7 +16,7 @@ function Appbar(): ReactElement {
 	return (
 		<Header>
 			<Nav>
-				<Logo height="4rem" withText />
+				<Logo height="4em" withText />
 
 				<MenuItemSet>
 					{routesData.map((route) => (

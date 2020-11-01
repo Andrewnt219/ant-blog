@@ -173,16 +173,13 @@ const blockquoteFontImport = css`
 export default css`
 	:root {
 		font-family: "Roboto", sans-serif;
-		/* font-size: max(2vw, 16px); */
+		font-size: max(100%, 1.25vw);
+
 		line-height: 1.8;
 
 		${bodyFontImport}
 		${headingFontImport}
 		${blockquoteFontImport}
-	}
-
-	body {
-		font-size: max(100%, 1.25vw);
 	}
 
 	blockquote {

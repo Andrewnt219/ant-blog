@@ -109,7 +109,7 @@ const StyledPinnedPostSet = styled.ul<StyledPinnedPostSetProps>`
 		grid-template-columns: 1.5fr 1fr 1fr;
 		grid-template-rows: initial;
 
-		height: 30rem;
+		height: 25rem;
 
 		& > li:first-of-type {
 			grid-column: auto;
@@ -188,7 +188,7 @@ const Thumbnail = styled.a<ThumbnailProps>`
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		filter: brightness(0.75);
+		filter: brightness(0.5);
 	}
 `;
 

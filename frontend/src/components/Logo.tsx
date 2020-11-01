@@ -24,7 +24,7 @@ function Logo({ withText, ...style }: Props): ReactElement {
 
 type LogoContainerProps = {};
 const LogoContainer = styled.div<LogoContainerProps>`
-	${tw`mr-6 flex items-center justify-center`}
+	${tw`flex items-center justify-center`}
 `;
 
 type LogoImageProps = {};

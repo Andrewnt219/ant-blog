@@ -28,6 +28,7 @@ module.exports = {
 			lprimary: "var(--primary-color-light)",
 			textColor: "var(--text-color)",
 			ltextColor: "var(--text-color-light)",
+			borderColor: "var(--border-color)",
 
 			black: "#000",
 			white: "#fff",

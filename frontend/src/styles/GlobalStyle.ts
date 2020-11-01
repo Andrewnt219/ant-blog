@@ -13,6 +13,9 @@ export default createGlobalStyle`
     --text-color-rgb: 0, 0, 0;
     --text-color-light: #717172;
     --text-color-light-rgb: 113, 113, 114;
+    --border-color: #ddd;
+    --border-color-rgb: 221, 221, 221;
+
         
     box-sizing: border-box;
     scroll-behavior: smooth;  

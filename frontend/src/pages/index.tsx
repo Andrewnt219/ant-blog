@@ -7,6 +7,7 @@ import { styled } from "twin.macro";
 import PinnedPost from "@src/components/post/PinnedPost";
 import Slider from "react-slick";
 import SlickArrow from "@src/components/SlickArrow";
+import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
 
 const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [spotifyLink, setSpotifyLink] = useState(
@@ -136,8 +137,7 @@ export const getStaticProps: GetStaticProps<{
 
 type MainProps = {};
 const Main = styled.main<MainProps>`
-	/* max-width: max(1200px, 80%); */
-	width: 90%;
+	padding: 0 ${STYLE_CONSTANTS.bodyPadding};
 	margin: 0 auto;
 `;
 

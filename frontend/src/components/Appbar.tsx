@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import tw, { styled, theme } from "twin.macro";
 import { routesData } from "@src/assets/data/routesData";
 import Link from "next/link";
 import Logo from "./Logo";
@@ -64,7 +64,11 @@ const Nav = styled.nav<NavProps>`
 
 type MenuItemSetProps = {};
 const MenuItemSet = styled.ul<MenuItemSetProps>`
-	${tw`ml-8 flex`}
+	display: none;
+
+	@media screen and (min-width: ${theme`screens.mdTablet`}) {
+		${tw`ml-8 flex`}
+	}
 `;
 
 type MenuItemProps = {};

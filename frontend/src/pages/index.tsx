@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import sanityClient from "@src/lib/sanity/client";
 import Head from "next/head";
 import EmbeddedSpotify from "@src/components/EmbeddedSpotify";
-import { styled } from "twin.macro";
-import PinnedPost from "@src/components/post/PinnedPost";
-import Slider from "react-slick";
-import SlickArrow from "@src/components/SlickArrow";
+import tw, { styled } from "twin.macro";
 import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
-
+import PinnedPostSet from "@src/components/post/PinnedPostSet";
+import sanityClient from "@src/lib/sanity/client";
 const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [spotifyLink, setSpotifyLink] = useState(
 		"https://open.spotify.com/playlist/2AwCV9pHpQHFjn2UOeClsy?si=iQVkTAM1RS6F_p5P3ZHLTg"
@@ -38,37 +35,7 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<br />
 			<br />
 
-			<Slider
-				infinite
-				slidesToShow={3}
-				accessibility
-				arrows
-				pauseOnHover
-				autoplay
-				autoplaySpeed={3000}
-				nextArrow={<SlickArrow isNextArrow />}
-				prevArrow={<SlickArrow />}
-				responsive={[
-					{
-						breakpoint: 768,
-						settings: {
-							slidesToShow: 2,
-						},
-					},
-					{
-						breakpoint: 480,
-						settings: {
-							slidesToShow: 1,
-						},
-					},
-				]}
-			>
-				{posts
-					.filter((post) => post.isPinned)
-					.map((post) => (
-						<PinnedPost key={post.slug} data={post} />
-					))}
-			</Slider>
+			<PinnedPostSet posts={posts.filter((post) => post.isPinned)} />
 
 			<label htmlFor="spotify-link">Enter spotify share link</label>
 
@@ -140,5 +107,4 @@ const Main = styled.main<MainProps>`
 	padding: 0 ${STYLE_CONSTANTS.bodyPadding};
 	margin: 0 auto;
 `;
-
 export default Index;

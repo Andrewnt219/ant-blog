@@ -1,142 +1,146 @@
 import { css } from "twin.macro";
 
 const bodyFontImport = css`
-	/* lora-regular - latin */
+	/* lora-regular - vietnamese */
 	@font-face {
 		font-family: "Lora";
 		font-style: normal;
 		font-weight: 400;
-		src: local(""), url("/fonts/lora-v16-latin-regular.woff2") format("woff2"),
+		src: local(""),
+			url("/fonts/lora-v16-vietnamese-regular.woff2") format("woff2"),
 			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/lora-v16-latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+				url("/fonts/lora-v16-vietnamese-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 	}
-	/* lora-500 - latin */
+	/* lora-500 - vietnamese */
 	@font-face {
 		font-family: "Lora";
 		font-style: normal;
 		font-weight: 500;
-		src: local(""), url("/fonts/lora-v16-latin-500.woff2") format("woff2"),
+		src: local(""), url("/fonts/lora-v16-vietnamese-500.woff2") format("woff2"),
 			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/lora-v16-latin-500.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+				url("/fonts/lora-v16-vietnamese-500.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 	}
-	/* lora-700 - latin */
+	/* lora-700 - vietnamese */
 	@font-face {
 		font-family: "Lora";
 		font-style: normal;
 		font-weight: 700;
-		src: local(""), url("/fonts/lora-v16-latin-700.woff2") format("woff2"),
+		src: local(""), url("/fonts/lora-v16-vietnamese-700.woff2") format("woff2"),
 			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/lora-v16-latin-700.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+				url("/fonts/lora-v16-vietnamese-700.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 	}
-	/* lora-italic - latin */
+	/* lora-italic - vietnamese */
 	@font-face {
 		font-family: "Lora";
 		font-style: italic;
 		font-weight: 400;
-		src: local(""), url("/fonts/lora-v16-latin-italic.woff2") format("woff2"),
+		src: local(""),
+			url("/fonts/lora-v16-vietnamese-italic.woff2") format("woff2"),
 			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/lora-v16-latin-italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+				url("/fonts/lora-v16-vietnamese-italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 	}
-	/* lora-500italic - latin */
+	/* lora-500italic - vietnamese */
 	@font-face {
 		font-family: "Lora";
 		font-style: italic;
 		font-weight: 500;
-		src: local(""), url("/fonts/lora-v16-latin-500italic.woff2") format("woff2"),
+		src: local(""),
+			url("/fonts/lora-v16-vietnamese-500italic.woff2") format("woff2"),
 			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/lora-v16-latin-500italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+				url("/fonts/lora-v16-vietnamese-500italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 	}
-	/* lora-700italic - latin */
+	/* lora-700italic - vietnamese */
 	@font-face {
 		font-family: "Lora";
 		font-style: italic;
 		font-weight: 700;
-		src: local(""), url("/fonts/lora-v16-latin-700italic.woff2") format("woff2"),
+		src: local(""),
+			url("/fonts/lora-v16-vietnamese-700italic.woff2") format("woff2"),
 			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/lora-v16-latin-700italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+				url("/fonts/lora-v16-vietnamese-700italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 	}
 `;
 
 const headingFontImport = css`
-	/* roboto-500 - vietnamese_latin */
-	@font-face {
-		font-family: "Roboto";
-		font-style: normal;
-		font-weight: 500;
-		src: local("Roboto Medium"), local("Roboto-Medium"),
-			url("/fonts/roboto-v20-vietnamese_latin-500.woff2") format("woff2"),
-			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/roboto-v20-vietnamese_latin-500.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-	}
-	/* roboto-italic - vietnamese_latin */
+	/* roboto-italic - vietnamese */
 	@font-face {
 		font-family: "Roboto";
 		font-style: italic;
 		font-weight: 400;
 		src: local("Roboto Italic"), local("Roboto-Italic"),
-			url("/fonts/roboto-v20-vietnamese_latin-italic.woff2") format("woff2"),
+			url("/fonts/roboto-v20-vietnamese-italic.woff2") format("woff2"),
 			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/roboto-v20-vietnamese_latin-italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+				url("/fonts/roboto-v20-vietnamese-italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 	}
-	/* roboto-500italic - vietnamese_latin */
-	@font-face {
-		font-family: "Roboto";
-		font-style: italic;
-		font-weight: 500;
-		src: local("Roboto Medium Italic"), local("Roboto-MediumItalic"),
-			url("/fonts/roboto-v20-vietnamese_latin-500italic.woff2") format("woff2"),
-			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/roboto-v20-vietnamese_latin-500italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-	}
-	/* roboto-700 - vietnamese_latin */
-	@font-face {
-		font-family: "Roboto";
-		font-style: normal;
-		font-weight: 700;
-		src: local("Roboto Bold"), local("Roboto-Bold"),
-			url("/fonts/roboto-v20-vietnamese_latin-700.woff2") format("woff2"),
-			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/roboto-v20-vietnamese_latin-700.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-	}
-	/* roboto-700italic - vietnamese_latin */
-	@font-face {
-		font-family: "Roboto";
-		font-style: italic;
-		font-weight: 700;
-		src: local("Roboto Bold Italic"), local("Roboto-BoldItalic"),
-			url("/fonts/roboto-v20-vietnamese_latin-700italic.woff2") format("woff2"),
-			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/roboto-v20-vietnamese_latin-700italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-	}
-	/* roboto-900 - vietnamese_latin */
-	@font-face {
-		font-family: "Roboto";
-		font-style: normal;
-		font-weight: 900;
-		src: local("Roboto Black"), local("Roboto-Black"),
-			url("/fonts/roboto-v20-vietnamese_latin-900.woff2") format("woff2"),
-			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/roboto-v20-vietnamese_latin-900.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-	}
-	/* roboto-900italic - vietnamese_latin */
-	@font-face {
-		font-family: "Roboto";
-		font-style: italic;
-		font-weight: 900;
-		src: local("Roboto Black Italic"), local("Roboto-BlackItalic"),
-			url("/fonts/roboto-v20-vietnamese_latin-900italic.woff2") format("woff2"),
-			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/roboto-v20-vietnamese_latin-900italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-	}
-	/* roboto-regular - vietnamese_latin */
+	/* roboto-regular - vietnamese */
 	@font-face {
 		font-family: "Roboto";
 		font-style: normal;
 		font-weight: 400;
 		src: local("Roboto"), local("Roboto-Regular"),
-			url("/fonts/roboto-v20-vietnamese_latin-regular.woff2") format("woff2"),
+			url("/fonts/roboto-v20-vietnamese-regular.woff2") format("woff2"),
 			/* Chrome 26+, Opera 23+, Firefox 39+ */
-				url("/fonts/roboto-v20-vietnamese_latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+				url("/fonts/roboto-v20-vietnamese-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
+	/* roboto-500 - vietnamese */
+	@font-face {
+		font-family: "Roboto";
+		font-style: normal;
+		font-weight: 500;
+		src: local("Roboto Medium"), local("Roboto-Medium"),
+			url("/fonts/roboto-v20-vietnamese-500.woff2") format("woff2"),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */
+				url("/fonts/roboto-v20-vietnamese-500.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
+	/* roboto-700 - vietnamese */
+	@font-face {
+		font-family: "Roboto";
+		font-style: normal;
+		font-weight: 700;
+		src: local("Roboto Bold"), local("Roboto-Bold"),
+			url("/fonts/roboto-v20-vietnamese-700.woff2") format("woff2"),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */
+				url("/fonts/roboto-v20-vietnamese-700.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
+	/* roboto-500italic - vietnamese */
+	@font-face {
+		font-family: "Roboto";
+		font-style: italic;
+		font-weight: 500;
+		src: local("Roboto Medium Italic"), local("Roboto-MediumItalic"),
+			url("/fonts/roboto-v20-vietnamese-500italic.woff2") format("woff2"),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */
+				url("/fonts/roboto-v20-vietnamese-500italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
+	/* roboto-700italic - vietnamese */
+	@font-face {
+		font-family: "Roboto";
+		font-style: italic;
+		font-weight: 700;
+		src: local("Roboto Bold Italic"), local("Roboto-BoldItalic"),
+			url("/fonts/roboto-v20-vietnamese-700italic.woff2") format("woff2"),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */
+				url("/fonts/roboto-v20-vietnamese-700italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
+	/* roboto-900 - vietnamese */
+	@font-face {
+		font-family: "Roboto";
+		font-style: normal;
+		font-weight: 900;
+		src: local("Roboto Black"), local("Roboto-Black"),
+			url("/fonts/roboto-v20-vietnamese-900.woff2") format("woff2"),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */
+				url("/fonts/roboto-v20-vietnamese-900.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
+	/* roboto-900italic - vietnamese */
+	@font-face {
+		font-family: "Roboto";
+		font-style: italic;
+		font-weight: 900;
+		src: local("Roboto Black Italic"), local("Roboto-BlackItalic"),
+			url("/fonts/roboto-v20-vietnamese-900italic.woff2") format("woff2"),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */
+				url("/fonts/roboto-v20-vietnamese-900italic.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 	}
 `;
 
@@ -169,12 +173,16 @@ const blockquoteFontImport = css`
 export default css`
 	:root {
 		font-family: "Roboto", sans-serif;
-		font-size: max(2vw, 16px);
+		/* font-size: max(2vw, 16px); */
 		line-height: 1.8;
 
 		${bodyFontImport}
 		${headingFontImport}
 		${blockquoteFontImport}
+	}
+
+	body {
+		font-size: max(100%, 1.25vw);
 	}
 
 	blockquote {
@@ -190,5 +198,13 @@ export default css`
 	h6 {
 		font-weight: 700;
 		line-height: 1.4;
+	}
+
+	h1 {
+		font-size: 2.4rem;
+	}
+
+	h2 {
+		font-size: 1rem;
 	}
 `;

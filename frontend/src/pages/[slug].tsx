@@ -9,6 +9,7 @@ import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
 import Comment, { FirestoreComment } from "@src/components/Comment";
 import db from "@src/lib/firebase/db";
 import Image from "next/image";
+import { styled } from "twin.macro";
 
 // TODO: router.fallback
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -57,7 +58,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 				) : (
 					<Loading />
 				)}
-				<h1 style={{ fontSize: "3em" }}>{post.title}</h1>
+				<PostTitle>{post.title}</PostTitle>
 				<div
 					style={{
 						display: "flex",
@@ -166,5 +167,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		fallback: false,
 	};
 };
+
+type PostTitleProps = {};
+const PostTitle = styled.h1<PostTitleProps>``;
 
 export default Post;

@@ -35,7 +35,9 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<br />
 			<br />
 
-			<PinnedPostSet posts={posts.filter((post) => post.isPinned)} />
+			<PinnedPostSet
+				posts={posts.filter((post) => post.isPinned).slice(0, 3)}
+			/>
 
 			<label htmlFor="spotify-link">Enter spotify share link</label>
 
@@ -80,7 +82,7 @@ export const getStaticProps: GetStaticProps<{
 }> = async () => {
 	const posts = await sanityClient.fetch<Post[]>(
 		`
-			*[_type == "post" && !isArchived]{
+			*[_type == "post" && !isArchived] | order(_updatedAt desc) {
 				isPinned,
 				title,
 				"slug": slug.current,

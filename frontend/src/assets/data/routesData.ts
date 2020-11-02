@@ -7,13 +7,13 @@ export type RouteProps = Pick<LinkProps, "href" | "as"> & {
 
 export const routesData: RouteProps[] = [
 	{
-		text: "About me",
-		href: "/about-me",
-	},
-	{
 		text: "Home",
 		href: "/",
 		exact: true,
+	},
+	{
+		text: "About me",
+		href: "/about-me",
 	},
 	{
 		text: "Music",

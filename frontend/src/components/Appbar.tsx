@@ -3,11 +3,10 @@ import tw, { styled, theme } from "twin.macro";
 import { routesData, RouteProps } from "@src/assets/data/routesData";
 import Link from "next/link";
 import Logo from "./Logo";
-import { FaFacebookF, FaLinkedinIn, FaSearch } from "react-icons/fa";
-import { AiFillInstagram } from "react-icons/ai";
+import { FaSearch } from "react-icons/fa";
 import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import { useRouteMatch } from "@src/hooks";
-type Props = {};
+import SocialMediaIcon from "./SocialMediaIcon";
 
 function Appbar(): ReactElement {
 	return (
@@ -25,19 +24,13 @@ function Appbar(): ReactElement {
 
 				<SocialMediaSet>
 					<li>
-						<a href="" target="_blank" rel="noopener noreferrer">
-							<FaFacebookF />
-						</a>
+						<SocialMediaIcon variants="facebook" />
 					</li>
 					<li>
-						<a href="" target="_blank" rel="noopener noreferrer">
-							<AiFillInstagram />
-						</a>
+						<SocialMediaIcon variants="instagram" />
 					</li>
 					<li>
-						<a href="" target="_blank" rel="noopener noreferrer">
-							<FaLinkedinIn />
-						</a>
+						<SocialMediaIcon variants="linkedin" />
 					</li>
 				</SocialMediaSet>
 				<SearchContainer>
@@ -103,18 +96,6 @@ const SocialMediaSet = styled.ul<SocialMediaSetProps>`
 	${tw`flex space-x-3 px-6`}
 	font-size: smaller;
 	margin-left: auto;
-
-	svg {
-		cursor: pointer;
-		transition: fill 200ms ease;
-	}
-
-	a:hover,
-	a:focus {
-		svg {
-			fill: var(--accent-color);
-		}
-	}
 `;
 
 type SearchContainerProps = {};

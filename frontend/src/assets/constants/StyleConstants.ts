@@ -1,3 +1,3 @@
 export const STYLE_CONSTANTS = {
-	bodyPadding: "5vw",
+	bodyPadding: "10vw",
 };

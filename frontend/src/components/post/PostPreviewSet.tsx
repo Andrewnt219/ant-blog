@@ -3,9 +3,8 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
 import React, { ReactElement } from "react";
-import { AiFillInstagram } from "react-icons/ai";
-import { FaFacebookF } from "react-icons/fa";
 import tw, { styled } from "twin.macro";
+import SocialMediaIcon from "../SocialMediaIcon";
 
 type PostPreviewSetProps = {
 	posts: PostPreviewProps["data"][];
@@ -99,21 +98,19 @@ function PostPreview({ data }: PostPreviewProps): ReactElement {
 				</SubInfoContainer>
 
 				<Snippet>{snippet}</Snippet>
+
+				<Footer>
+					<SocialMediaSet>
+						<li>
+							<SocialMediaIcon variants="facebook" />
+						</li>
+
+						<li>
+							<SocialMediaIcon variants="instagram" />
+						</li>
+					</SocialMediaSet>
+				</Footer>
 			</InfoContainer>
-			<Footer>
-				<SocialMediaSet>
-					<li>
-						<a>
-							<FaFacebookF />
-						</a>
-					</li>
-					<li>
-						<a>
-							<AiFillInstagram />
-						</a>
-					</li>
-				</SocialMediaSet>
-			</Footer>
 		</PostPreviewContainer>
 	);
 }
@@ -121,8 +118,8 @@ function PostPreview({ data }: PostPreviewProps): ReactElement {
 type PostPreviewSetContainerProps = {};
 const PostPreviewSetContainer = styled.ul<PostPreviewSetContainerProps>`
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
-	gap: 2rem;
+	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+	gap: 3rem 2rem;
 `;
 
 type PostPreviewContainerProps = {};
@@ -136,7 +133,7 @@ type ThumbnailProps = {};
 const Thumbnail = styled.a<ThumbnailProps>`
 	${tw`block`}
 	width: 100%;
-	height: 15rem;
+	height: 12rem;
 
 	div {
 		width: 100%;
@@ -162,19 +159,28 @@ const Thumbnail = styled.a<ThumbnailProps>`
 
 type InfoContainerProps = {};
 const InfoContainer = styled.div<InfoContainerProps>`
-	${tw`mt-8 mx-auto text-sm space-y-2`}
+	${tw`mt-8 mx-auto text-sm space-y-2 relative`}
 	width: 90%;
+	height: 100%;
+	padding-bottom: 5rem;
 `;
 
 type CategoryProps = {};
 const Category = styled.span<CategoryProps>`
-	${tw`uppercase text-accent font-500 inline-block`}
+	${tw`uppercase text-accent font-500 inline-block cursor-pointer border-transparent border-b border-solid`}
 	font-size: smaller;
+
+	transition: color 200ms ease;
+
+	:hover,
+	:focus {
+		${tw`text-textColor underline`}
+	}
 `;
 
 type TitleProps = {};
 const Title = styled.h2<TitleProps>`
-	${tw`text-xl`}
+	${tw`text-xl cursor-pointer`}
 
 	a {
 		transition: box-shadow 300ms ease, text-shadow 300ms ease;
@@ -202,14 +208,19 @@ const SubInfo = styled.span<SubInfoProps>`
 type SnippetProps = {};
 const Snippet = styled.p<SnippetProps>``;
 
-/* TODO align footer between posts */
 type FooterProps = {};
-const Footer = styled.footer<FooterProps>``;
+const Footer = styled.footer<FooterProps>`
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+`;
 
 type SocialMediaSetProps = {};
 const SocialMediaSet = styled.ul<SocialMediaSetProps>`
 	font-size: smaller;
-	${tw`mt-5 flex items-center justify-center border-borderColor border-t border-b border-solid p-3 space-x-3`}
+	border-color: #ebebeb;
+	${tw`mt-5 flex items-center justify-center border-t border-b border-solid p-3 space-x-3`}
 `;
 
 export default PostPreviewSet;

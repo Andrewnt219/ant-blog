@@ -58,7 +58,11 @@ const Header = styled.header<HeaderProps>`
 	box-shadow: 0 2px 9px -1px rgba(0, 0, 0, 0.04);
 	border-bottom: 1px solid #efefef;
 	color: rgb(82, 82, 82);
-	padding: 0 ${STYLE_CONSTANTS.bodyPadding};
+	padding: 0 ${STYLE_CONSTANTS.mobileBodyPadding};
+
+	@media screen and (min-width: ${theme`screens.smTablet`}) {
+		padding: 0 ${STYLE_CONSTANTS.bodyPadding};
+	}
 `;
 
 type NavProps = {};

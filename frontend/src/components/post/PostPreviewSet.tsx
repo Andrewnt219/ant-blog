@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
 import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import tw, { styled, theme } from "twin.macro";
 import SocialMediaIcon from "../SocialMediaIcon";
 
 type PostPreviewSetProps = {
@@ -118,8 +118,11 @@ function PostPreview({ data }: PostPreviewProps): ReactElement {
 type PostPreviewSetContainerProps = {};
 const PostPreviewSetContainer = styled.ul<PostPreviewSetContainerProps>`
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
 	gap: 3rem 2rem;
+
+	@media screen and (min-width: ${theme`screens.smTablet`}) {
+		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+	}
 `;
 
 type PostPreviewContainerProps = {};
@@ -131,9 +134,9 @@ const PostPreviewContainer = styled.article<PostPreviewContainerProps>`
 
 type ThumbnailProps = {};
 const Thumbnail = styled.a<ThumbnailProps>`
-	${tw`block`}
+	${tw`block relative`}
 	width: 100%;
-	height: 12rem;
+	padding-bottom: 66.66%;
 
 	div {
 		width: 100%;
@@ -141,6 +144,9 @@ const Thumbnail = styled.a<ThumbnailProps>`
 	}
 
 	img {
+		position: absolute;
+		top: 0;
+		left: 0;
 		object-fit: cover;
 		height: 100%;
 		width: 100%;

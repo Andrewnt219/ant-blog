@@ -1,7 +1,7 @@
 import React from "react";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import { styled } from "twin.macro";
+import { styled, theme } from "twin.macro";
 import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import PinnedPostSet from "@src/components/post/PinnedPostSet";
 import sanityClient from "@src/lib/sanity/client";
@@ -91,7 +91,11 @@ export const getStaticProps: GetStaticProps<{
 
 type MainProps = {};
 const Main = styled.main<MainProps>`
-	padding: 2rem ${STYLE_CONSTANTS.bodyPadding};
+	padding: 2rem ${STYLE_CONSTANTS.mobileBodyPadding};
 	margin: 0 auto;
+
+	@media screen and (min-width: ${theme`screens.smTablet`}) {
+		padding: 2rem ${STYLE_CONSTANTS.bodyPadding};
+	}
 `;
 export default Index;

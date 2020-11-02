@@ -32,7 +32,7 @@ function PinnedPostSet({ posts }: PinnedPostSetProps) {
 		<StyledPinnedPostSet>
 			{posts.map((post, index) => (
 				<li key={post.slug}>
-					<PinnedPost data={post} isMainPinnedPost={index == 0} />
+					<PinnedPost data={post} isMainPinnedPost={index === 0} />
 				</li>
 			))}
 		</StyledPinnedPostSet>
@@ -59,16 +59,6 @@ function PinnedPost({ data, isMainPinnedPost }: PinnedPostProps): ReactElement {
 
 	return (
 		<Container>
-			<Link href={linkToPost} passHref>
-				<Thumbnail>
-					<Image
-						src={image.url}
-						alt={image.alt ?? "Pinned post thumbnail"}
-						unsized
-					/>
-				</Thumbnail>
-			</Link>
-
 			<Info>
 				<Link href={`/category/${category.slug}`} passHref>
 					<Category>{category.title}</Category>
@@ -85,6 +75,16 @@ function PinnedPost({ data, isMainPinnedPost }: PinnedPostProps): ReactElement {
 					</Date>
 				</SubInfo>
 			</Info>
+
+			<Link href={linkToPost} passHref>
+				<Thumbnail>
+					<Image
+						src={image.url}
+						alt={image.alt ?? "Pinned post thumbnail"}
+						unsized
+					/>
+				</Thumbnail>
+			</Link>
 		</Container>
 	);
 }
@@ -128,6 +128,12 @@ const Container = styled.article<ContainerProps>`
 type InfoProps = {};
 const Info = styled.div<InfoProps>`
 	${tw`relative z-10 space-y-2 uppercase`}
+
+	/* Select the thumbnail image */
+	:hover + a img {
+		filter: brightness(0.25);
+		transform: scale(1.1);
+	}
 `;
 
 type SubInfoProps = {
@@ -150,6 +156,12 @@ type CategoryProps = {};
 const Category = styled.a<CategoryProps>`
 	${tw`bg-accent py-1 px-2 `}
 	font-size: smaller;
+	transition: background-color 200ms ease;
+
+	:hover,
+	:focus {
+		${tw`bg-black`}
+	}
 `;
 
 type TitleProps = {
@@ -178,7 +190,13 @@ const Title = styled.h2<TitleProps>`
 `;
 
 type AuthorProps = {};
-const Author = styled.span<AuthorProps>``;
+const Author = styled.span<AuthorProps>`
+	${tw`cursor-pointer`}
+
+	:hover, :focus {
+		${tw`underline`}
+	}
+`;
 
 type DateProps = {};
 const Date = styled.time<DateProps>``;
@@ -190,6 +208,7 @@ const Thumbnail = styled.a<ThumbnailProps>`
 	left: 0;
 	width: 100%;
 	height: 100%;
+	overflow: hidden;
 	display: block;
 
 	/* NOTE: this is a fix for next/image */
@@ -203,6 +222,16 @@ const Thumbnail = styled.a<ThumbnailProps>`
 		height: 100%;
 		object-fit: cover;
 		filter: brightness(0.5);
+
+		transition: transform 300ms ease, filter 300ms ease;
+	}
+
+	:hover,
+	:focus {
+		img {
+			filter: brightness(0.7);
+			transform: scale(1.06);
+		}
 	}
 `;
 

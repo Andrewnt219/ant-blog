@@ -44,10 +44,10 @@ function PinnedPost({ data, isMainPinnedPost }: PinnedPostProps): ReactElement {
 	const { title, image, slug, category, publishedAt, author } = data;
 	const [titleHead, titleTail] = trimLastWord(title);
 
-	let renderedTitle = <Title>{title}</Title>;
+	let renderedTitle = <Title isMain={isMainPinnedPost}>{title}</Title>;
 	if (titleHead) {
 		renderedTitle = (
-			<Title>
+			<Title isMain={isMainPinnedPost}>
 				{titleHead}
 				&nbsp;
 				{titleTail}
@@ -152,14 +152,28 @@ const Category = styled.a<CategoryProps>`
 	font-size: smaller;
 `;
 
-type TitleProps = {};
+type TitleProps = {
+	isMain: boolean;
+};
 const Title = styled.h2<TitleProps>`
 	${tw`font-600 text-2xl`}
 	text-transform: none;
 
+	${(p) =>
+		!p.isMain &&
+		css`
+			${tw`text-xl`}
+		`}
+
 	/* NOTE: This is for 3 columns layout */
 	@media screen and (min-width: ${theme`screens.lgTablet`}) {
 		${tw`text-4xl`}
+
+		${(p) =>
+			!p.isMain &&
+			css`
+				${tw`text-3xl`}
+			`}
 	}
 `;
 

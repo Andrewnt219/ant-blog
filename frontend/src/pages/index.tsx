@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import EmbeddedSpotify from "@src/components/EmbeddedSpotify";
-import tw, { styled } from "twin.macro";
+import { styled } from "twin.macro";
 import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import PinnedPostSet from "@src/components/post/PinnedPostSet";
 import sanityClient from "@src/lib/sanity/client";
-const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const [spotifyLink, setSpotifyLink] = useState(
-		"https://open.spotify.com/playlist/2AwCV9pHpQHFjn2UOeClsy?si=iQVkTAM1RS6F_p5P3ZHLTg"
-	);
 
+const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
 		<Main>
 			<Head>
 				<title>Welcome to my blog</title>
 			</Head>
+
+			<PinnedPostSet
+				posts={posts.filter((post) => post.isPinned).slice(0, 3)}
+			/>
 
 			<h1>
 				To start writing articles, go to{" "}
@@ -32,29 +32,6 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<h2>
 				This site is not mobile-friendly, yet. Color palette does not make sense
 			</h2>
-			<br />
-			<br />
-
-			<PinnedPostSet
-				posts={posts.filter((post) => post.isPinned).slice(0, 3)}
-			/>
-
-			<label htmlFor="spotify-link">Enter spotify share link</label>
-
-			<input
-				id="spotify-link"
-				type="text"
-				value={spotifyLink}
-				onChange={(e) => setSpotifyLink(e.target.value)}
-				style={{
-					border: "1px solid black",
-					padding: "0.25rem",
-					margin: "0.25rem 0",
-					display: "block",
-					width: "100%",
-				}}
-			/>
-			<EmbeddedSpotify spotifyShareLink={spotifyLink} />
 		</Main>
 	);
 };
@@ -106,7 +83,7 @@ export const getStaticProps: GetStaticProps<{
 
 type MainProps = {};
 const Main = styled.main<MainProps>`
-	padding: 0 ${STYLE_CONSTANTS.bodyPadding};
+	padding: 2rem ${STYLE_CONSTANTS.bodyPadding};
 	margin: 0 auto;
 `;
 export default Index;

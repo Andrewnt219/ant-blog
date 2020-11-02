@@ -97,7 +97,7 @@ const StyledPinnedPostSet = styled.ul<StyledPinnedPostSetProps>`
 
 	@media screen and (min-width: ${theme`screens.lgMobile`}) {
 		grid-template-columns: 50% 50%;
-		grid-template-rows: 1.5fr 1fr 1fr;
+		grid-template-rows: 1.5fr 1fr;
 
 		& > li:first-of-type {
 			grid-column: 1 / -1;

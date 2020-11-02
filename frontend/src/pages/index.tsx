@@ -5,6 +5,7 @@ import { styled } from "twin.macro";
 import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import PinnedPostSet from "@src/components/post/PinnedPostSet";
 import sanityClient from "@src/lib/sanity/client";
+import PostPreviewSet from "@src/components/post/PostPreviewSet";
 
 const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
@@ -16,6 +17,11 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<PinnedPostSet
 				posts={posts.filter((post) => post.isPinned).slice(0, 3)}
 			/>
+
+			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>
+				Others
+			</h2>
+			<PostPreviewSet posts={posts.filter((post) => !post.isPinned)} />
 
 			<h1>
 				To start writing articles, go to{" "}
@@ -48,6 +54,7 @@ type Post = {
 	contentSnippet: string;
 	author: string;
 	rawContent: string;
+	snippet: string;
 	image: {
 		alt?: string;
 		url: string;
@@ -70,7 +77,8 @@ export const getStaticProps: GetStaticProps<{
 				"image": mainImage {
 					alt,
 					"url": asset -> url
-				}
+				},
+				snippet
 			}
 		`
 	);

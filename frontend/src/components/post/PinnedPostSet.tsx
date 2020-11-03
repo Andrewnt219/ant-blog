@@ -39,7 +39,6 @@ function PinnedPostSet({ posts }: PinnedPostSetProps) {
 	);
 }
 
-// TODO clarify hovering category
 function PinnedPost({ data, isMainPinnedPost }: PinnedPostProps): ReactElement {
 	const { title, image, slug, category, publishedAt, author } = data;
 	const [titleHead, titleTail] = trimLastWord(title);

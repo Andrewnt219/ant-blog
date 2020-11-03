@@ -6,6 +6,7 @@ import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import PinnedPostSet from "@src/components/post/PinnedPostSet";
 import sanityClient from "@src/lib/sanity/client";
 import PostPreviewSet from "@src/components/post/PostPreviewSet";
+import RecentPostSet from "@src/components/post/RecentPostSet";
 
 const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
@@ -22,6 +23,11 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 				Others
 			</h2>
 			<PostPreviewSet posts={posts.filter((post) => !post.isPinned)} />
+
+			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>
+				Recent
+			</h2>
+			<RecentPostSet posts={posts.filter((post) => !post.isPinned)} />
 
 			<h1>
 				To start writing articles, go to{" "}

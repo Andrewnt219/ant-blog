@@ -7,6 +7,7 @@ import PinnedPostSet from "@src/components/post/PinnedPostSet";
 import sanityClient from "@src/lib/sanity/client";
 import PostPreviewSet from "@src/components/post/PostPreviewSet";
 import RecentPostSet from "@src/components/post/RecentPostSet";
+import SidePostSet from "@src/components/post/SidePostSet";
 
 const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	return (
@@ -30,7 +31,12 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 			<Recent>
 				<RecentPostSet posts={posts.filter((post) => !post.isPinned)} />
-				<aside>Aside</aside>
+				<aside>
+					<h5>Latest</h5>
+					<SidePostSet
+						posts={posts.filter((post) => !post.isPinned).slice(0, 3)}
+					/>
+				</aside>
 			</Recent>
 
 			<h1>

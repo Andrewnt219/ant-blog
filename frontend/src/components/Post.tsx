@@ -13,14 +13,15 @@ type CategoryProps = {
 		slug: string;
 		title: string;
 	};
+	className?: string;
 };
 
-function Category({ data }: CategoryProps): ReactElement {
+function Category({ data, className }: CategoryProps): ReactElement {
 	const { slug, title } = data;
 
 	return (
 		<Link href={"/category/" + slug}>
-			<StyledCategory>
+			<StyledCategory className={className}>
 				<a>{title}</a>
 			</StyledCategory>
 		</Link>
@@ -49,9 +50,10 @@ type TitleProps = {
 		title: string;
 		linkToPost: string;
 	};
+	className?: string;
 };
 
-function Title({ data }: TitleProps): ReactElement {
+function Title({ data, className }: TitleProps): ReactElement {
 	const { title, linkToPost } = data;
 	const [titleHead, titleTail] = trimLastWord(title);
 
@@ -68,7 +70,7 @@ function Title({ data }: TitleProps): ReactElement {
 
 	return (
 		<Link href={linkToPost}>
-			<StyledTitle>
+			<StyledTitle className={className}>
 				<a>{renderedText}</a>
 			</StyledTitle>
 		</Link>
@@ -99,11 +101,14 @@ const StyledTitle = styled.h2<StyledTitleProps>`
 type SubInfoProps = {
 	children: ReactNode;
 	isTime?: boolean;
+	className?: string;
 };
 
-function SubInfo({ children, isTime }: SubInfoProps): ReactElement {
+function SubInfo({ children, isTime, className }: SubInfoProps): ReactElement {
 	return (
-		<StyledSubInfo as={isTime ? "time" : undefined}>{children}</StyledSubInfo>
+		<StyledSubInfo className={className} as={isTime ? "time" : undefined}>
+			{children}
+		</StyledSubInfo>
 	);
 }
 
@@ -144,6 +149,7 @@ const Snippet = styled.p<SnippetProps>``;
 /*                                  Thumbnail                                 */
 /* -------------------------------------------------------------------------- */
 type ThumbnailProps = {
+	className?: string;
 	data: {
 		linkToPost: string;
 		image: {
@@ -153,14 +159,15 @@ type ThumbnailProps = {
 	};
 };
 
-function Thumbnail({ data }: ThumbnailProps): ReactElement {
+function Thumbnail({ data, className }: ThumbnailProps): ReactElement {
 	const {
 		linkToPost,
 		image: { url, alt },
 	} = data;
+
 	return (
 		<Link href={linkToPost} passHref>
-			<StyledThumbnail>
+			<StyledThumbnail className={className}>
 				<Image src={url} alt={alt ?? "Article's thumbnail"} unsized />
 			</StyledThumbnail>
 		</Link>

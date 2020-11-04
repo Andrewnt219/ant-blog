@@ -1,3 +1,4 @@
+import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import dayjs from "dayjs";
 import React, { ReactElement } from "react";
 import tw, { styled } from "twin.macro";
@@ -41,7 +42,9 @@ function SidePost({ data }: SidePostProps): ReactElement {
 			<Thumbnail data={{ image, linkToPost }} />
 			<CustomInfoContainer>
 				<CustomTitle data={{ title, linkToPost }} />
-				<SubInfo isTime>{dayjs(publishedAt).format("MMM dd YYYY")}</SubInfo>
+				<SubInfo isTime>
+					{dayjs(publishedAt).format(FORMAT_CONSTANTS.dateFormat)}
+				</SubInfo>
 			</CustomInfoContainer>
 		</SidePostContainer>
 	);

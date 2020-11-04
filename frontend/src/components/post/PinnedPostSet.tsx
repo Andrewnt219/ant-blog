@@ -4,6 +4,7 @@ import React, { ReactElement } from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import Image from "next/image";
 import dayjs from "dayjs";
+import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
 
 type PinnedPostSetProps = {
 	posts: PinnedPostProps["data"][];
@@ -70,7 +71,8 @@ function PinnedPost({ data, isMainPinnedPost }: PinnedPostProps): ReactElement {
 					<Author>{author}</Author>
 
 					<Date>
-						&nbsp;&nbsp;-&nbsp;&nbsp;{dayjs(publishedAt).format("MMM DD YYYY")}
+						&nbsp;&nbsp;-&nbsp;&nbsp;
+						{dayjs(publishedAt).format(FORMAT_CONSTANTS.dateFormat)}
 					</Date>
 				</SubInfo>
 			</Info>

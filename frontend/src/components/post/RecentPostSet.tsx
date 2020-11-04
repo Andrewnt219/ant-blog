@@ -1,3 +1,4 @@
+import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import { calculateReadingMinutes } from "@src/utils";
 import dayjs from "dayjs";
 import React, { ReactElement } from "react";
@@ -60,7 +61,9 @@ function RecentPost({ data, isMain }: RecentPostProps): ReactElement {
 			<InfoContainer>
 				<Category data={category} />
 				<Title data={{ linkToPost, title }} />
-				<SubInfo isTime>{dayjs(publishedAt).format("MMM DD YYYY")}</SubInfo>
+				<SubInfo isTime>
+					{dayjs(publishedAt).format(FORMAT_CONSTANTS.dateFormat)}
+				</SubInfo>
 				<SubInfo>
 					&nbsp;&nbsp;-&nbsp;&nbsp;{calculateReadingMinutes(rawContent)}
 				</SubInfo>

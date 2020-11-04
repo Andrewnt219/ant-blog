@@ -27,7 +27,11 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>
 				Recent
 			</h2>
-			<RecentPostSet posts={posts.filter((post) => !post.isPinned)} />
+
+			<Recent>
+				<RecentPostSet posts={posts.filter((post) => !post.isPinned)} />
+				<aside>Aside</aside>
+			</Recent>
 
 			<h1>
 				To start writing articles, go to{" "}
@@ -104,4 +108,12 @@ const Main = styled.main<MainProps>`
 		padding: 2rem ${STYLE_CONSTANTS.bodyPadding};
 	}
 `;
+
+type RecentProps = {};
+const Recent = styled.section<RecentProps>`
+	display: grid;
+	grid-template-columns: 65% 30%;
+	column-gap: 5%;
+`;
+
 export default Index;

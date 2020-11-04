@@ -32,7 +32,7 @@ const StyledCategory = styled.span<StyledCategoryProps>`
 	${tw`uppercase text-accent font-500 inline-block cursor-pointer border-transparent border-b border-solid`}
 	font-size: smaller;
 
-	transition: color 200ms ease;
+	transition: color 300ms ease;
 
 	:hover,
 	:focus {
@@ -120,7 +120,8 @@ const StyledSubInfo = styled.span<StyledSubInfoProps>`
 
 type InfoContainerProps = {};
 const InfoContainer = styled.div<InfoContainerProps>`
-	${tw`mt-8 mx-auto text-sm space-y-2 relative`}
+	${tw` mt-8 mx-auto text-sm space-y-2 relative`}
+
 	width: 90%;
 	height: 100%;
 `;

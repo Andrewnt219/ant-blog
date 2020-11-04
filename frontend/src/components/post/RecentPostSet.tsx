@@ -57,19 +57,20 @@ function RecentPost({ data, isMain }: RecentPostProps): ReactElement {
 	return (
 		<RecentPostContainer>
 			<Thumbnail data={{ linkToPost, image }} />
-
-			<Category data={category} />
-			<Title data={{ linkToPost, title }} />
-			<SubInfo isTime>{dayjs(publishedAt).format("MMM DD YYYY")}</SubInfo>
-			<SubInfo>
-				&nbsp;&nbsp;-&nbsp;&nbsp;{calculateReadingMinutes(rawContent)}
-			</SubInfo>
-			{isMain && (
-				<>
-					<Snippet>{snippet}</Snippet>
-					<button>Read more</button>
-				</>
-			)}
+			<InfoContainer>
+				<Category data={category} />
+				<Title data={{ linkToPost, title }} />
+				<SubInfo isTime>{dayjs(publishedAt).format("MMM DD YYYY")}</SubInfo>
+				<SubInfo>
+					&nbsp;&nbsp;-&nbsp;&nbsp;{calculateReadingMinutes(rawContent)}
+				</SubInfo>
+				{isMain && (
+					<>
+						<Snippet>{snippet}</Snippet>
+						<ReadMoreButton>Read more</ReadMoreButton>
+					</>
+				)}
+			</InfoContainer>
 		</RecentPostContainer>
 	);
 }
@@ -78,11 +79,24 @@ type RecentPostSetContainerProps = {};
 const RecentPostSetContainer = styled.ul<RecentPostSetContainerProps>`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
+	gap: 3rem 1.5rem;
 `;
 
 type RecentPostContainerProps = {};
 const RecentPostContainer = styled.article<RecentPostContainerProps>``;
 
-const { Category, Title, Thumbnail, SubInfo, SubInfoContainer, Snippet } = Post;
+const { Category, Title, Thumbnail, SubInfo, Snippet, InfoContainer } = Post;
+
+type ReadMoreButtonProps = {};
+const ReadMoreButton = styled.button<ReadMoreButtonProps>`
+	${tw`capitalize border-b-2 border-solid border-accent`}
+
+	transform: filter 300ms ease;
+
+	:hover,
+	:focus {
+		filter: grayscale(1);
+	}
+`;
 
 export default RecentPostSet;

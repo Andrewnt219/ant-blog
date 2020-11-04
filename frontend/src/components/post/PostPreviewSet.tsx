@@ -89,10 +89,10 @@ function PostPreview({ data }: PostPreviewProps): ReactElement {
 type PostPreviewSetContainerProps = {};
 const PostPreviewSetContainer = styled.ul<PostPreviewSetContainerProps>`
 	display: grid;
-	gap: 3rem 2rem;
+	gap: 3rem 1.5rem;
 
 	@media screen and (min-width: ${theme`screens.smTablet`}) {
-		grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
 	}
 `;
 

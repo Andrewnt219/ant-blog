@@ -73,12 +73,15 @@ const Container = styled.header<ContainerProps>`
 	padding-bottom: max(37.5%, 25rem);
 
 	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-		url(${(p) => p.bgSrc});
+		url("${(p) => p.bgSrc}");
 	background-size: cover;
 	background-position: center center;
-	background-attachment: fixed;
 	width: 100%;
 	${tw`mb-12`}
+
+	@media screen and (min-width: ${theme`screens.smDesktop`}) {
+		background-attachment: fixed;
+	}
 `;
 
 type InfoContainerProps = {};
@@ -87,7 +90,7 @@ const InfoContainer = styled.div<InfoContainerProps>`
 	padding: 2.5% 12.5%;
 
 	@media screen and (min-width: ${theme`screens.smDesktop`}) {
-		padding: 2.5% 25%;
+		padding: 2.5% 15%;
 	}
 `;
 
@@ -122,9 +125,7 @@ const SubTitleContainer = styled.div<SubTitleContainerProps>`
 `;
 
 type SubTitleProps = {};
-const SubTitle = styled.span<SubTitleProps>`
-	font-size: ;
-`;
+const SubTitle = styled.span<SubTitleProps>``;
 
 type SeparatorProps = {};
 const Separator = styled.span<SeparatorProps>`

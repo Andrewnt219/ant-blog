@@ -10,13 +10,14 @@ import Comment, { FirestoreComment } from "@src/components/Comment";
 import db from "@src/lib/firebase/db";
 import Image from "next/image";
 import { styled } from "twin.macro";
+import { calculateReadingMinutes } from "@src/utils";
+import PostHeader from "@src/components/post/PostHeader";
 
 // TODO: router.fallback
 const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const authorImageSource = urlFor(post.authorImage).width(50).url();
-	const heroImageSource = urlFor(post.mainImage).url();
 	const [comments, setComments] = useState<PostComment[]>([]);
 
+	// Subscribe for live comments
 	useEffect(() => {
 		const unsubscribe = db
 			.collection("comments")
@@ -41,51 +42,44 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 		};
 	}, [post._id]);
 
+	const {
+		_id,
+		author,
+		body,
+		slug,
+		thumbnailSrc,
+		title,
+		category,
+		rawContent,
+		publishedAt,
+	} = post;
+
+	const headerData = {
+		thumbnailSrc,
+		category,
+		title,
+		author,
+		publishedAt,
+		readMinute: calculateReadingMinutes(rawContent),
+	};
+
 	return (
 		<>
 			<Head>
 				<title>{post.title}</title>
 			</Head>
 
-			<div style={{ width: "80ch", maxWidth: "80%", margin: "2rem auto" }}>
-				{heroImageSource ? (
-					<Image
-						style={{ width: "100%", height: "30rem", objectFit: "cover" }}
-						alt="Hero"
-						src={heroImageSource}
-						unsized
-					/>
-				) : (
-					<Loading />
-				)}
-				<PostTitle>{post.title}</PostTitle>
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "flex-end",
-					}}
-				>
-					{authorImageSource ? (
-						<img
-							style={{ borderRadius: "50%", marginRight: "1em" }}
-							alt={post.name}
-							src={authorImageSource}
-						/>
-					) : (
-						<Loading />
-					)}
-					<span>{post.name}</span>
-				</div>
+			<PostHeader data={headerData} />
+			<MainLayout>
 				<BlockContent
-					blocks={post.body}
+					blocks={body}
 					projectId={sanityClient.config().projectId}
 					dataset={sanityClient.config().dataset}
 					serializers={postSerializer}
 					imageOptions={{ fit: "clip", auto: "format" }}
 				/>
-			</div>
-			<Comment _postId={post._id} />
+			</MainLayout>
+			<Comment _postId={_id} />
 
 			{comments.map((comment) => (
 				<React.Fragment key={comment.id}>
@@ -107,22 +101,26 @@ type PostComment = FirestoreComment & {
 
 type Post = {
 	_id: string;
+	category: {
+		title: string;
+		slug: string;
+	};
+	rawContent: string;
 	title: string;
 	slug: {
 		current: string;
 		_type: "slug";
 	};
-	mainImage: {
-		asset: {
-			url: string;
-			_id: string;
-		};
-	};
+	thumbnailSrc: string;
 	body: any;
-	name: string;
-	authorImage: string;
+	author: {
+		name: string;
+		imageUrl: string;
+	};
+	publishedAt: string;
 };
 
+// TODO: multi category
 export const getStaticProps: GetStaticProps<
 	{ post: Post },
 	{ slug: string }
@@ -131,17 +129,17 @@ export const getStaticProps: GetStaticProps<
 		`
         *[slug.current == $slug] {
 						_id,
+						"category": categories[] -> {title, "slug": slug.current}[0],
             title,
             slug,
-            mainImage {
-                asset -> {
-                    _id,
-                    url
-                }
-            },
+            "thumbnailSrc": mainImage.asset -> url,
 						body,
-            "name": author->name,
-            "authorImage": author->image
+						author -> {
+							name,
+							"imageUrl": image.asset -> url
+						},
+						publishedAt,
+						rawContent
         }
     `,
 		{
@@ -168,7 +166,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	};
 };
 
-type PostTitleProps = {};
-const PostTitle = styled.h1<PostTitleProps>``;
+type MainLayoutProps = {};
+const MainLayout = styled.main<MainLayoutProps>`
+	width: min(80ch, 80%);
+	margin: 0 auto;
+`;
 
 export default Post;

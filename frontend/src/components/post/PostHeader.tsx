@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
 import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import tw, { styled, theme } from "twin.macro";
 
 type Props = {
 	data: {
@@ -35,23 +35,32 @@ function PostHeader({ data }: Props): ReactElement {
 
 	return (
 		<Container bgSrc={thumbnailSrc}>
-			<Link href={"/category/" + category.slug} passHref>
-				<Category>{category.title}</Category>
-			</Link>
-			<Title>{preventOrphanText(title)}</Title>
-			<SubTitleContainer>
-				<SubTitle>By {author.name}</SubTitle>
-				&nbsp;&nbsp;-&nbsp;&nbsp;
-				<SubTitle>
-					{dayjs(publishedAt).format(FORMAT_CONSTANTS.dateFormat)}
-				</SubTitle>
-				&nbsp;&nbsp;-&nbsp;&nbsp;
-				<SubTitle>{readMinute}</SubTitle>
-			</SubTitleContainer>
+			<InfoContainer>
+				<Link href={"/category/" + category.slug} passHref>
+					<Category>{category.title}</Category>
+				</Link>
+				<Title>{preventOrphanText(title)}</Title>
+				<SubTitleContainer>
+					<SubTitle>
+						By {author.name}
+						<Separator />
+					</SubTitle>
+					<SubTitle>
+						{dayjs(publishedAt).format(FORMAT_CONSTANTS.dateFormat)}
+						<Separator />
+					</SubTitle>
 
-			<ImageContainer>
-				<Image unsized src={author.imageUrl} alt={"Image of " + author.name} />
-			</ImageContainer>
+					<SubTitle>{readMinute}</SubTitle>
+				</SubTitleContainer>
+
+				<ImageContainer>
+					<Image
+						unsized
+						src={author.imageUrl}
+						alt={"Image of " + author.name}
+					/>
+				</ImageContainer>
+			</InfoContainer>
 		</Container>
 	);
 }
@@ -60,22 +69,31 @@ type ContainerProps = {
 	bgSrc: string;
 };
 const Container = styled.header<ContainerProps>`
-	${tw`text-primary flex justify-center items-center flex-col text-xs  font-500 space-y-2`}
-	padding: 2.5% 25%;
+	${tw`relative`}
+	padding-bottom: max(37.5%, 25rem);
 
 	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
 		url(${(p) => p.bgSrc});
 	background-size: cover;
 	background-position: center center;
 	background-attachment: fixed;
-	width: 100vw;
-	height: 75vh;
-	margin-bottom: 10vh;
+	width: 100%;
+	${tw`mb-12`}
+`;
+
+type InfoContainerProps = {};
+const InfoContainer = styled.div<InfoContainerProps>`
+	${tw`absolute top-0 left-0 w-full h-full flex justify-center items-center flex-col text-xs  text-primary font-500 space-y-2  `}
+	padding: 2.5% 12.5%;
+
+	@media screen and (min-width: ${theme`screens.smDesktop`}) {
+		padding: 2.5% 25%;
+	}
 `;
 
 type CategoryProps = {};
 const Category = styled.span<CategoryProps>`
-	${tw`uppercase bg-textColor  py-1 px-2 cursor-pointer`}
+	${tw`uppercase bg-textColor py-1 px-2 cursor-pointer`}
 
 	transition: background 200ms ease, color 200ms ease;
 
@@ -87,16 +105,34 @@ const Category = styled.span<CategoryProps>`
 
 type TitleProps = {};
 const Title = styled.h1<TitleProps>`
-	${tw`text-5xl font-700 text-center`}
+	${tw`text-2xl font-700 text-center`}
+
+	@media screen and (min-width: ${theme`screens.mdTablet`}) {
+		${tw`text-3xl`}
+	}
+
+	@media screen and (min-width: ${theme`screens.lgTablet`}) {
+		${tw`text-5xl`}
+	}
 `;
 
 type SubTitleContainerProps = {};
 const SubTitleContainer = styled.div<SubTitleContainerProps>`
-	${tw`flex items-center uppercase`}
+	${tw`flex items-center uppercase flex-wrap justify-center`}
 `;
 
 type SubTitleProps = {};
-const SubTitle = styled.span<SubTitleProps>``;
+const SubTitle = styled.span<SubTitleProps>`
+	font-size: ;
+`;
+
+type SeparatorProps = {};
+const Separator = styled.span<SeparatorProps>`
+	::before {
+		content: "-";
+		${tw`px-1`}
+	}
+`;
 
 type ImageContainerProps = {};
 const ImageContainer = styled.div<ImageContainerProps>`
@@ -117,8 +153,6 @@ const ImageContainer = styled.div<ImageContainerProps>`
 	}
 `;
 
-export default PostHeader;
-
 function preventOrphanText(title: string) {
 	const [titleHead, titleTail] = trimLastWord(title);
 
@@ -134,3 +168,5 @@ function preventOrphanText(title: string) {
 		);
 	return renderedText;
 }
+
+export default PostHeader;

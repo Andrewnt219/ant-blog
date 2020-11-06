@@ -1,4 +1,5 @@
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import { trimLastWord } from "@src/utils";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,7 +38,7 @@ function PostHeader({ data }: Props): ReactElement {
 			<Link href={"/category/" + category.slug} passHref>
 				<Category>{category.title}</Category>
 			</Link>
-			<Title>{title}</Title>
+			<Title>{preventOrphanText(title)}</Title>
 			<SubTitleContainer>
 				<SubTitle>By {author.name}</SubTitle>
 				&nbsp;&nbsp;-&nbsp;&nbsp;
@@ -117,3 +118,19 @@ const ImageContainer = styled.div<ImageContainerProps>`
 `;
 
 export default PostHeader;
+
+function preventOrphanText(title: string) {
+	const [titleHead, titleTail] = trimLastWord(title);
+
+	let renderedText = <>{title}</>;
+
+	if (titleHead)
+		renderedText = (
+			<>
+				{titleHead}
+				&nbsp;
+				{titleTail}
+			</>
+		);
+	return renderedText;
+}

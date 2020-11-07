@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import sanityClient from "@src/lib/sanity/client";
-import BlockContent from "@sanity/block-content-to-react";
 import Head from "next/head";
-import Loading from "@src/components/Loading";
-import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
-import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
 import Comment, { FirestoreComment } from "@src/components/Comment";
 import db from "@src/lib/firebase/db";
-import Image from "next/image";
-import { styled } from "twin.macro";
 import { calculateReadingMinutes } from "@src/utils";
 import PostHeader from "@src/components/post/PostHeader";
+import PostBody from "@src/components/post/PostBody";
 
 // TODO: router.fallback
-const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Post = ({
+	post,
+	sidePosts,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [comments, setComments] = useState<PostComment[]>([]);
 
 	// Subscribe for live comments
@@ -46,7 +44,6 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 		_id,
 		author,
 		body,
-		slug,
 		thumbnailSrc,
 		title,
 		category,
@@ -70,15 +67,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 			</Head>
 
 			<PostHeader data={headerData} />
-			<MainLayout>
-				<BlockContent
-					blocks={body}
-					projectId={sanityClient.config().projectId}
-					dataset={sanityClient.config().dataset}
-					serializers={postSerializer}
-					imageOptions={{ fit: "clip", auto: "format" }}
-				/>
-			</MainLayout>
+			<PostBody data={{ body, sidePosts, category }} />
 			<Comment _postId={_id} />
 
 			{comments.map((comment) => (
@@ -107,10 +96,6 @@ type Post = {
 	};
 	rawContent: string;
 	title: string;
-	slug: {
-		current: string;
-		_type: "slug";
-	};
 	thumbnailSrc: string;
 	body: any;
 	author: {
@@ -120,9 +105,19 @@ type Post = {
 	publishedAt: string;
 };
 
+type SidePost = {
+	title: string;
+	slug: string;
+	publishedAt: string;
+	thumbnail: {
+		url: string;
+		alt?: string;
+	};
+};
+
 // TODO: multi category
 export const getStaticProps: GetStaticProps<
-	{ post: Post },
+	{ post: Post; sidePosts: SidePost[] },
 	{ slug: string }
 > = async ({ params }) => {
 	const posts = await sanityClient.fetch<Omit<Post, "comments">[]>(
@@ -131,7 +126,6 @@ export const getStaticProps: GetStaticProps<
 						_id,
 						"category": categories[] -> {title, "slug": slug.current}[0],
             title,
-            slug,
             "thumbnailSrc": mainImage.asset -> url,
 						body,
 						author -> {
@@ -147,8 +141,21 @@ export const getStaticProps: GetStaticProps<
 		}
 	);
 
+	const sidePosts = await sanityClient.fetch<SidePost[]>(`
+		*[_type == "post" && !isArchived && !isPinned] | order(_updatedAt desc) {
+			title,
+			"slug": slug.current,
+			publishedAt,
+			"category": categories[] -> {title, "slug": slug.current}[0],
+			"thumbnail": mainImage {
+				alt,
+				"url": asset -> url
+			}
+		}[0...3]
+	`);
+
 	return {
-		props: { post: posts[0] },
+		props: { post: posts[0], sidePosts },
 		revalidate: 1,
 	};
 };
@@ -165,11 +172,5 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		fallback: false,
 	};
 };
-
-type MainLayoutProps = {};
-const MainLayout = styled.main<MainLayoutProps>`
-	width: min(80ch, 80%);
-	margin: 0 auto;
-`;
 
 export default Post;

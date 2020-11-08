@@ -49,7 +49,7 @@ export default class MyDocument extends Document {
 				<Head>
 					<link
 						rel="preload"
-						href="fonts/roboto-v20-vietnamese-700.woff2"
+						href="/fonts/roboto-v20-vietnamese-700.woff2"
 						as="font"
 						type="font/woff2"
 						crossOrigin=""
@@ -57,7 +57,7 @@ export default class MyDocument extends Document {
 
 					<link
 						rel="preload"
-						href="fonts/roboto-v20-vietnamese-500.woff2"
+						href="/fonts/roboto-v20-vietnamese-500.woff2"
 						as="font"
 						type="font/woff2"
 						crossOrigin=""
@@ -65,7 +65,7 @@ export default class MyDocument extends Document {
 
 					<link
 						rel="preload"
-						href="fonts/roboto-v20-vietnamese-regular.woff2"
+						href="/fonts/roboto-v20-vietnamese-regular.woff2"
 						as="font"
 						type="font/woff2"
 						crossOrigin=""

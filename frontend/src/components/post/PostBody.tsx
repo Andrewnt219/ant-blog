@@ -1,8 +1,9 @@
 import BlockContent from "@sanity/block-content-to-react";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import tw, { styled } from "twin.macro";
 import sanityClient from "@src/lib/sanity/client";
 import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
+import ShareSideBar from "../ShareSideBar";
 
 type Props = {
 	data: {
@@ -28,10 +29,16 @@ type SidePostProps = {
 
 function PostBody({ data }: Props): ReactElement {
 	const { body, sidePosts, category } = data;
+	const [currentLocation, setCurrentLocation] = useState<string>("");
+
+	useEffect(() => {
+		setCurrentLocation(window.location.href);
+	}, []);
 
 	return (
 		<Container>
-			<LeftSideBar>Share to facebook</LeftSideBar>
+			<ShareSideBar sharingUrl={currentLocation} />
+
 			<Main>
 				<BlockContent
 					blocks={body}
@@ -62,9 +69,6 @@ const Container = styled.div<ContainerProps>`
 	padding: 0 10% 0 2.5%;
 	gap: 0 5%;
 `;
-
-type LeftSideBarProps = {};
-const LeftSideBar = styled.aside<LeftSideBarProps>``;
 
 type RightSideBarProps = {};
 const RightSideBar = styled.aside<RightSideBarProps>``;

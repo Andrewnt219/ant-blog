@@ -65,7 +65,7 @@ const PostSetTitle = styled.h5<PostSetTitleProps>`
 
 type SidePostSetContainerProps = {};
 const SidePostSetContainer = styled.ul<SidePostSetContainerProps>`
-	${tw`flex flex-col space-y-5`}
+	${tw`flex flex-col space-y-6`}
 `;
 
 type SidePostContainerProps = {};

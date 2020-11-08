@@ -6,6 +6,7 @@ import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
 import ShareSideBar from "../ShareSideBar";
 import Breadcrumb from "../Breadcrumb";
 import { useRouter } from "next/router";
+import SidePostSet from "./SidePostSet";
 
 type Props = {
 	data: {
@@ -23,7 +24,7 @@ type SidePostProps = {
 	title: string;
 	slug: string;
 	publishedAt: string;
-	thumbnail: {
+	image: {
 		url: string;
 		alt?: string;
 	};
@@ -69,14 +70,17 @@ function PostBody({ data }: Props): ReactElement {
 				/>
 			</Main>
 			<RightSideBar>
+				<SidePostSet posts={sidePosts} title="Latest Posts" />
+			</RightSideBar>
+			{/* <RightSideBar>
 				{sidePosts.map((post) => (
 					<img
 						key={post.slug}
-						src={post.thumbnail.url}
-						alt={post.thumbnail.alt ?? post.title}
+						src={post.image.url}
+						alt={post.image.alt ?? post.title}
 					/>
 				))}
-			</RightSideBar>
+			</RightSideBar> */}
 			<Footer>{category.title}</Footer>
 		</Container>
 	);

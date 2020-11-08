@@ -4,8 +4,9 @@ import React, { ReactElement } from "react";
 import tw, { styled } from "twin.macro";
 import { Post } from "../Post";
 
-type SidePostSetProps = {
+export type SidePostSetProps = {
 	posts: SidePostProps["data"][];
+	title: string;
 };
 
 type SidePostProps = {
@@ -20,15 +21,19 @@ type SidePostProps = {
 	};
 };
 
-function SidePostSet({ posts }: SidePostSetProps): ReactElement {
+function SidePostSet({ posts, title }: SidePostSetProps): ReactElement {
 	return (
-		<SidePostSetContainer>
-			{posts.map((post) => (
-				<li key={post.slug}>
-					<SidePost data={post} />
-				</li>
-			))}
-		</SidePostSetContainer>
+		<Container>
+			<PostSetTitle>{title}</PostSetTitle>
+
+			<SidePostSetContainer>
+				{posts.map((post) => (
+					<li key={post.slug}>
+						<SidePost data={post} />
+					</li>
+				))}
+			</SidePostSetContainer>
+		</Container>
 	);
 }
 
@@ -49,6 +54,14 @@ function SidePost({ data }: SidePostProps): ReactElement {
 		</SidePostContainer>
 	);
 }
+
+type ContainerProps = {};
+const Container = styled.aside<ContainerProps>``;
+
+type PostSetTitleProps = {};
+const PostSetTitle = styled.h5<PostSetTitleProps>`
+	${tw`border-b border-solid border-borderColor mb-8 pb-2 text-lg`}
+`;
 
 type SidePostSetContainerProps = {};
 const SidePostSetContainer = styled.ul<SidePostSetContainerProps>`

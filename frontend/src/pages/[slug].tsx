@@ -7,6 +7,7 @@ import db from "@src/lib/firebase/db";
 import { calculateReadingMinutes } from "@src/utils";
 import PostHeader from "@src/components/post/PostHeader";
 import PostBody from "@src/components/post/PostBody";
+import { SidePostSetProps } from "@src/components/post/SidePostSet";
 
 // TODO: router.fallback
 const Post = ({
@@ -105,19 +106,9 @@ type Post = {
 	publishedAt: string;
 };
 
-type SidePost = {
-	title: string;
-	slug: string;
-	publishedAt: string;
-	thumbnail: {
-		url: string;
-		alt?: string;
-	};
-};
-
 // TODO: multi category
 export const getStaticProps: GetStaticProps<
-	{ post: Post; sidePosts: SidePost[] },
+	{ post: Post; sidePosts: SidePostSetProps["posts"] },
 	{ slug: string }
 > = async ({ params }) => {
 	const posts = await sanityClient.fetch<Omit<Post, "comments">[]>(
@@ -141,13 +132,13 @@ export const getStaticProps: GetStaticProps<
 		}
 	);
 
-	const sidePosts = await sanityClient.fetch<SidePost[]>(`
+	const sidePosts = await sanityClient.fetch<SidePostSetProps["posts"]>(`
 		*[_type == "post" && !isArchived && !isPinned] | order(_updatedAt desc) {
 			title,
 			"slug": slug.current,
 			publishedAt,
 			"category": categories[] -> {title, "slug": slug.current}[0],
-			"thumbnail": mainImage {
+			"image": mainImage {
 				alt,
 				"url": asset -> url
 			}

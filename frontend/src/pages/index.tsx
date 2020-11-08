@@ -31,12 +31,11 @@ const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 			<Recent>
 				<RecentPostSet posts={posts.filter((post) => !post.isPinned)} />
-				<aside>
-					<h5>Latest</h5>
-					<SidePostSet
-						posts={posts.filter((post) => !post.isPinned).slice(0, 3)}
-					/>
-				</aside>
+
+				<SidePostSet
+					posts={posts.filter((post) => !post.isPinned).slice(0, 3)}
+					title="Latest"
+				/>
 			</Recent>
 
 			<h1>

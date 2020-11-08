@@ -25,7 +25,7 @@ export const postSerializer = {
 					</figcaption>
 				</figure>
 			) : (
-				<Loading />
+				<Loading height="3rem" />
 			);
 		},
 		block: BlockRenderer,

@@ -38,6 +38,7 @@
     "react-youtube": "^7.13.0",
     "rss-parser": "^3.9.0",
     "styled-components": "^5.2.0",
+    "swr": "^0.3.8",
     "twin.macro": "^1.11.0"
   },
   "devDependencies": {

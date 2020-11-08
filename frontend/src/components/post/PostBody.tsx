@@ -7,6 +7,11 @@ import ShareSideBar from "../ShareSideBar";
 import Breadcrumb from "../Breadcrumb";
 import { useRouter } from "next/router";
 import SidePostSet from "./SidePostSet";
+import useSWR from "swr";
+import { sanityFetcher } from "@src/lib/swr";
+import { SanityClientErrorResponse } from "sanity";
+import Loading from "../Loading";
+import Broken from "../Broken";
 
 type Props = {
 	data: {
@@ -31,9 +36,42 @@ type SidePostProps = {
 };
 
 function PostBody({ data }: Props): ReactElement {
-	const { body, sidePosts, category, title } = data;
+	const { body, category, title } = data;
 	const [currentLocation, setCurrentLocation] = useState<string>("");
 	const { asPath } = useRouter();
+
+	const { data: sidePosts, error } = useSWR<
+		SidePostProps[],
+		SanityClientErrorResponse
+	>(
+		`
+		*[_type == "post" && !isArchived && !isPinned] | order(_updatedAt desc) {
+			title,
+			"slug": slug.current,
+			publishedAt,
+			"category": categories[] -> {title, "slug": slug.current}[0],
+			"image": mainImage {
+				alt,
+				"url": asset -> url
+			}
+		}[0...3]
+	`,
+		sanityFetcher
+	);
+
+	let renderedSidePosts = (
+		<Loading height="10rem" loadingText="Fetching posts..." />
+	);
+
+	if (error) {
+		renderedSidePosts = (
+			<Broken errorText="Fail to fetch posts :(" height="10rem" />
+		);
+	}
+
+	if (sidePosts) {
+		renderedSidePosts = <SidePostSet posts={sidePosts} title="Latest Post" />;
+	}
 
 	const breadcrumbItems = [
 		{
@@ -56,7 +94,9 @@ function PostBody({ data }: Props): ReactElement {
 
 	return (
 		<Container>
-			<ShareSideBar sharingUrl={currentLocation} />
+			<Header>
+				<ShareSideBar sharingUrl={currentLocation} />
+			</Header>
 
 			<Main>
 				<Breadcrumb data={breadcrumbItems} />
@@ -69,18 +109,8 @@ function PostBody({ data }: Props): ReactElement {
 					imageOptions={{ fit: "clip", auto: "format" }}
 				/>
 			</Main>
-			<RightSideBar>
-				<SidePostSet posts={sidePosts} title="Latest Posts" />
-			</RightSideBar>
-			{/* <RightSideBar>
-				{sidePosts.map((post) => (
-					<img
-						key={post.slug}
-						src={post.image.url}
-						alt={post.image.alt ?? post.title}
-					/>
-				))}
-			</RightSideBar> */}
+
+			{renderedSidePosts}
 			<Footer>{category.title}</Footer>
 		</Container>
 	);
@@ -96,9 +126,6 @@ const Container = styled.div<ContainerProps>`
 
 type HeaderProps = {};
 const Header = styled.header<HeaderProps>``;
-
-type RightSideBarProps = {};
-const RightSideBar = styled.aside<RightSideBarProps>``;
 
 type MainProps = {};
 const Main = styled.div<MainProps>``;

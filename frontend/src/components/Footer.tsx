@@ -7,7 +7,7 @@ type Props = {};
 function Footer(): ReactElement {
 	return (
 		<Container>
-			<Loading />
+			<Loading height="10rem" />
 			&copy; 2020
 		</Container>
 	);

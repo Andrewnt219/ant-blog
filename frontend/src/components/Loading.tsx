@@ -1,19 +1,33 @@
 import Lottie from "react-lottie";
 import React from "react";
 import animationData from "@src/assets/lottie/Dog smell.json";
+import tw, { styled } from "twin.macro";
 
-const Loading = () => {
+type Props = {
+	height: string;
+	loadingText?: string;
+};
+
+const Loading = ({ height, loadingText }: Props) => {
 	return (
-		<Lottie
-			width={300}
-			height={300}
-			options={{
-				loop: true,
-				autoplay: true,
-				animationData,
-			}}
-		/>
+		<Container>
+			<Lottie
+				height={height}
+				options={{
+					loop: true,
+					autoplay: true,
+					animationData,
+				}}
+			/>
+			<span>{loadingText}</span>
+		</Container>
 	);
 };
+
+type ContainerProps = {};
+const Container = styled.div<ContainerProps>`
+	${tw`flex flex-col items-center italic pointer-events-none`}
+	font-size: smaller;
+`;
 
 export default Loading;

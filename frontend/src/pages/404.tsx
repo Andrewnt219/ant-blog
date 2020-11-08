@@ -5,7 +5,7 @@ import Broken from "@src/components/Broken";
 const PageNotFound = () => {
 	return (
 		<div>
-			<Broken />
+			<Broken height="20rem" />
 			<h1 style={{ textAlign: "center" }}>Oops... My dog ate the page</h1>
 			<Link href="/">
 				<a style={{ textAlign: "center", display: "block" }}>Go back</a>

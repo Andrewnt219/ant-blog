@@ -2,15 +2,32 @@ import React from "react";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import { styled, theme } from "twin.macro";
-import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import {
+	NUMBER_CONSTANTS,
+	STYLE_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
 import PinnedPostSet from "@src/components/post/PinnedPostSet";
 import sanityClient from "@src/lib/sanity/client";
 import PostPreviewSet from "@src/components/post/PostPreviewSet";
 import RecentPostSet from "@src/components/post/RecentPostSet";
 import SidePostSet from "@src/components/post/SidePostSet";
+import useSWR from "swr";
+import { sanityFetcher } from "@src/lib/swr";
+import Broken from "@src/components/Broken";
 
-const Index = ({ posts }: InferGetStaticPropsType<typeof getStaticProps>) => {
-	return (
+const Index = ({
+	prefetchedPosts,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+	const { data: posts } = useSWR<Post[]>(queryString, sanityFetcher, {
+		initialData: prefetchedPosts ?? [],
+		refreshInterval: NUMBER_CONSTANTS.refreshInterval,
+	});
+
+	return !posts || posts.length === 0 ? (
+		<>
+			<Broken height="20rem" errorText="Something went wrong" />
+		</>
+	) : (
 		<Main>
 			<Head>
 				<title>Welcome to my blog</title>
@@ -76,11 +93,7 @@ type Post = {
 	};
 };
 
-export const getStaticProps: GetStaticProps<{
-	posts: Post[];
-}> = async () => {
-	const posts = await sanityClient.fetch<Post[]>(
-		`
+const queryString = `
 			*[_type == "post" && !isArchived] | order(_updatedAt desc) {
 				isPinned,
 				title,
@@ -95,13 +108,25 @@ export const getStaticProps: GetStaticProps<{
 				},
 				snippet
 			}
-		`
-	);
+		`;
 
-	return {
-		props: { posts },
-		revalidate: 1,
-	};
+export const getStaticProps: GetStaticProps<{
+	prefetchedPosts: Post[] | null;
+}> = async () => {
+	try {
+		const posts = await sanityClient.fetch<Post[]>(queryString);
+		return {
+			props: { prefetchedPosts: posts },
+			revalidate: 1,
+		};
+	} catch (error) {
+		console.log(error);
+
+		return {
+			props: { prefetchedPosts: null },
+			revalidate: 1,
+		};
+	}
 };
 
 type MainProps = {};

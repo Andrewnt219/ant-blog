@@ -35,16 +35,21 @@ function PostHeader({ data }: Props): ReactElement {
 	return (
 		<Container bgSrc={thumbnailSrc}>
 			<InfoContainer>
-				<Link href={"/category/" + category.slug} passHref>
-					<Category>{category.title}</Category>
+				<Link href={"/category/" + category.slug}>
+					<a>
+						<Category>{category.title}</Category>
+					</a>
 				</Link>
 				<Title>{preventOrphanText(title)}</Title>
 				<SubTitleContainer>
-					<SubTitle>
-						By {author.name}
-						<Separator />
-					</SubTitle>
-					<SubTitle>
+					<Link href={"/author/" + author.name}>
+						<a>
+							<SubTitle underlineOnHover>By {author.name}</SubTitle>
+							<Separator />
+						</a>
+					</Link>
+
+					<SubTitle as="time">
 						{dayjs(publishedAt).format(FORMAT_CONSTANTS.dateFormat)}
 						<Separator />
 					</SubTitle>
@@ -115,8 +120,15 @@ const SubTitleContainer = styled.div<SubTitleContainerProps>`
 	${tw`flex items-center uppercase flex-wrap justify-center`}
 `;
 
-type SubTitleProps = {};
-const SubTitle = styled.span<SubTitleProps>``;
+type SubTitleProps = {
+	underlineOnHover?: boolean;
+};
+const SubTitle = styled.span<SubTitleProps>`
+	:hover,
+	:focus {
+		text-decoration: ${(p) => p.underlineOnHover && "underline"};
+	}
+`;
 
 type SeparatorProps = {};
 const Separator = styled.span<SeparatorProps>`

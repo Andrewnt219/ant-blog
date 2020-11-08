@@ -23,13 +23,13 @@ const data: iconData[] = [
 		shadowColor: "8, 159, 197",
 		alt: "twitter-logo",
 		src: "/svg/twitter.svg",
-		href: "https://www.facebook.com/sharer/sharer.php?u=",
+		href: "https://www.twitter.com/sharer/sharer.php?u=",
 	},
 	{
 		shadowColor: "40, 103, 178",
 		alt: "linkedIn-logo",
 		src: "/svg/linkedin.svg",
-		href: "https://www.facebook.com/sharer/sharer.php?u=",
+		href: "https://www.linkedin.com/sharer/sharer.php?u=",
 	},
 ];
 
@@ -54,8 +54,8 @@ function ShareToolbar({ sharingUrl }: Props): ReactElement {
 type ContainerProps = {};
 const Container = styled.aside<ContainerProps>`
 	${tw`uppercase flex flex-col items-center font-500 text-xs text-ltextColor sticky`}
-	top: 2rem;
-	padding-bottom: 5rem;
+	top: 0;
+	padding: 5rem 0;
 	height: min-content;
 `;
 

@@ -15,14 +15,14 @@ function Breadcrumb({ data }: Props): ReactElement {
 	return (
 		<BreadcrumbItemSet>
 			{data.map(({ href, text }, index) => (
-				<>
-					<BreadCrumbItem key={href}>
+				<React.Fragment key={href}>
+					<BreadCrumbItem>
 						<Link href={href}>
 							<a>{text}</a>
 						</Link>
 					</BreadCrumbItem>
 					{index !== data.length - 1 && <span>&raquo;</span>}
-				</>
+				</React.Fragment>
 			))}
 		</BreadcrumbItemSet>
 	);

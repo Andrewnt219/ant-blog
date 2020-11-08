@@ -6,7 +6,7 @@ import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
 import ShareSideBar from "../ShareSideBar";
 import Breadcrumb from "../Breadcrumb";
 import { useRouter } from "next/router";
-import SidePostSet from "./SidePostSet";
+import SidePostSet, { SidePostSetProps } from "./SidePostSet";
 import useSWR from "swr";
 import { sanityFetcher } from "@src/lib/swr";
 import { SanityClientErrorResponse } from "sanity";
@@ -21,17 +21,6 @@ type Props = {
 		};
 		title: string;
 		body: any;
-		sidePosts: SidePostProps[];
-	};
-};
-
-type SidePostProps = {
-	title: string;
-	slug: string;
-	publishedAt: string;
-	image: {
-		url: string;
-		alt?: string;
 	};
 };
 
@@ -41,7 +30,7 @@ function PostBody({ data }: Props): ReactElement {
 	const { asPath } = useRouter();
 
 	const { data: sidePosts, error } = useSWR<
-		SidePostProps[],
+		SidePostSetProps["posts"],
 		SanityClientErrorResponse
 	>(
 		`

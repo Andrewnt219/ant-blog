@@ -6,3 +6,7 @@ export const STYLE_CONSTANTS = {
 export const FORMAT_CONSTANTS = {
 	dateFormat: "MMM DD YYYY",
 };
+
+export const NUMBER_CONSTANTS = {
+	refreshInterval: 10000,
+};

@@ -7,13 +7,9 @@ import db from "@src/lib/firebase/db";
 import { calculateReadingMinutes } from "@src/utils";
 import PostHeader from "@src/components/post/PostHeader";
 import PostBody from "@src/components/post/PostBody";
-import { SidePostSetProps } from "@src/components/post/SidePostSet";
 
 // TODO: router.fallback
-const Post = ({
-	post,
-	sidePosts,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [comments, setComments] = useState<PostComment[]>([]);
 
 	// Subscribe for live comments
@@ -68,7 +64,7 @@ const Post = ({
 			</Head>
 
 			<PostHeader data={headerData} />
-			<PostBody data={{ body, sidePosts, category, title }} />
+			<PostBody data={{ body, category, title }} />
 			<Comment _postId={_id} />
 
 			{comments.map((comment) => (
@@ -108,7 +104,7 @@ type Post = {
 
 // TODO: multi category
 export const getStaticProps: GetStaticProps<
-	{ post: Post; sidePosts: SidePostSetProps["posts"] },
+	{ post: Post },
 	{ slug: string }
 > = async ({ params }) => {
 	const posts = await sanityClient.fetch<Omit<Post, "comments">[]>(
@@ -132,21 +128,8 @@ export const getStaticProps: GetStaticProps<
 		}
 	);
 
-	const sidePosts = await sanityClient.fetch<SidePostSetProps["posts"]>(`
-		*[_type == "post" && !isArchived && !isPinned] | order(_updatedAt desc) {
-			title,
-			"slug": slug.current,
-			publishedAt,
-			"category": categories[] -> {title, "slug": slug.current}[0],
-			"image": mainImage {
-				alt,
-				"url": asset -> url
-			}
-		}[0...3]
-	`);
-
 	return {
-		props: { post: posts[0], sidePosts },
+		props: { post: posts[0] },
 		revalidate: 1,
 	};
 };

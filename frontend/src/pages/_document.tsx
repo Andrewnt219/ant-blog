@@ -48,15 +48,27 @@ export default class MyDocument extends Document {
 			<Html lang="en">
 				<Head>
 					<link
-						rel="stylesheet"
-						type="text/css"
-						charSet="UTF-8"
-						href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+						rel="preload"
+						href="fonts/roboto-v20-vietnamese-700.woff2"
+						as="font"
+						type="font/woff2"
+						crossOrigin=""
 					/>
+
 					<link
-						rel="stylesheet"
-						type="text/css"
-						href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+						rel="preload"
+						href="fonts/roboto-v20-vietnamese-500.woff2"
+						as="font"
+						type="font/woff2"
+						crossOrigin=""
+					/>
+
+					<link
+						rel="preload"
+						href="fonts/roboto-v20-vietnamese-regular.woff2"
+						as="font"
+						type="font/woff2"
+						crossOrigin=""
 					/>
 				</Head>
 				<body>

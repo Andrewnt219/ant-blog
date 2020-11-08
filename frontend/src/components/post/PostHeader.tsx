@@ -92,7 +92,7 @@ const InfoContainer = styled.div<InfoContainerProps>`
 
 type CategoryProps = {};
 const Category = styled.span<CategoryProps>`
-	${tw`uppercase bg-textColor py-1 px-2 cursor-pointer`}
+	${tw`uppercase bg-textColor py-1 px-2 cursor-pointer tracking-widest`}
 
 	transition: background 200ms ease, color 200ms ease;
 
@@ -117,7 +117,7 @@ const Title = styled.h1<TitleProps>`
 
 type SubTitleContainerProps = {};
 const SubTitleContainer = styled.div<SubTitleContainerProps>`
-	${tw`flex items-center uppercase flex-wrap justify-center`}
+	${tw`flex items-center uppercase flex-wrap justify-center tracking-widest`}
 `;
 
 type SubTitleProps = {

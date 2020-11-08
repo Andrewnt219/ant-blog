@@ -155,7 +155,7 @@ const SubInfo = styled.div<SubInfoProps>`
 
 type CategoryProps = {};
 const Category = styled.a<CategoryProps>`
-	${tw`bg-accent py-1 px-2 `}
+	${tw`bg-accent py-1 px-2 tracking-widest`}
 	font-size: smaller;
 	transition: background-color 200ms ease;
 

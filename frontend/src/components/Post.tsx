@@ -30,7 +30,7 @@ function Category({ data, className }: CategoryProps): ReactElement {
 
 type StyledCategoryProps = {};
 const StyledCategory = styled.span<StyledCategoryProps>`
-	${tw`uppercase text-accent font-500 inline-block cursor-pointer border-transparent border-b border-solid`}
+	${tw`uppercase text-accent font-500 inline-block cursor-pointer border-transparent border-b border-solid tracking-widest`}
 	font-size: smaller;
 
 	transition: color 300ms ease;
@@ -115,7 +115,7 @@ function SubInfo({ children, isTime, className }: SubInfoProps): ReactElement {
 type StyledSubInfoProps = {};
 const StyledSubInfo = styled.span<StyledSubInfoProps>`
 	font-size: smaller;
-	${tw`font-500 uppercase inline-block`}
+	${tw`font-500 uppercase inline-block tracking-widest`}
 	color: #999;
 `;
 

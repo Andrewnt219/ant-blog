@@ -192,15 +192,17 @@ const StyledThumbnail = styled.a<StyledThumbnailProps>`
 		object-fit: cover;
 		height: 100%;
 		width: 100%;
-		box-shadow: 0 0.3rem 1.2rem -0.1rem rgba(7, 10, 25, 0.2),
-			0 2.2rem 2.7rem -2rem rgba(7, 10, 25, 0.2);
+		/* box-shadow: 0 0.3rem 1.2rem -0.1rem rgba(7, 10, 25, 0.2),
+			0 2.2rem 2.7rem -2rem rgba(7, 10, 25, 0.2); */
+		box-shadow: 0 3px 12px -1px rgba(7, 10, 25, 0.2),
+			0 22px 27px -20px rgba(7, 10, 25, 0.2);
 		transition: transform 300ms ease, box-shadow 300ms ease, filter 300ms ease;
 	}
 
 	:hover {
 		img {
 			filter: brightness(1.05);
-			box-shadow: 0 1.5rem 4.5rem -0.5rem rgba(7, 10, 25, 0.25);
+			box-shadow: 0 15px 45px -5px rgba(7, 10, 25, 0.25);
 			transform: translateY(-0.2rem);
 		}
 	}

@@ -67,7 +67,7 @@ const Post = ({
 			</Head>
 
 			<PostHeader data={headerData} />
-			<PostBody data={{ body, sidePosts, category }} />
+			<PostBody data={{ body, sidePosts, category, title }} />
 			<Comment _postId={_id} />
 
 			{comments.map((comment) => (

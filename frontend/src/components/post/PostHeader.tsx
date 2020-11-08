@@ -1,7 +1,6 @@
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import { trimLastWord } from "@src/utils";
 import dayjs from "dayjs";
-import Image from "next/image";
 import Link from "next/link";
 import React, { ReactElement } from "react";
 import tw, { styled, theme } from "twin.macro";
@@ -52,14 +51,6 @@ function PostHeader({ data }: Props): ReactElement {
 
 					<SubTitle>{readMinute}</SubTitle>
 				</SubTitleContainer>
-
-				<ImageContainer>
-					<Image
-						unsized
-						src={author.imageUrl}
-						alt={"Image of " + author.name}
-					/>
-				</ImageContainer>
 			</InfoContainer>
 		</Container>
 	);
@@ -132,25 +123,6 @@ const Separator = styled.span<SeparatorProps>`
 	::before {
 		content: "-";
 		${tw`px-1`}
-	}
-`;
-
-type ImageContainerProps = {};
-const ImageContainer = styled.div<ImageContainerProps>`
-	width: 2.5rem;
-	height: 2.5rem;
-	border-radius: 50%;
-	overflow: hidden;
-
-	div,
-	img {
-		width: 100%;
-		height: 100%;
-	}
-
-	img {
-		object-fit: cover;
-		object-position: center;
 	}
 `;
 

@@ -4,6 +4,8 @@ import tw, { styled } from "twin.macro";
 import sanityClient from "@src/lib/sanity/client";
 import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
 import ShareSideBar from "../ShareSideBar";
+import Breadcrumb from "../Breadcrumb";
+import { useRouter } from "next/router";
 
 type Props = {
 	data: {
@@ -11,7 +13,7 @@ type Props = {
 			title: string;
 			slug: string;
 		};
-
+		title: string;
 		body: any;
 		sidePosts: SidePostProps[];
 	};
@@ -28,8 +30,24 @@ type SidePostProps = {
 };
 
 function PostBody({ data }: Props): ReactElement {
-	const { body, sidePosts, category } = data;
+	const { body, sidePosts, category, title } = data;
 	const [currentLocation, setCurrentLocation] = useState<string>("");
+	const { asPath } = useRouter();
+
+	const breadcrumbItems = [
+		{
+			text: "Home",
+			href: "/",
+		},
+		{
+			text: category.title,
+			href: "/category/" + category.slug,
+		},
+		{
+			text: title,
+			href: asPath,
+		},
+	];
 
 	useEffect(() => {
 		setCurrentLocation(window.location.href);
@@ -40,6 +58,8 @@ function PostBody({ data }: Props): ReactElement {
 			<ShareSideBar sharingUrl={currentLocation} />
 
 			<Main>
+				<Breadcrumb data={breadcrumbItems} />
+
 				<BlockContent
 					blocks={body}
 					projectId={sanityClient.config().projectId}
@@ -69,6 +89,9 @@ const Container = styled.div<ContainerProps>`
 	padding: 0 10% 0 2.5%;
 	gap: 0 5%;
 `;
+
+type HeaderProps = {};
+const Header = styled.header<HeaderProps>``;
 
 type RightSideBarProps = {};
 const RightSideBar = styled.aside<RightSideBarProps>``;

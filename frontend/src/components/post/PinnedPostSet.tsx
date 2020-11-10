@@ -4,7 +4,10 @@ import React, { ReactElement } from "react";
 import tw, { css, styled, theme } from "twin.macro";
 import Image from "next/image";
 import dayjs from "dayjs";
-import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import {
+	ENDPOINTS,
+	FORMAT_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
 
 type PinnedPostSetProps = {
 	posts: PinnedPostProps["data"][];
@@ -60,7 +63,7 @@ function PinnedPost({ data, isMainPinnedPost }: PinnedPostProps): ReactElement {
 	return (
 		<Container>
 			<Info>
-				<Link href={`/category/${category.slug}`} passHref>
+				<Link href={`${ENDPOINTS.category}/${category.slug}`} passHref>
 					<Category>{category.title}</Category>
 				</Link>
 				<Link href={linkToPost}>

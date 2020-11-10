@@ -1,4 +1,7 @@
-import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import {
+	ENDPOINTS,
+	FORMAT_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
 import { trimLastWord } from "@src/utils";
 import dayjs from "dayjs";
 import Link from "next/link";
@@ -15,7 +18,7 @@ type Props = {
 		title: string;
 		author: {
 			name: string;
-			imageUrl: string;
+			slug: string;
 		};
 		publishedAt: string;
 		readMinute: string;
@@ -35,14 +38,14 @@ function PostHeader({ data }: Props): ReactElement {
 	return (
 		<Container bgSrc={thumbnailSrc}>
 			<InfoContainer>
-				<Link href={"/category/" + category.slug}>
+				<Link href={`${ENDPOINTS.category}/${category.slug}`}>
 					<a>
 						<Category>{category.title}</Category>
 					</a>
 				</Link>
 				<Title>{preventOrphanText(title)}</Title>
 				<SubTitleContainer>
-					<Link href={"/author/" + author.name}>
+					<Link href={`${ENDPOINTS.author}/${author.slug}`}>
 						<a>
 							<SubTitle underlineOnHover>By {author.name}</SubTitle>
 							<Separator />

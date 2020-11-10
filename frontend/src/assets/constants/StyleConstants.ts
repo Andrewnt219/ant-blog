@@ -10,3 +10,8 @@ export const FORMAT_CONSTANTS = {
 export const NUMBER_CONSTANTS = {
 	refreshInterval: 10000,
 };
+
+export const ENDPOINTS = {
+	author: "/authors",
+	category: "/categories",
+};

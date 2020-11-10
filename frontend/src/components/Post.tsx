@@ -1,3 +1,4 @@
+import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
 import { trimLastWord } from "@src/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,7 +21,7 @@ function Category({ data, className }: CategoryProps): ReactElement {
 	const { slug, title } = data;
 
 	return (
-		<Link href={"/category/" + slug}>
+		<Link href={`${ENDPOINTS.category}/${slug}`}>
 			<StyledCategory className={className}>
 				<a>{title}</a>
 			</StyledCategory>

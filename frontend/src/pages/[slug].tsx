@@ -43,14 +43,14 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 		body,
 		thumbnailSrc,
 		title,
-		category,
+		categories,
 		rawContent,
 		publishedAt,
 	} = post;
 
 	const headerData = {
 		thumbnailSrc,
-		category,
+		category: categories[0],
 		title,
 		author,
 		publishedAt,
@@ -64,7 +64,7 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 			</Head>
 
 			<PostHeader data={headerData} />
-			<PostBody data={{ body, category, title }} />
+			<PostBody data={{ body, categories, title, author }} />
 			<Comment _postId={_id} />
 
 			{comments.map((comment) => (
@@ -87,17 +87,19 @@ type PostComment = FirestoreComment & {
 
 type Post = {
 	_id: string;
-	category: {
+	categories: {
 		title: string;
 		slug: string;
-	};
+	}[];
 	rawContent: string;
 	title: string;
 	thumbnailSrc: string;
 	body: any;
 	author: {
 		name: string;
-		imageUrl: string;
+		avatarSrc: string;
+		slug: string;
+		bio: any;
 	};
 	publishedAt: string;
 };
@@ -111,13 +113,15 @@ export const getStaticProps: GetStaticProps<
 		`
         *[slug.current == $slug] {
 						_id,
-						"category": categories[] -> {title, "slug": slug.current}[0],
+						"categories": categories[] -> {title, "slug": slug.current},
             title,
             "thumbnailSrc": mainImage.asset -> url,
 						body,
 						author -> {
 							name,
-							"imageUrl": image.asset -> url
+							"slug": slug.current,
+							"avatarSrc": image.asset -> url,
+							bio
 						},
 						publishedAt,
 						rawContent

@@ -12,20 +12,34 @@ import { sanityFetcher } from "@src/lib/swr";
 import { SanityClientErrorResponse } from "sanity";
 import Loading from "../Loading";
 import Broken from "../Broken";
+import { FaFacebookF, FaHeart, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import Link from "next/link";
+import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
 
 type Props = {
 	data: {
-		category: {
+		categories: {
 			title: string;
 			slug: string;
-		};
+		}[];
 		title: string;
 		body: any;
+		author: {
+			avatarSrc: string;
+			bio: any;
+			name: string;
+			socialMedias?: string[];
+			slug: string;
+		};
 	};
 };
 
+type a = {
+	name?: { first: string };
+};
+
 function PostBody({ data }: Props): ReactElement {
-	const { body, category, title } = data;
+	const { body, categories, title, author } = data;
 	const [currentLocation, setCurrentLocation] = useState<string>("");
 	const { asPath } = useRouter();
 
@@ -68,8 +82,8 @@ function PostBody({ data }: Props): ReactElement {
 			href: "/",
 		},
 		{
-			text: category.title,
-			href: "/category/" + category.slug,
+			text: categories[0].title,
+			href: `${ENDPOINTS.category}/${categories[0].slug}`,
 		},
 		{
 			text: title,
@@ -83,24 +97,78 @@ function PostBody({ data }: Props): ReactElement {
 
 	return (
 		<Container>
-			<Header>
-				<ShareSideBar sharingUrl={currentLocation} />
-			</Header>
+			<ShareSideBar sharingUrl={currentLocation} />
 
 			<Main>
-				<Breadcrumb data={breadcrumbItems} />
+				<header>
+					<Breadcrumb data={breadcrumbItems} />
+				</header>
 
-				<BlockContent
-					blocks={body}
-					projectId={sanityClient.config().projectId}
-					dataset={sanityClient.config().dataset}
-					serializers={postSerializer}
-					imageOptions={{ fit: "clip", auto: "format" }}
-				/>
+				<main>
+					<BlockContent
+						blocks={body}
+						projectId={sanityClient.config().projectId}
+						dataset={sanityClient.config().dataset}
+						serializers={postSerializer}
+						imageOptions={{ fit: "clip", auto: "format" }}
+					/>
+				</main>
+
+				<Footer>
+					<AdditionalInfo>
+						<CategorySet>
+							{categories
+								.sort((a, b) => a.title.localeCompare(b.title))
+								.map((category) => (
+									<Category key={category.slug}>
+										<Link href={`${ENDPOINTS.category}/${category.slug}`}>
+											<a>{category.title}</a>
+										</Link>
+									</Category>
+								))}
+						</CategorySet>
+						<ShareButtonSet>
+							{[FaFacebookF, FaTwitter, FaLinkedinIn].map((Icon, index) => (
+								<li key={index}>
+									<ShareButton>
+										<Icon />
+									</ShareButton>
+								</li>
+							))}
+						</ShareButtonSet>
+					</AdditionalInfo>
+
+					{/* TODO: use the lottie dog for various reactions */}
+					<button>
+						<FaHeart /> <span>340</span>
+					</button>
+					<hr />
+
+					<AuthorInfo>
+						<div>
+							<img
+								width={50}
+								height={50}
+								src={author.avatarSrc}
+								alt={author.name + "avatar"}
+							/>
+							<Link href={`${ENDPOINTS.author}/${author.slug}`}>
+								<a>{author.name}</a>
+							</Link>
+							<p>{author.bio}</p>
+
+							{/* TODO: add author's social media */}
+							{/* {socialMedias?.map(link => )} */}
+						</div>
+					</AuthorInfo>
+
+					<RelatedPosts>
+						<h2>Related posts</h2>
+					</RelatedPosts>
+				</Footer>
 			</Main>
 
 			{renderedSidePosts}
-			<Footer>{category.title}</Footer>
 		</Container>
 	);
 }
@@ -113,13 +181,33 @@ const Container = styled.div<ContainerProps>`
 	gap: 0 5%;
 `;
 
-type HeaderProps = {};
-const Header = styled.header<HeaderProps>``;
-
 type MainProps = {};
 const Main = styled.div<MainProps>``;
 
 type FooterProps = {};
 const Footer = styled.footer<FooterProps>``;
+
+type AdditionalInfoProps = {};
+const AdditionalInfo = styled.div<AdditionalInfoProps>`
+	${tw`flex justify-between`}
+`;
+
+type CategorySetProps = {};
+const CategorySet = styled.ul<CategorySetProps>``;
+
+type CategoryProps = {};
+const Category = styled.li<CategoryProps>``;
+
+type ShareButtonSetProps = {};
+const ShareButtonSet = styled.ul<ShareButtonSetProps>``;
+
+type ShareButtonProps = {};
+const ShareButton = styled.button<ShareButtonProps>``;
+
+type AuthorInfoProps = {};
+const AuthorInfo = styled.div<AuthorInfoProps>``;
+
+type RelatedPostsProps = {};
+const RelatedPosts = styled.div<RelatedPostsProps>``;
 
 export default PostBody;

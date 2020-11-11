@@ -29,6 +29,7 @@ module.exports = {
 			textColor: "var(--text-color)",
 			ltextColor: "var(--text-color-light)",
 			borderColor: "var(--border-color)",
+			lborderColor: "var(--border-color-light)",
 
 			black: "#000",
 			white: "#fff",

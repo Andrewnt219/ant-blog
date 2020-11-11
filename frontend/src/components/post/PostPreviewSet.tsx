@@ -131,8 +131,7 @@ const Footer = styled.footer<FooterProps>`
 type SocialMediaSetProps = {};
 const SocialMediaSet = styled.ul<SocialMediaSetProps>`
 	font-size: smaller;
-	border-color: #ebebeb;
-	${tw`mt-5 flex items-center justify-center border-t border-b border-solid p-3 space-x-3`}
+	${tw`mt-5 flex items-center justify-center border-t border-lborderColor border-b border-solid p-3 space-x-3`}
 `;
 
 export default PostPreviewSet;

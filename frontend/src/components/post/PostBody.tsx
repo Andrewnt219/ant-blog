@@ -12,9 +12,10 @@ import { sanityFetcher } from "@src/lib/swr";
 import { SanityClientErrorResponse } from "sanity";
 import Loading from "../Loading";
 import Broken from "../Broken";
-import { FaFacebookF, FaHeart, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import Link from "next/link";
 import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
+import { PostReactionSet } from "./PostReactionSet";
 
 type Props = {
 	data: {
@@ -137,11 +138,7 @@ function PostBody({ data }: Props): ReactElement {
 							))}
 						</ShareButtonSet>
 					</AdditionalInfo>
-
-					{/* TODO: use the lottie dog for various reactions */}
-					<button>
-						<FaHeart /> <span>340</span>
-					</button>
+					<PostReactionSet itemHeight="3rem" />
 					<hr />
 
 					<AuthorInfo>
@@ -185,24 +182,60 @@ type MainProps = {};
 const Main = styled.div<MainProps>``;
 
 type FooterProps = {};
-const Footer = styled.footer<FooterProps>``;
+const Footer = styled.footer<FooterProps>`
+	${tw`space-y-5`}
+`;
 
 type AdditionalInfoProps = {};
 const AdditionalInfo = styled.div<AdditionalInfoProps>`
-	${tw`flex justify-between`}
+	${tw`text-xs`}
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: flex-start;
+	gap: 2rem;
 `;
 
 type CategorySetProps = {};
-const CategorySet = styled.ul<CategorySetProps>``;
+const CategorySet = styled.ul<CategorySetProps>`
+	${tw`flex space-x-2 items-center flex-wrap -mt-2`}
+
+	& > * {
+		${tw`mt-2`}
+	}
+`;
 
 type CategoryProps = {};
-const Category = styled.li<CategoryProps>``;
+const Category = styled.li<CategoryProps>`
+	${tw`px-4 py-1 border border-solid border-lborderColor uppercase font-500 tracking-widest`}
+	${tw`flex items-center justify-center`}
+	font-size: smaller;
+
+	transition: color 300ms ease;
+
+	:hover,
+	:focus {
+		${tw`text-accent`}
+	}
+`;
 
 type ShareButtonSetProps = {};
-const ShareButtonSet = styled.ul<ShareButtonSetProps>``;
+const ShareButtonSet = styled.ul<ShareButtonSetProps>`
+	${tw`flex items-center space-x-1`}
+`;
 
 type ShareButtonProps = {};
-const ShareButton = styled.button<ShareButtonProps>``;
+const ShareButton = styled.button<ShareButtonProps>`
+	${tw`flex items-center justify-center`}
+	${tw`border-lborderColor border border-solid rounded-full p-2`}
+	font-size: smaller;
+
+	transition: color 300ms ease;
+
+	:hover,
+	:focus {
+		${tw`text-accent`}
+	}
+`;
 
 type AuthorInfoProps = {};
 const AuthorInfo = styled.div<AuthorInfoProps>``;

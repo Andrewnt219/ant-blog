@@ -17,6 +17,7 @@ import Link from "next/link";
 import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
 import { PostReactionSet } from "./PostReactionSet";
 import CenteredElementWithLine from "../CenteredElementWithLine";
+import Image from "next/image";
 
 type Props = {
 	data: {
@@ -116,6 +117,7 @@ function PostBody({ data }: Props): ReactElement {
 					/>
 				</main>
 
+				{/* TODO move out of PostBody to [slug] because of SharingSideBar range */}
 				<Footer>
 					<AdditionalInfo>
 						<CategorySet>
@@ -140,31 +142,28 @@ function PostBody({ data }: Props): ReactElement {
 						</ShareButtonSet>
 					</AdditionalInfo>
 					<PostReactionSet itemHeight="3rem" />
-					<hr />
 
-					<AuthorInfo>
-						<div>
-							<CenteredElementWithLine>
-								<img
+					<AuthorContainer>
+						<CenteredElementWithLine>
+							<AuthorImageContainer>
+								<Image
 									src={author.avatarSrc}
 									alt={author.name + "avatar"}
-									style={{
-										display: "inline-block",
-										width: "5rem",
-										height: "5rem",
-									}}
+									unsized
 								/>
-							</CenteredElementWithLine>
+							</AuthorImageContainer>
+						</CenteredElementWithLine>
 
-							<Link href={`${ENDPOINTS.author}/${author.slug}`}>
-								<a>{author.name}</a>
+						<AuthorInfo>
+							<Link href={`${ENDPOINTS.author}/${author.slug}`} passHref>
+								<AuthorName>{author.name}</AuthorName>
 							</Link>
-							<p>{author.bio}</p>
+							<AuthorBio>{author.bio}</AuthorBio>
 
 							{/* TODO: add author's social media */}
 							{/* {socialMedias?.map(link => )} */}
-						</div>
-					</AuthorInfo>
+						</AuthorInfo>
+					</AuthorContainer>
 
 					<RelatedPosts>
 						<h2>Related posts</h2>
@@ -190,7 +189,7 @@ const Main = styled.div<MainProps>``;
 
 type FooterProps = {};
 const Footer = styled.footer<FooterProps>`
-	${tw`space-y-5`}
+	${tw`space-y-10`}
 `;
 
 type AdditionalInfoProps = {};
@@ -244,8 +243,42 @@ const ShareButton = styled.button<ShareButtonProps>`
 	}
 `;
 
+type AuthorContainerProps = {};
+const AuthorContainer = styled.div<AuthorContainerProps>`
+	/* NOTE this should be the same space-y with authorInfo */
+	${tw`space-y-3`}
+`;
+
 type AuthorInfoProps = {};
-const AuthorInfo = styled.div<AuthorInfoProps>``;
+const AuthorInfo = styled.div<AuthorInfoProps>`
+	${tw`flex flex-col items-center space-y-3 text-sm`}
+`;
+
+type AuthorImageContainerProps = {};
+const AuthorImageContainer = styled.div<AuthorImageContainerProps>`
+	${tw`w-24 h-24 rounded-full overflow-hidden`}
+
+	div,
+	img {
+		width: 100%;
+		height: 100%;
+	}
+
+	img {
+		object-fit: cover;
+		object-position: center center;
+	}
+`;
+
+type AuthorNameProps = {};
+const AuthorName = styled.a<AuthorNameProps>`
+	${tw`text-xl font-700`}
+`;
+
+type AuthorBioProps = {};
+const AuthorBio = styled.p<AuthorBioProps>`
+	${tw`text-center`}
+`;
 
 type RelatedPostsProps = {};
 const RelatedPosts = styled.div<RelatedPostsProps>``;

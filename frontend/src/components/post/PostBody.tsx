@@ -16,6 +16,7 @@ import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import Link from "next/link";
 import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
 import { PostReactionSet } from "./PostReactionSet";
+import CenteredElementWithLine from "../CenteredElementWithLine";
 
 type Props = {
 	data: {
@@ -143,12 +144,18 @@ function PostBody({ data }: Props): ReactElement {
 
 					<AuthorInfo>
 						<div>
-							<img
-								width={50}
-								height={50}
-								src={author.avatarSrc}
-								alt={author.name + "avatar"}
-							/>
+							<CenteredElementWithLine>
+								<img
+									src={author.avatarSrc}
+									alt={author.name + "avatar"}
+									style={{
+										display: "inline-block",
+										width: "5rem",
+										height: "5rem",
+									}}
+								/>
+							</CenteredElementWithLine>
+
 							<Link href={`${ENDPOINTS.author}/${author.slug}`}>
 								<a>{author.name}</a>
 							</Link>

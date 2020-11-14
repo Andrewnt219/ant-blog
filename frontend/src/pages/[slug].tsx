@@ -170,7 +170,7 @@ export const getStaticProps: GetStaticProps<
 	{ post: Post; sidePosts: SidePostSetProps["posts"] },
 	{ slug: string }
 > = async ({ params }) => {
-	const posts = await sanityClient.fetch<Omit<Post, "comments">[]>(
+	const post = await sanityClient.fetch<Post>(
 		`
         *[slug.current == $slug] {
 						_id,
@@ -186,7 +186,7 @@ export const getStaticProps: GetStaticProps<
 						},
 						publishedAt,
 						rawContent
-        }
+        }[0]
     `,
 		{
 			slug: params?.slug,
@@ -198,7 +198,7 @@ export const getStaticProps: GetStaticProps<
 	);
 
 	return {
-		props: { post: posts[0], sidePosts },
+		props: { post, sidePosts },
 		revalidate: 1,
 	};
 };

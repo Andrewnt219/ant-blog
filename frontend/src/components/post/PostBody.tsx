@@ -18,10 +18,6 @@ type Props = {
 	};
 };
 
-type a = {
-	name?: { first: string };
-};
-
 function PostBody({ data }: Props): ReactElement {
 	const { body, categories, title } = data;
 	const { asPath } = useRouter();

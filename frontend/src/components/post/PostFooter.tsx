@@ -75,10 +75,6 @@ function PostFooter({ data, className }: Props): ReactElement {
 					{/* {socialMedias?.map(link => )} */}
 				</AuthorInfo>
 			</AuthorContainer>
-
-			<RelatedPosts>
-				<h2>Related posts</h2>
-			</RelatedPosts>
 		</Footer>
 	);
 }
@@ -175,8 +171,5 @@ type AuthorBioProps = {};
 const AuthorBio = styled.p<AuthorBioProps>`
 	${tw`text-center`}
 `;
-
-type RelatedPostsProps = {};
-const RelatedPosts = styled.div<RelatedPostsProps>``;
 
 export default PostFooter;

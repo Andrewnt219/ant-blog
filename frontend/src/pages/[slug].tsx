@@ -7,10 +7,39 @@ import db from "@src/lib/firebase/db";
 import { calculateReadingMinutes } from "@src/utils";
 import PostHeader from "@src/components/post/PostHeader";
 import PostBody from "@src/components/post/PostBody";
+import PostFooter from "@src/components/post/PostFooter";
+import { styled } from "twin.macro";
+import ShareSideBar from "@src/components/ShareSideBar";
+import SidePostSet, {
+	SidePostSetProps,
+} from "@src/components/post/SidePostSet";
+import useSWR from "swr";
+import { sanityFetcher } from "@src/lib/swr";
+import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import { SanityClientErrorResponse } from "sanity";
+import Loading from "@src/components/Loading";
+import Broken from "@src/components/Broken";
 
 // TODO: router.fallback
-const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Post = ({
+	post,
+	sidePosts: initialSidePosts,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [comments, setComments] = useState<PostComment[]>([]);
+
+	const [currentLocation, setCurrentLocation] = useState<string>("");
+
+	const { data: sidePosts, error } = useSWR<
+		SidePostSetProps["posts"],
+		SanityClientErrorResponse
+	>(SIDE_POSTS_QUERY, sanityFetcher, {
+		initialData: initialSidePosts,
+		refreshInterval: NUMBER_CONSTANTS.refreshInterval,
+	});
+
+	useEffect(() => {
+		setCurrentLocation(window.location.href);
+	}, []);
 
 	// Subscribe for live comments
 	useEffect(() => {
@@ -57,6 +86,20 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 		readMinute: calculateReadingMinutes(rawContent),
 	};
 
+	let renderedSidePosts = (
+		<Loading height="10rem" loadingText="Fetching posts..." />
+	);
+
+	if (error) {
+		renderedSidePosts = (
+			<Broken errorText="Fail to fetch posts :(" height="10rem" />
+		);
+	}
+
+	if (sidePosts) {
+		renderedSidePosts = <SidePostSet posts={sidePosts} title="Latest Post" />;
+	}
+
 	return (
 		<>
 			<Head>
@@ -64,7 +107,11 @@ const Post = ({ post }: InferGetStaticPropsType<typeof getStaticProps>) => {
 			</Head>
 
 			<PostHeader data={headerData} />
-			<PostBody data={{ body, categories, title, author }} />
+			<Content>
+				<ShareSideBar sharingUrl={currentLocation} />
+				<PostBody data={{ body, categories, title, author }} />
+				{renderedSidePosts}
+			</Content>
 			<Comment _postId={_id} />
 
 			{comments.map((comment) => (
@@ -104,9 +151,21 @@ type Post = {
 	publishedAt: string;
 };
 
-// TODO: multi category
+const SIDE_POSTS_QUERY = `
+		*[_type == "post" && !isArchived && !isPinned] | order(_updatedAt desc) {
+			title,
+			"slug": slug.current,
+			publishedAt,
+			"category": categories[] -> {title, "slug": slug.current}[0],
+			"image": mainImage {
+				alt,
+				"url": asset -> url
+			}
+		}[0...3]
+	`;
+
 export const getStaticProps: GetStaticProps<
-	{ post: Post },
+	{ post: Post; sidePosts: SidePostSetProps["posts"] },
 	{ slug: string }
 > = async ({ params }) => {
 	const posts = await sanityClient.fetch<Omit<Post, "comments">[]>(
@@ -132,8 +191,12 @@ export const getStaticProps: GetStaticProps<
 		}
 	);
 
+	const sidePosts = await sanityClient.fetch<SidePostSetProps["posts"]>(
+		SIDE_POSTS_QUERY
+	);
+
 	return {
-		props: { post: posts[0] },
+		props: { post: posts[0], sidePosts },
 		revalidate: 1,
 	};
 };
@@ -150,5 +213,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		fallback: false,
 	};
 };
+
+type ContentProps = {};
+const Content = styled.div<ContentProps>`
+	display: grid;
+	grid-template-columns: 10% 1fr 25%;
+	padding: 0 10% 0 2.5%;
+	gap: 0 5%;
+`;
 
 export default Post;

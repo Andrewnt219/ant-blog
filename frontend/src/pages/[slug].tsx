@@ -111,6 +111,8 @@ const Post = ({
 				<ShareSideBar sharingUrl={currentLocation} />
 				<PostBody data={{ body, categories, title }} />
 				{renderedSidePosts}
+			</ContentLayout>
+			<ContentLayout>
 				<CustomPostFooter data={{ categories, author }} />
 			</ContentLayout>
 

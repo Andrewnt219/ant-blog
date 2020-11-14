@@ -21,13 +21,15 @@ type Props = {
 			slug: string;
 		};
 	};
+
+	className?: string;
 };
 
-function PostFooter({ data }: Props): ReactElement {
+function PostFooter({ data, className }: Props): ReactElement {
 	const { categories, author } = data;
 
 	return (
-		<Footer>
+		<Footer className={className}>
 			<AdditionalInfo>
 				<CategorySet>
 					{categories

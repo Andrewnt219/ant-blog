@@ -107,11 +107,13 @@ const Post = ({
 			</Head>
 
 			<PostHeader data={headerData} />
-			<Content>
+			<ContentLayout>
 				<ShareSideBar sharingUrl={currentLocation} />
-				<PostBody data={{ body, categories, title, author }} />
+				<PostBody data={{ body, categories, title }} />
 				{renderedSidePosts}
-			</Content>
+				<CustomPostFooter data={{ categories, author }} />
+			</ContentLayout>
+
 			<Comment _postId={_id} />
 
 			{comments.map((comment) => (
@@ -214,12 +216,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	};
 };
 
-type ContentProps = {};
-const Content = styled.div<ContentProps>`
+type ContentLayoutProps = {};
+const ContentLayout = styled.div<ContentLayoutProps>`
 	display: grid;
 	grid-template-columns: 10% 1fr 25%;
 	padding: 0 10% 0 2.5%;
 	gap: 0 5%;
+`;
+
+const CustomPostFooter = styled(PostFooter)`
+	grid-column: 2/3;
 `;
 
 export default Post;

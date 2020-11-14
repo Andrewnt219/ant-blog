@@ -6,7 +6,6 @@ import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
 import Breadcrumb from "../Breadcrumb";
 import { useRouter } from "next/router";
 import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
-import PostFooter from "./PostFooter";
 
 type Props = {
 	data: {
@@ -16,13 +15,6 @@ type Props = {
 		}[];
 		title: string;
 		body: any;
-		author: {
-			avatarSrc: string;
-			bio: any;
-			name: string;
-			socialMedias?: string[];
-			slug: string;
-		};
 	};
 };
 
@@ -31,7 +23,7 @@ type a = {
 };
 
 function PostBody({ data }: Props): ReactElement {
-	const { body, categories, title, author } = data;
+	const { body, categories, title } = data;
 	const { asPath } = useRouter();
 
 	const breadcrumbItems = [
@@ -64,8 +56,6 @@ function PostBody({ data }: Props): ReactElement {
 					imageOptions={{ fit: "clip", auto: "format" }}
 				/>
 			</main>
-
-			<PostFooter data={{ categories, author }} />
 		</Container>
 	);
 }

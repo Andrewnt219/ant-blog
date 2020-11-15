@@ -42,6 +42,7 @@ function PostFooter({ data, className }: Props): ReactElement {
 							</Category>
 						))}
 				</CategorySet>
+
 				<ShareButtonSet>
 					{[FaFacebookF, FaTwitter, FaLinkedinIn].map((Icon, index) => (
 						<li key={index}>
@@ -56,6 +57,7 @@ function PostFooter({ data, className }: Props): ReactElement {
 
 			<AuthorContainer>
 				<CenteredElementWithLine>
+					{/* TODO: author image stale */}
 					<AuthorImageContainer>
 						<Image
 							src={author.avatarSrc}

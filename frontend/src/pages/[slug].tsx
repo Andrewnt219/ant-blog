@@ -8,7 +8,7 @@ import { calculateReadingMinutes } from "@src/utils";
 import PostHeader from "@src/components/post/PostHeader";
 import PostBody from "@src/components/post/PostBody";
 import PostFooter from "@src/components/post/PostFooter";
-import { styled } from "twin.macro";
+import tw, { styled } from "twin.macro";
 import ShareSideBar from "@src/components/ShareSideBar";
 import SidePostSet, {
 	SidePostSetProps,
@@ -19,21 +19,33 @@ import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import { SanityClientErrorResponse } from "sanity";
 import Loading from "@src/components/Loading";
 import Broken from "@src/components/Broken";
+import * as sanityDataService from "@src/service/sanityDataService";
+import RelatedPostSet from "@src/components/post/RelatedPostSet";
+import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
 
 // TODO: router.fallback
 const Post = ({
 	post,
 	sidePosts: initialSidePosts,
+	relatedPosts: initialRelatedPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [comments, setComments] = useState<PostComment[]>([]);
 
 	const [currentLocation, setCurrentLocation] = useState<string>("");
 
-	const { data: sidePosts, error } = useSWR<
+	const { data: sidePosts, error: sidePostsError } = useSWR<
 		SidePostSetProps["posts"],
 		SanityClientErrorResponse
 	>(SIDE_POSTS_QUERY, sanityFetcher, {
 		initialData: initialSidePosts,
+		refreshInterval: NUMBER_CONSTANTS.refreshInterval,
+	});
+
+	const { data: relatedPosts, error: relatedPostsError } = useSWR<
+		sanityDataService.RelatedPostsProps[],
+		SanityClientErrorResponse
+	>(SIDE_POSTS_QUERY, sanityFetcher, {
+		initialData: initialRelatedPosts,
 		refreshInterval: NUMBER_CONSTANTS.refreshInterval,
 	});
 
@@ -90,7 +102,7 @@ const Post = ({
 		<Loading height="10rem" loadingText="Fetching posts..." />
 	);
 
-	if (error) {
+	if (sidePostsError) {
 		renderedSidePosts = (
 			<Broken errorText="Fail to fetch posts :(" height="10rem" />
 		);
@@ -98,6 +110,20 @@ const Post = ({
 
 	if (sidePosts) {
 		renderedSidePosts = <SidePostSet posts={sidePosts} title="Latest Post" />;
+	}
+
+	let renderedRelatedPosts = (
+		<Loading height="10rem" loadingText="Fetching posts..." />
+	);
+
+	if (relatedPostsError) {
+		renderedSidePosts = (
+			<Broken errorText="Fail to fetch posts :(" height="10rem" />
+		);
+	}
+
+	if (relatedPosts) {
+		renderedRelatedPosts = <RelatedPostSet posts={relatedPosts} />;
 	}
 
 	return (
@@ -112,8 +138,13 @@ const Post = ({
 				<PostBody data={{ body, categories, title }} />
 				{renderedSidePosts}
 			</ContentLayout>
+
 			<ContentLayout>
-				<CustomPostFooter data={{ categories, author }} />
+				<PostFooter data={{ categories, author }} />
+				<CenteredElementWithLine>
+					<Title>Related posts</Title>
+				</CenteredElementWithLine>
+				{renderedRelatedPosts}
 			</ContentLayout>
 
 			<Comment _postId={_id} />
@@ -169,7 +200,11 @@ const SIDE_POSTS_QUERY = `
 	`;
 
 export const getStaticProps: GetStaticProps<
-	{ post: Post; sidePosts: SidePostSetProps["posts"] },
+	{
+		post: Post;
+		sidePosts: SidePostSetProps["posts"];
+		relatedPosts: sanityDataService.RelatedPostsProps[];
+	},
 	{ slug: string }
 > = async ({ params }) => {
 	const post = await sanityClient.fetch<Post>(
@@ -195,12 +230,16 @@ export const getStaticProps: GetStaticProps<
 		}
 	);
 
+	const relatedPosts = await sanityDataService.getRelatedPosts.fetch(
+		post.categories[0].slug
+	);
+
 	const sidePosts = await sanityClient.fetch<SidePostSetProps["posts"]>(
 		SIDE_POSTS_QUERY
 	);
 
 	return {
-		props: { post, sidePosts },
+		props: { post, sidePosts, relatedPosts },
 		revalidate: 1,
 	};
 };
@@ -220,14 +259,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 type ContentLayoutProps = {};
 const ContentLayout = styled.div<ContentLayoutProps>`
+	${tw`space-y-10`}
 	display: grid;
 	grid-template-columns: 10% 1fr 25%;
 	padding: 0 10% 0 2.5%;
 	gap: 0 5%;
+
+	& > *:not(aside) {
+		grid-column: 2/3;
+	}
 `;
 
-const CustomPostFooter = styled(PostFooter)`
-	grid-column: 2/3;
+type TitleProps = {};
+const Title = styled.span<TitleProps>`
+	${tw`text-xl font-700`}
 `;
 
 export default Post;

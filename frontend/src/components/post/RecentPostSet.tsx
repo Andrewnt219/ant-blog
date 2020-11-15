@@ -43,7 +43,7 @@ function RecentPostSet({ posts }: RecentPostSetProps): ReactElement {
 	);
 }
 
-function RecentPost({ data, isMain }: RecentPostProps): ReactElement {
+export function RecentPost({ data, isMain }: RecentPostProps): ReactElement {
 	const {
 		category,
 		slug,

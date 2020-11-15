@@ -21,7 +21,7 @@ const getRelatedPostsQuery = `
       "url": asset -> url
     },
     "slug": slug.current,
-  }
+  }[0...4]
 `;
 export const getRelatedPosts = {
 	query: getRelatedPostsQuery,

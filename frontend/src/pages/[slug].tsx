@@ -44,10 +44,14 @@ const Post = ({
 	const { data: relatedPosts, error: relatedPostsError } = useSWR<
 		sanityDataService.RelatedPostsProps[],
 		SanityClientErrorResponse
-	>(SIDE_POSTS_QUERY, sanityFetcher, {
-		initialData: initialRelatedPosts,
-		refreshInterval: NUMBER_CONSTANTS.refreshInterval,
-	});
+	>(
+		sanityDataService.getRelatedPosts.query,
+		sanityDataService.getRelatedPosts.fetch.bind(this, post.categories[0].slug),
+		{
+			initialData: initialRelatedPosts,
+			refreshInterval: NUMBER_CONSTANTS.refreshInterval,
+		}
+	);
 
 	useEffect(() => {
 		setCurrentLocation(window.location.href);

@@ -99,6 +99,7 @@ export default {
 					"Main image (thumbnail) như avatar của bài viết á, cũng là tấm hình đầu tiên của bài viết."
 				),
 		},
+		// TODO: add isMain attribute
 		{
 			name: "categories",
 			title: "Categories",

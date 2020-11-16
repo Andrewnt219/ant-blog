@@ -1,4 +1,4 @@
-import { FirestoreComment } from "@src/components/CommentWriter";
+import { FirestoreComment } from "@src/components/post/CommentSet";
 import db from "@src/lib/firebase/db";
 import { useEffect, useState } from "react";
 

@@ -2,8 +2,7 @@ import React, { ReactElement } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import sanityClient from "@src/lib/sanity/client";
 import Head from "next/head";
-import Comment from "@src/components/CommentWriter";
-import { calculateReadingMinutes, padZero } from "@src/utils";
+import { calculateReadingMinutes } from "@src/utils";
 import PostHeader from "@src/components/post/PostHeader";
 import PostBody from "@src/components/post/PostBody";
 import PostFooter from "@src/components/post/PostFooter";
@@ -33,7 +32,7 @@ const Post = ({
 	/* --------------------------------- STATES --------------------------------- */
 	// Post's comments
 	const comments = usePostComments(post._id);
-
+	console.log(comments);
 	// Full location to current page
 	const currentLocation = useCurrentLocation();
 
@@ -62,7 +61,7 @@ const Post = ({
 
 	/* --------------------------------- RENDER --------------------------------- */
 
-	const { _id, categories, rawContent } = post;
+	const { categories, rawContent } = post;
 
 	const renderedSidePosts = renderPosts(
 		sidePosts,
@@ -98,15 +97,7 @@ const Post = ({
 			<ContentLayout>
 				<PostFooter data={post} />
 
-				<Comment _postId={_id} />
-
-				<CenteredElementWithLine>
-					<Title>
-						<span tw="text-accent">{padZero(comments.length)}</span>{" "}
-						{comments.length > 1 ? "Comments" : "Comment"}
-					</Title>
-				</CenteredElementWithLine>
-				<CommentSet comments={comments} />
+				<CommentSet _postId={post._id} comments={comments} />
 
 				<CenteredElementWithLine>
 					<Title>Related posts</Title>

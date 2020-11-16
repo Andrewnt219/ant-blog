@@ -1,31 +1,22 @@
-import db from "@src/lib/firebase/db";
-import { AxiosError } from "axios";
 import React, { ReactElement, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import tw, { styled } from "twin.macro";
 import CenteredElementWithLine from "./CenteredElementWithLine";
 import TextArea from "./form/TextArea";
 import TextField from "./form/TextField";
-import omit from "lodash/omit";
 import { LOCAL_STORAGE } from "@src/assets/constants/StyleConstants";
 import Checkbox from "./form/Checkbox";
 import * as FormBuilder from "@src/components/form/FormBuilder";
 import { getRandomNumberInclusive } from "@src/utils";
 
-type FormValues = {
+export type CommentFormValues = {
 	username: string;
 	text: string;
 	isSaved: boolean;
 };
 
-export type FirestoreComment = Omit<FormValues, "isSaved"> & {
-	_postId: string;
-	_createdAt: number;
-};
-
 type Props = {
-	_postId: string;
-	submitHandler?: (data: FirestoreComment) => void;
+	submitHandler?: (data: CommentFormValues) => void;
 	className?: string;
 	config?: {
 		headerText?: string;
@@ -37,10 +28,10 @@ type Ref = HTMLFormElement;
 
 const CommentWriter = React.forwardRef<Ref, Props>(
 	(props, ref): ReactElement => {
-		const { _postId, submitHandler, className, config } = props;
+		const { submitHandler, className, config } = props;
 
 		const { register, handleSubmit, reset, watch, errors, setValue } = useForm<
-			FormValues
+			CommentFormValues
 		>({
 			mode: "onChange",
 		});
@@ -52,20 +43,7 @@ const CommentWriter = React.forwardRef<Ref, Props>(
 
 		const onSubmit = handleSubmit(async (data) => {
 			reset();
-
-			const submittedData: FirestoreComment = {
-				...omit(data, ["isSaved"]),
-				_postId,
-				_createdAt: Date.now(),
-			};
-
-			try {
-				db.collection("comments").add(submittedData);
-				submitHandler && submitHandler(submittedData);
-			} catch (error) {
-				console.log((error as AxiosError).message);
-				console.log(error);
-			}
+			submitHandler && submitHandler(data);
 
 			try {
 				if (data.isSaved) {
@@ -99,7 +77,7 @@ const CommentWriter = React.forwardRef<Ref, Props>(
 					<Header>{config?.headerText ?? "Write A Comment"}</Header>
 				</CenteredElementWithLine>
 
-				<TextField<FormValues>
+				<TextField<CommentFormValues>
 					id={`comment-name-${WRITER_ID}`}
 					type="text"
 					name="username"
@@ -110,7 +88,7 @@ const CommentWriter = React.forwardRef<Ref, Props>(
 					autoComplete="name"
 				/>
 
-				<TextArea<FormValues>
+				<TextArea<CommentFormValues>
 					name="text"
 					aria-required
 					id={`comment-text-${WRITER_ID}`}

@@ -46,6 +46,7 @@ const Post = ({
 		refreshInterval: NUMBER_CONSTANTS.refreshInterval,
 	});
 
+	// TODO: fixed server fetch !== client fetch (probably category different)
 	// fetch relatedPosts
 	const { data: relatedPosts, error: relatedPostsError } = useSWR<
 		sanityDataService.RelatedPostsProps[],

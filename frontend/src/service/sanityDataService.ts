@@ -11,6 +11,7 @@ export type RelatedPostsProps = {
 	slug: string;
 };
 
+// TODO: && post.id !== currentPost
 const getRelatedPostsQuery = `
   *[_type == "post" && categories[0]->slug.current == $categorySlug] {
     title,

@@ -1,9 +1,10 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useRef, useState } from "react";
 import tw, { styled } from "twin.macro";
-import { PostComment } from "@src/hooks";
+import { PostComment, useClickOutside } from "@src/hooks";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { FaReply } from "react-icons/fa";
+import CommentWriter from "@src/components/CommentWriter";
 
 dayjs.extend(relativeTime);
 
@@ -41,26 +42,47 @@ type CommentProps = {
 	data: PostComment;
 };
 function Comment({ data }: CommentProps) {
-	const { _createdAt, username, text } = data;
+	const { _createdAt, username, text, _postId } = data;
+
+	const [showCommentEditor, setShowCommentEditor] = useState(false);
+
+	const containerRef = useRef<HTMLDivElement | null>(null);
+	useClickOutside(containerRef, () => setShowCommentEditor(false));
+
 	return (
-		<StyledComment>
-			<Avatar src="/svg/user-avatar.svg" />
-			<Name>{username}</Name>
-			{/* TODO: add hover show exact date */}
-			<Date>{dayjs(_createdAt).fromNow()}</Date>
-			<Body>{text}</Body>
-			<Button>
-				<FaReply /> Reply
-			</Button>
+		<StyledComment ref={containerRef}>
+			<CommentContainer>
+				<Avatar src="/svg/user-avatar.svg" />
+				<Name>{username}</Name>
+				{/* TODO: add hover show exact date */}
+				<Date>{dayjs(_createdAt).fromNow()}</Date>
+				<Body>{text}</Body>
+				<Button onClick={() => setShowCommentEditor((prev) => !prev)}>
+					<FaReply /> {showCommentEditor ? "Close" : "Reply"}
+				</Button>
+			</CommentContainer>
+
+			{showCommentEditor && (
+				<CustomCommentWriter
+					_postId={_postId}
+					config={{
+						headerText: `Reply to ${username.split(" ")[0]}`,
+						buttonText: "Reply",
+					}}
+				/>
+			)}
 		</StyledComment>
 	);
 }
 
 type StyledCommentProps = {};
-const StyledComment = styled.article<StyledCommentProps>`
+const StyledComment = styled.div<StyledCommentProps>`
 	${tw`text-sm`}
 	${tw`py-8 border-b border-lborderColor border-solid`}
+`;
 
+type CommentContainerProps = {};
+const CommentContainer = styled.article<CommentContainerProps>`
 	display: grid;
 	grid-template-columns: 3rem 1fr auto;
 	grid-template-areas:
@@ -106,6 +128,10 @@ const Button = styled.button<ButtonProps>`
 		height: 0.5em;
 		${tw`text-xs text-ltextColor mr-1`}
 	}
+`;
+
+const CustomCommentWriter = styled(CommentWriter)`
+	${tw`ml-10`}
 `;
 
 export default CommentSet;

@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, ReactNode } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import sanityClient from "@src/lib/sanity/client";
 import Head from "next/head";
@@ -63,12 +63,16 @@ const Post = ({
 
 	const { _id, categories, rawContent } = post;
 
-	const renderedSidePosts = renderPosts(sidePosts, sidePostsError, SidePostSet);
+	const renderedSidePosts = renderPosts(
+		sidePosts,
+		sidePostsError,
+		<SidePostSet posts={sidePosts!} title="Lastest Posts" />
+	);
 
 	const renderedRelatedPosts = renderPosts(
 		relatedPosts,
 		relatedPostsError,
-		RelatedPostSet
+		<RelatedPostSet posts={relatedPosts!} />
 	);
 
 	return (
@@ -116,7 +120,7 @@ const Post = ({
 function renderPosts<P extends any[], E extends SanityClientErrorResponse>(
 	posts: P | undefined,
 	error: E | undefined,
-	Component: (props: any) => ReactElement
+	Component: JSX.Element
 ): ReactElement {
 	let renderedPosts = (
 		<Loading height="10rem" loadingText="Fetching posts..." />
@@ -129,7 +133,7 @@ function renderPosts<P extends any[], E extends SanityClientErrorResponse>(
 	}
 
 	if (posts) {
-		renderedPosts = <Component posts={posts} />;
+		renderedPosts = Component;
 	}
 
 	return renderedPosts;

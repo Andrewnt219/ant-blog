@@ -46,6 +46,7 @@ module.exports = {
 				900: "#1a202c",
 			},
 			red: {
+				error: "#e31c3d",
 				100: "#fff5f5",
 				200: "#fed7d7",
 				300: "#feb2b2",

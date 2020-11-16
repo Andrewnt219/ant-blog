@@ -1,8 +1,8 @@
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactElement } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import sanityClient from "@src/lib/sanity/client";
 import Head from "next/head";
-import Comment from "@src/components/Comment";
+import Comment from "@src/components/CommentWriter";
 import { calculateReadingMinutes, padZero } from "@src/utils";
 import PostHeader from "@src/components/post/PostHeader";
 import PostBody from "@src/components/post/PostBody";
@@ -97,11 +97,7 @@ const Post = ({
 			<ContentLayout>
 				<PostFooter data={post} />
 
-				<CenteredElementWithLine>
-					<Title>Related posts</Title>
-				</CenteredElementWithLine>
-
-				{renderedRelatedPosts}
+				<Comment _postId={_id} />
 
 				<CenteredElementWithLine>
 					<Title>
@@ -109,9 +105,12 @@ const Post = ({
 						{comments.length > 1 ? "Comments" : "Comment"}
 					</Title>
 				</CenteredElementWithLine>
-
 				<CommentSet comments={comments} />
-				<Comment _postId={_id} />
+
+				<CenteredElementWithLine>
+					<Title>Related posts</Title>
+				</CenteredElementWithLine>
+				{renderedRelatedPosts}
 			</ContentLayout>
 		</>
 	);

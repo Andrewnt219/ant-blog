@@ -15,3 +15,7 @@ export const ENDPOINTS = {
 	author: "/authors",
 	category: "/categories",
 };
+
+export const LOCAL_STORAGE = {
+	commentName: "comment-name",
+};

@@ -28,6 +28,10 @@ const StyledCommentSet = styled.ul<StyledCommentSetProps>`
 	&& {
 		${tw`mt-0`}
 	}
+
+	& > li:last-child > * {
+		${tw`border-none`}
+	}
 `;
 
 /* -------------------------------------------------------------------------- */
@@ -37,11 +41,11 @@ type CommentProps = {
 	data: PostComment;
 };
 function Comment({ data }: CommentProps) {
-	const { _createdAt, name, text } = data;
+	const { _createdAt, username, text } = data;
 	return (
 		<StyledComment>
 			<Avatar src="/svg/user-avatar.svg" />
-			<Name>{name}</Name>
+			<Name>{username}</Name>
 			{/* TODO: add hover show exact date */}
 			<Date>{dayjs(_createdAt).fromNow()}</Date>
 			<Body>{text}</Body>

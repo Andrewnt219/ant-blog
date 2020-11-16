@@ -166,7 +166,7 @@ const AuthorImageContainer = styled.div<AuthorImageContainerProps>`
 
 type AuthorNameProps = {};
 const AuthorName = styled.a<AuthorNameProps>`
-	${tw`text-xl font-700`}
+	${tw`text-xl font-600`}
 `;
 
 type AuthorBioProps = {};

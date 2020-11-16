@@ -3,7 +3,7 @@ import { Post } from "@src/components/Post";
 import { RelatedPostsProps } from "@src/service/sanityDataService";
 import dayjs from "dayjs";
 import React, { ReactElement } from "react";
-import { styled } from "twin.macro";
+import tw, { styled } from "twin.macro";
 
 type RelatedPostSetProps = {
 	posts: RelatedPostsProps[];
@@ -41,7 +41,7 @@ function RelatedPost({ data }: Props): ReactElement {
 		<PostContainer>
 			<Post.Thumbnail data={{ linkToPost, image }} />
 			<Post.InfoContainer>
-				<Post.Title data={{ linkToPost, title }} />
+				<CustomPostTitle data={{ linkToPost, title }} />
 				<Post.SubInfoContainer>
 					<Post.SubInfo isTime>
 						{dayjs(publishedAt).format(FORMAT_CONSTANTS.dateFormat)}
@@ -54,5 +54,9 @@ function RelatedPost({ data }: Props): ReactElement {
 
 type PostContainerProps = {};
 const PostContainer = styled.article<PostContainerProps>``;
+
+const CustomPostTitle = styled(Post.Title)`
+	${tw`font-600`}
+`;
 
 export default RelatedPostSet;

@@ -3,7 +3,7 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import sanityClient from "@src/lib/sanity/client";
 import Head from "next/head";
 import Comment from "@src/components/Comment";
-import { calculateReadingMinutes } from "@src/utils";
+import { calculateReadingMinutes, padZero } from "@src/utils";
 import PostHeader from "@src/components/post/PostHeader";
 import PostBody from "@src/components/post/PostBody";
 import PostFooter from "@src/components/post/PostFooter";
@@ -22,6 +22,7 @@ import * as sanityDataService from "@src/service/sanityDataService";
 import RelatedPostSet from "@src/components/post/RelatedPostSet";
 import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
 import { useCurrentLocation, usePostComments } from "@src/hooks";
+import CommentSet from "@src/components/post/CommentSet";
 
 // TODO: router.fallback
 const Post = ({
@@ -91,24 +92,23 @@ const Post = ({
 
 			<ContentLayout>
 				<PostFooter data={post} />
+
 				<CenteredElementWithLine>
 					<Title>Related posts</Title>
 				</CenteredElementWithLine>
+
 				{renderedRelatedPosts}
+
+				<CenteredElementWithLine>
+					<Title>
+						<span tw="text-accent">{padZero(comments.length)}</span>{" "}
+						{comments.length > 1 ? "Comments" : "Comment"}
+					</Title>
+				</CenteredElementWithLine>
+
+				<CommentSet comments={comments} />
+				<Comment _postId={_id} />
 			</ContentLayout>
-
-			<Comment _postId={_id} />
-
-			{comments.map((comment) => (
-				<React.Fragment key={comment.id}>
-					<li>
-						<h3>{comment.name}</h3>
-						<p>{comment.text}</p>
-						<span>{new Date(comment._createdAt).toLocaleDateString()}</span>
-					</li>
-					<hr />
-				</React.Fragment>
-			))}
 		</>
 	);
 };
@@ -150,7 +150,7 @@ const ContentLayout = styled.div<ContentLayoutProps>`
 
 type TitleProps = {};
 const Title = styled.span<TitleProps>`
-	${tw`text-xl font-700`}
+	${tw`text-xl font-600`}
 `;
 
 export default Post;

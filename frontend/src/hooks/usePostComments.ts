@@ -2,7 +2,7 @@ import { FirestoreComment } from "@src/components/Comment";
 import db from "@src/lib/firebase/db";
 import { useEffect, useState } from "react";
 
-type PostComment = FirestoreComment & {
+export type PostComment = FirestoreComment & {
 	id: string;
 };
 

@@ -83,12 +83,21 @@ export const ErrorMessage = styled.span<ErrorMessageProps>`
 
 type SubmitButtonProps = {};
 export const SubmitButton = styled.button<SubmitButtonProps>`
-	${tw`font-500 uppercase tracking-widest`}
+	${tw`font-500 uppercase tracking-widest rounded-sm`}
 	font-size: smaller;
 
 	${tw`py-2 px-5 bg-black text-white`}
 
-	:disabled {
-		${tw`bg-ltextColor`}
+	transition: transform 200ms ease, box-shadow 200ms ease;
+
+	:hover,
+	:focus {
+		transform: translateY(-0.1rem);
+		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.07);
+	}
+
+	:active {
+		transform: translateY(0);
+		box-shadow: none;
 	}
 `;

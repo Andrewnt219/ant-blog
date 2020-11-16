@@ -3,7 +3,7 @@ import { Post } from "@src/components/Post";
 import { RelatedPostsProps } from "@src/service/sanityDataService";
 import dayjs from "dayjs";
 import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import { styled } from "twin.macro";
 
 type RelatedPostSetProps = {
 	posts: RelatedPostsProps[];

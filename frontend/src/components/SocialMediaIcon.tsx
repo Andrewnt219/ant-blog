@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { AiFillInstagram } from "react-icons/ai";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
-import tw, { styled } from "twin.macro";
+import { styled } from "twin.macro";
 
 type Props = {
 	variants: "facebook" | "instagram" | "linkedin";

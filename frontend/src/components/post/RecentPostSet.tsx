@@ -2,7 +2,7 @@ import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import { calculateReadingMinutes } from "@src/utils";
 import dayjs from "dayjs";
 import React, { ReactElement } from "react";
-import tw, { css, styled } from "twin.macro";
+import tw, { styled } from "twin.macro";
 import { Post } from "../Post";
 
 type RecentPostSetProps = {

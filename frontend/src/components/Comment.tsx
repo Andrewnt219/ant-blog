@@ -1,8 +1,8 @@
 import db from "@src/lib/firebase/db";
-import Axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import React, { ReactElement } from "react";
 import { useForm } from "react-hook-form";
-import tw, { styled } from "twin.macro";
+import { styled } from "twin.macro";
 
 type FormValues = {
 	name: string;
@@ -20,7 +20,7 @@ type Props = {
 };
 
 function Comment({ _postId, submitHandler }: Props): ReactElement {
-	const { register, handleSubmit, errors, reset } = useForm<FormValues>();
+	const { register, handleSubmit, reset } = useForm<FormValues>();
 
 	const onSubmit = handleSubmit(async (data) => {
 		reset();

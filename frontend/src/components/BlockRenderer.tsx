@@ -23,11 +23,11 @@ const Normal = styled.p<NormalProps>`
 	margin-bottom: 1rem;
 `;
 
-type Heading1Props = {};
-const Heading1 = styled.h1<Heading1Props>``;
+// type Heading1Props = {};
+// const Heading1 = styled.h1<Heading1Props>``;
 
-type Heading2Props = {};
-const Heading2 = styled.h2<Heading2Props>``;
+// type Heading2Props = {};
+// const Heading2 = styled.h2<Heading2Props>``;
 
 type BlockQuoteProps = {};
 const BlockQuote = styled.blockquote<BlockQuoteProps>`

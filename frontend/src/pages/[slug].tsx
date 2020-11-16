@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import sanityClient from "@src/lib/sanity/client";
 import Head from "next/head";
-import Comment, { FirestoreComment } from "@src/components/Comment";
-import db from "@src/lib/firebase/db";
+import Comment from "@src/components/Comment";
 import { calculateReadingMinutes } from "@src/utils";
 import PostHeader from "@src/components/post/PostHeader";
 import PostBody from "@src/components/post/PostBody";
@@ -22,6 +21,7 @@ import Broken from "@src/components/Broken";
 import * as sanityDataService from "@src/service/sanityDataService";
 import RelatedPostSet from "@src/components/post/RelatedPostSet";
 import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
+import { useCurrentLocation, usePostComments } from "@src/hooks";
 
 // TODO: router.fallback
 const Post = ({
@@ -29,10 +29,14 @@ const Post = ({
 	sidePosts: initialSidePosts,
 	relatedPosts: initialRelatedPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const [comments, setComments] = useState<PostComment[]>([]);
+	/* --------------------------------- STATES --------------------------------- */
+	// Post's comments
+	const comments = usePostComments(post._id);
 
-	const [currentLocation, setCurrentLocation] = useState<string>("");
+	// Full location to current page
+	const currentLocation = useCurrentLocation();
 
+	// fetch sidePosts
 	const { data: sidePosts, error: sidePostsError } = useSWR<
 		SidePostSetProps["posts"],
 		SanityClientErrorResponse
@@ -41,6 +45,7 @@ const Post = ({
 		refreshInterval: NUMBER_CONSTANTS.refreshInterval,
 	});
 
+	// fetch relatedPosts
 	const { data: relatedPosts, error: relatedPostsError } = useSWR<
 		sanityDataService.RelatedPostsProps[],
 		SanityClientErrorResponse
@@ -53,82 +58,17 @@ const Post = ({
 		}
 	);
 
-	useEffect(() => {
-		setCurrentLocation(window.location.href);
-	}, []);
+	/* --------------------------------- RENDER --------------------------------- */
 
-	// Subscribe for live comments
-	useEffect(() => {
-		const unsubscribe = db
-			.collection("comments")
-			.where("_postId", "==", post._id)
-			.orderBy("_createdAt", "desc")
-			.onSnapshot(
-				(snapshot) => {
-					const comments = snapshot.docs.map((doc) => ({
-						...doc.data(),
-						id: doc.id,
-					})) as PostComment[];
-					setComments(comments);
-				},
-				(error) => {
-					setComments([]);
-					console.log(error);
-				}
-			);
+	const { _id, categories, rawContent } = post;
 
-		return () => {
-			unsubscribe();
-		};
-	}, [post._id]);
+	const renderedSidePosts = renderPosts(sidePosts, sidePostsError, SidePostSet);
 
-	const {
-		_id,
-		author,
-		body,
-		thumbnailSrc,
-		title,
-		categories,
-		rawContent,
-		publishedAt,
-	} = post;
-
-	const headerData = {
-		thumbnailSrc,
-		category: categories[0],
-		title,
-		author,
-		publishedAt,
-		readMinute: calculateReadingMinutes(rawContent),
-	};
-
-	let renderedSidePosts = (
-		<Loading height="10rem" loadingText="Fetching posts..." />
+	const renderedRelatedPosts = renderPosts(
+		relatedPosts,
+		relatedPostsError,
+		RelatedPostSet
 	);
-
-	if (sidePostsError) {
-		renderedSidePosts = (
-			<Broken errorText="Fail to fetch posts :(" height="10rem" />
-		);
-	}
-
-	if (sidePosts) {
-		renderedSidePosts = <SidePostSet posts={sidePosts} title="Latest Post" />;
-	}
-
-	let renderedRelatedPosts = (
-		<Loading height="10rem" loadingText="Fetching posts..." />
-	);
-
-	if (relatedPostsError) {
-		renderedSidePosts = (
-			<Broken errorText="Fail to fetch posts :(" height="10rem" />
-		);
-	}
-
-	if (relatedPosts) {
-		renderedRelatedPosts = <RelatedPostSet posts={relatedPosts} />;
-	}
 
 	return (
 		<>
@@ -136,15 +76,21 @@ const Post = ({
 				<title>{post.title}</title>
 			</Head>
 
-			<PostHeader data={headerData} />
+			<PostHeader
+				data={{
+					...post,
+					category: categories[0],
+					readMinute: calculateReadingMinutes(rawContent),
+				}}
+			/>
 			<ContentLayout>
 				<ShareSideBar sharingUrl={currentLocation} />
-				<PostBody data={{ body, categories, title }} />
+				<PostBody data={post} />
 				{renderedSidePosts}
 			</ContentLayout>
 
 			<ContentLayout>
-				<PostFooter data={{ categories, author }} />
+				<PostFooter data={post} />
 				<CenteredElementWithLine>
 					<Title>Related posts</Title>
 				</CenteredElementWithLine>
@@ -167,9 +113,51 @@ const Post = ({
 	);
 };
 
-type PostComment = FirestoreComment & {
-	id: string;
-};
+function renderPosts<P extends any[], E extends SanityClientErrorResponse>(
+	posts: P | undefined,
+	error: E | undefined,
+	Component: (props: any) => ReactElement
+): ReactElement {
+	let renderedPosts = (
+		<Loading height="10rem" loadingText="Fetching posts..." />
+	);
+
+	if (error) {
+		renderedPosts = (
+			<Broken errorText="Fail to fetch posts :(" height="10rem" />
+		);
+	}
+
+	if (posts) {
+		renderedPosts = <Component posts={posts} />;
+	}
+
+	return renderedPosts;
+}
+
+type ContentLayoutProps = {};
+const ContentLayout = styled.div<ContentLayoutProps>`
+	${tw`space-y-10`}
+	display: grid;
+	grid-template-columns: 10% 1fr 25%;
+	padding: 0 10% 0 2.5%;
+	gap: 0 5%;
+
+	& > *:not(aside) {
+		grid-column: 2/3;
+	}
+`;
+
+type TitleProps = {};
+const Title = styled.span<TitleProps>`
+	${tw`text-xl font-700`}
+`;
+
+export default Post;
+
+/* -------------------------------------------------------------------------- */
+/*                                 SERVER-SIDE                                */
+/* -------------------------------------------------------------------------- */
 
 type Post = {
 	_id: string;
@@ -260,23 +248,3 @@ export const getStaticPaths: GetStaticPaths = async () => {
 		fallback: false,
 	};
 };
-
-type ContentLayoutProps = {};
-const ContentLayout = styled.div<ContentLayoutProps>`
-	${tw`space-y-10`}
-	display: grid;
-	grid-template-columns: 10% 1fr 25%;
-	padding: 0 10% 0 2.5%;
-	gap: 0 5%;
-
-	& > *:not(aside) {
-		grid-column: 2/3;
-	}
-`;
-
-type TitleProps = {};
-const Title = styled.span<TitleProps>`
-	${tw`text-xl font-700`}
-`;
-
-export default Post;

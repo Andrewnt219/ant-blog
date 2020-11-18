@@ -93,6 +93,7 @@ export default {
 			],
 			options: {
 				hotspot: true,
+				metadata: ["lqip"],
 			},
 			validation: (Rule) =>
 				Rule.required().error(
@@ -135,6 +136,9 @@ export default {
 				Rule.required().error(
 					"Chờ chút, bài này là clickbait à? Nội dung bài viết đâu rồi =))."
 				),
+			options: {
+				metadata: ["lqip"],
+			},
 		},
 		{
 			name: "isArchived",

@@ -26,6 +26,7 @@ export const Input = styled.input<InputProps>`
 type TextareaProps = {};
 export const Textarea = styled.textarea<TextareaProps>`
 	${inputCss}
+	resize: none;
 `;
 
 type LabelProps = {};

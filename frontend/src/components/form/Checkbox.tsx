@@ -56,7 +56,7 @@ const Container = styled.div<ContainerProps>`
 
 type InputContainerProps = {};
 const InputContainer = styled.div<InputContainerProps>`
-	${tw`flex items-center space-x-2`}
+	${tw`flex items-center space-x-2 cursor-pointer`}
 
 	:focus-within, :hover {
 		${tw`text-accent`}

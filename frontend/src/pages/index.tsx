@@ -93,6 +93,8 @@ type Post = {
 	};
 };
 
+// TODO: add lqip. "lqip": mainImage.asset->metadata.lqip
+// "lqip": body[].asset->metadata (watch out for null)
 const queryString = `
 			*[_type == "post" && !isArchived] | order(_updatedAt desc) {
 				isPinned,

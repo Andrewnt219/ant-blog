@@ -28,12 +28,13 @@ function TextField<FormKeys extends Record<string, any>>({
 		<FormBuilder.Container>
 			<FormBuilder.InputContainer hasError={hasError}>
 				<FormBuilder.Input
-					{...inputProps}
+					aria-invalid={hasError}
 					type={type}
 					placeholder={labelText}
 					name={name}
 					id={id}
 					ref={register}
+					{...inputProps}
 				/>
 				<FormBuilder.Label htmlFor={id}>{labelText}</FormBuilder.Label>
 			</FormBuilder.InputContainer>

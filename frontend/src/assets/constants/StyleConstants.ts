@@ -5,6 +5,7 @@ export const STYLE_CONSTANTS = {
 
 export const FORMAT_CONSTANTS = {
 	dateFormat: "MMM DD YYYY",
+	dateTimeFormat: "MMM DD YYYY HH:mm:ss",
 };
 
 export const NUMBER_CONSTANTS = {

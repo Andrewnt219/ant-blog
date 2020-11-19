@@ -156,8 +156,9 @@ function Comment({ data, _postId }: CommentProps) {
 
 				<Name>{username}</Name>
 
+				{/* TODO style hover insteade of title */}
 				<StyledDate
-					title={dayjs(_createdAt).format(FORMAT_CONSTANTS.dateFormat)}
+					title={dayjs(_createdAt).format(FORMAT_CONSTANTS.dateTimeFormat)}
 				>
 					{dayjs(_createdAt).fromNow()}
 				</StyledDate>

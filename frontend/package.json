@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "sanity": "cd .\\studio\\ && yarn start",
-    "full": "concurrently \"yarn dev\" \"yarn sanity\""
+    "full": "concurrently \"yarn dev\" \"yarn sanity\"",
+    "test": "jest --watch"
   },
   "dependencies": {
     "@asbjorn/eslint-plugin-groq": "^1.0.0",
@@ -45,6 +46,7 @@
     "twin.macro": "^1.11.0"
   },
   "devDependencies": {
+    "@types/jest": "^26.0.15",
     "@types/node": "^14.11.10",
     "@types/react": "^16.9.53",
     "@typescript-eslint/eslint-plugin": "2.x",
@@ -59,6 +61,7 @@
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "2.x",
+    "jest": "^26.6.3",
     "typescript": "^4.0.3"
   },
   "babelMacros": {

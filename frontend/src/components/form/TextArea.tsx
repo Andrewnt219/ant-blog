@@ -26,10 +26,11 @@ function TextArea<FormKeys extends Record<string, any>>({
 		<FormBuilder.Container>
 			<FormBuilder.InputContainer hasError={hasError}>
 				<FormBuilder.Textarea
-					{...inputProps}
+					aria-invalid={hasError}
 					name={name}
 					id={id}
 					ref={register}
+					{...inputProps}
 				/>
 				<FormBuilder.Label htmlFor={id}>{labelText}</FormBuilder.Label>
 			</FormBuilder.InputContainer>

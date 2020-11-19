@@ -8,6 +8,7 @@ import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import { useRouteMatch } from "@src/hooks";
 import SocialMediaIcon from "./SocialMediaIcon";
 
+/* TODO add router loading. NProgress maybe? */
 function Appbar(): ReactElement {
 	return (
 		<Header>

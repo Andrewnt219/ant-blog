@@ -1,6 +1,6 @@
 import React from "react";
 import BlockContent from "@sanity/block-content-to-react";
-import { styled } from "twin.macro";
+import tw, { styled } from "twin.macro";
 
 export const BlockRenderer = (props: any) => {
 	const { style = "normal" } = props.node;
@@ -20,7 +20,7 @@ export const BlockRenderer = (props: any) => {
 type NormalProps = {};
 const Normal = styled.p<NormalProps>`
 	font-family: "Lora", serif;
-	margin-bottom: 1rem;
+	${tw`mb-6`}
 `;
 
 // type Heading1Props = {};
@@ -31,6 +31,6 @@ const Normal = styled.p<NormalProps>`
 
 type BlockQuoteProps = {};
 const BlockQuote = styled.blockquote<BlockQuoteProps>`
-	border-left: 0.15em solid #ccc;
-	padding: 0.1em 1em;
+	${tw`font-500 text-2xl text-center leading-snug`}
+	${tw`my-10 pt-4 px-8`}
 `;

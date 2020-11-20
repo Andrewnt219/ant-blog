@@ -12,6 +12,7 @@ type iconData = {
 	href: string;
 };
 
+// TODO: implementing sharing links
 const data: iconData[] = [
 	{
 		shadowColor: "19, 92, 182",

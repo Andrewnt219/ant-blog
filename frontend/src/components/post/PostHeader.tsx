@@ -2,7 +2,7 @@ import {
 	ENDPOINTS,
 	FORMAT_CONSTANTS,
 } from "@src/assets/constants/StyleConstants";
-import { trimLastWord } from "@src/utils";
+import { preventOrphanText } from "@src/utils";
 import dayjs from "dayjs";
 import Link from "next/link";
 import React, { ReactElement } from "react";
@@ -140,21 +140,5 @@ const Separator = styled.span<SeparatorProps>`
 		${tw`px-1`}
 	}
 `;
-
-function preventOrphanText(title: string) {
-	const [titleHead, titleTail] = trimLastWord(title);
-
-	let renderedText = <>{title}</>;
-
-	if (titleHead)
-		renderedText = (
-			<>
-				{titleHead}
-				&nbsp;
-				{titleTail}
-			</>
-		);
-	return renderedText;
-}
 
 export default PostHeader;

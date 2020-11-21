@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  * This is the schema definition for the rich text fields used for
  * for this blog studio. When you import it in schemas.js it can be
@@ -42,6 +44,25 @@ export default {
 				// Annotations can be any object structure – e.g. a link or a footnote.
 				annotations: [
 					{
+						name: "internalLink",
+						type: "object",
+						title: "Internal Link",
+
+						blockEditor: {
+							// NOTE: The internal link button
+							icon: () => <div>🌹</div>,
+							render: ({ children }) => <span>{children} 🐱‍🏍</span>,
+						},
+
+						fields: [
+							{
+								name: "post",
+								type: "reference",
+								to: [{ type: "post" }],
+							},
+						],
+					},
+					{
 						title: "URL",
 						name: "link",
 						type: "object",
@@ -50,6 +71,11 @@ export default {
 								title: "URL",
 								name: "href",
 								type: "url",
+							},
+							{
+								title: "Open in new window",
+								name: "blank",
+								type: "boolean",
 							},
 						],
 					},

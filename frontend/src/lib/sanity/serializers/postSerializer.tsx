@@ -3,8 +3,25 @@ import Loading from "@src/components/Loading";
 import RenderedYoutube from "@src/components/RenderedYoutube";
 import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
 import getYouTubeID from "get-youtube-id";
+import InternalLink from "../../../components/InternalLink";
 
 export const postSerializer = {
+	marks: {
+		// NOTE the structure of internalLink comes from post query in [slug]
+		internalLink: ({ children, mark }: any) => (
+			<InternalLink nextLinkProps={{ href: mark.url }}>{children}</InternalLink>
+		),
+		link: ({ children, mark }: any) =>
+			mark.blank ? (
+				<a href={mark.href} target="_blank" rel="noopener noreferrer">
+					{children}
+				</a>
+			) : (
+				<a href={mark.href}>{children}</a>
+			),
+	},
+	// TODO: create a listRender like blockRenderer
+	list: (...props: any) => <ul>{console.log(props)}dasdasdasdasdadasdasd</ul>,
 	types: {
 		youtube: ({ node }: { node: { url: string } }) => {
 			const { url } = node;

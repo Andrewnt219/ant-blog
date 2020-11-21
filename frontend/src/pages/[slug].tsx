@@ -89,7 +89,7 @@ const Post = ({
 				}}
 			/>
 			<ContentLayout>
-				<ShareSideBar sharingUrl={currentLocation} />
+				<ShareSideBar sharingUrl={currentLocation?.href ?? ""} />
 				<PostBody data={post} />
 				{renderedSidePosts}
 			</ContentLayout>
@@ -134,7 +134,7 @@ type ContentLayoutProps = {};
 const ContentLayout = styled.div<ContentLayoutProps>`
 	${tw`space-y-10`}
 	display: grid;
-	grid-template-columns: 10% 1fr 25%;
+	grid-template-columns: 5% 1fr 25%;
 	padding: 0 10% 0 2.5%;
 	gap: 0 5%;
 
@@ -201,7 +201,16 @@ export const getStaticProps: GetStaticProps<
 						"categories": categories[] -> {title, "slug": slug.current},
             title,
             "thumbnailSrc": mainImage.asset -> url,
-						body,
+						body[] {
+							...,
+							markDefs[] {
+								...,
+								_type == "internalLink" => {
+									...,
+									"url": "/" + @.post->slug.current,
+								}
+							}
+						},
 						author -> {
 							name,
 							"slug": slug.current,

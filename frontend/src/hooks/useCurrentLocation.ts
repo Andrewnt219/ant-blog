@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-export const useCurrentLocation = (): string => {
-	const [currentLocation, setCurrentLocation] = useState<string>("");
+export const useCurrentLocation = (): Location | undefined => {
+	const [currentLocation, setCurrentLocation] = useState<Location>();
 
 	useEffect(() => {
-		setCurrentLocation(window.location.href);
+		setCurrentLocation(window.location);
 	}, []);
 
 	return currentLocation;

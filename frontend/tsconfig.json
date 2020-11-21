@@ -1,7 +1,11 @@
 {
 	"compilerOptions": {
 		"target": "es5",
-		"lib": ["dom", "dom.iterable", "esnext"],
+		"lib": [
+			"dom",
+			"dom.iterable",
+			"esnext"
+		],
 		"allowJs": true,
 		"skipLibCheck": true,
 		"strict": true,
@@ -15,19 +19,25 @@
 		"jsx": "preserve",
 		"baseUrl": ".",
 		"paths": {
-			"@src/*": ["src/*"],
-			"@components/*": ["src/components/*"]
+			"@src/*": [
+				"src/*"
+			],
+			"@components/*": [
+				"src/components/*"
+			]
 		}
 	},
-
-	"files": ["@types/block-content-to-react.d.ts"],
+	"files": [
+		"@types/twin.d.ts",
+	],
 	"include": [
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
 		"public/scripts/theme.script.js",
-		"@types/twin.d.ts",
-		"@types/carousel.d.ts"
 	],
-	"exclude": ["node_modules", "tailwind.config.ts"]
+	"exclude": [
+		"node_modules",
+		"tailwind.config.ts"
+	]
 }

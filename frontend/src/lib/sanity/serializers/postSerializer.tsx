@@ -1,4 +1,5 @@
 import { BlockRenderer } from "@src/components/BlockRenderer";
+import ExternalLink from "@src/components/ExternalLink";
 import Loading from "@src/components/Loading";
 import RenderedYoutube from "@src/components/RenderedYoutube";
 import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
@@ -11,14 +12,11 @@ export const postSerializer = {
 		internalLink: ({ children, mark }: any) => (
 			<InternalLink nextLinkProps={{ href: mark.url }}>{children}</InternalLink>
 		),
-		link: ({ children, mark }: any) =>
-			mark.blank ? (
-				<a href={mark.href} target="_blank" rel="noopener noreferrer">
-					{children}
-				</a>
-			) : (
-				<a href={mark.href}>{children}</a>
-			),
+		link: ({ children, mark }: any) => (
+			<ExternalLink href={mark.href} blank>
+				{children}
+			</ExternalLink>
+		),
 	},
 	// TODO: create a listRender like blockRenderer
 	list: (...props: any) => <ul>{console.log(props)}dasdasdasdasdadasdasd</ul>,

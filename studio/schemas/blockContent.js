@@ -51,7 +51,6 @@ export default {
 						blockEditor: {
 							// NOTE: The internal link button
 							icon: () => <div>🌹</div>,
-							render: ({ children }) => <span>{children} 🐱‍🏍</span>,
 						},
 
 						fields: [
@@ -71,11 +70,6 @@ export default {
 								title: "URL",
 								name: "href",
 								type: "url",
-							},
-							{
-								title: "Open in new window",
-								name: "blank",
-								type: "boolean",
 							},
 						],
 					},
@@ -104,6 +98,7 @@ export default {
 				},
 			],
 		},
+		// TODO: add icon to Insert > Youtube
 		{
 			type: "youtube",
 		},

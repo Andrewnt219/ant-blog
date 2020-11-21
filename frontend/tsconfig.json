@@ -29,6 +29,7 @@
 	},
 	"files": [
 		"@types/twin.d.ts",
+		"@types/block-content-to-react.d.ts"
 	],
 	"include": [
 		"next-env.d.ts",

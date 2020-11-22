@@ -113,9 +113,7 @@ function renderPosts<P extends any[], E extends SanityClientErrorResponse>(
 	error: E | undefined,
 	Component: JSX.Element
 ): ReactElement {
-	let renderedPosts = (
-		<Loading height="10rem" loadingText="Fetching posts..." />
-	);
+	let renderedPosts = <Loading height="10rem" loadingText="Fetching posts" />;
 
 	if (error) {
 		renderedPosts = (

@@ -19,7 +19,7 @@ function PostImage({ node, options }: Props): ReactElement {
 	const imgSrc = urlFor(node.asset).withOptions(options.imageOptions).url();
 
 	let renderContent: ReactNode = (
-		<Loading height="15rem" loadingText="Loading image..." />
+		<Loading height="15rem" loadingText="Loading image" />
 	);
 
 	if (imgSrc) {

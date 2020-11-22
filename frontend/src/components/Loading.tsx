@@ -1,7 +1,8 @@
 import Lottie from "react-lottie";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import animationData from "@src/assets/lottie/Dog smell.json";
 import tw, { styled } from "twin.macro";
+import { useLoadingDots } from "@src/hooks";
 
 type Props = {
 	width?: string;
@@ -10,6 +11,8 @@ type Props = {
 };
 
 const Loading = ({ width, height, loadingText }: Props) => {
+	const dots = useLoadingDots({ intervalInMs: 500 });
+
 	return (
 		<Container>
 			<Lottie
@@ -21,7 +24,7 @@ const Loading = ({ width, height, loadingText }: Props) => {
 					animationData,
 				}}
 			/>
-			<span>{loadingText}</span>
+			<span>{loadingText?.concat(dots)}</span>
 		</Container>
 	);
 };

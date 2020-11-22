@@ -2,6 +2,7 @@ import { BlockRenderer } from "@src/components/BlockRenderer";
 import ExternalLink from "@src/components/ExternalLink";
 import Loading from "@src/components/Loading";
 import PostImage from "@src/components/post/PostImage";
+import PostBlockquote from "@src/components/PostBlockquote";
 import RenderedYoutube from "@src/components/RenderedYoutube";
 import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
 import getYouTubeID from "get-youtube-id";
@@ -9,6 +10,9 @@ import InternalLink from "../../../components/InternalLink";
 
 export const postSerializer = {
 	marks: {
+		quote: ({ children, mark }: any) => (
+			<PostBlockquote author={mark.author}>{children}</PostBlockquote>
+		),
 		// NOTE the structure of internalLink comes from post query in [slug]
 		internalLink: ({ children, mark }: any) => (
 			<InternalLink nextLinkProps={{ href: mark.url }}>{children}</InternalLink>

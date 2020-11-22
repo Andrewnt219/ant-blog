@@ -4,14 +4,16 @@ import animationData from "@src/assets/lottie/Dog smell.json";
 import tw, { styled } from "twin.macro";
 
 type Props = {
+	width?: string;
 	height: string;
 	loadingText?: string;
 };
 
-const Loading = ({ height, loadingText }: Props) => {
+const Loading = ({ width, height, loadingText }: Props) => {
 	return (
 		<Container>
 			<Lottie
+				width={width}
 				height={height}
 				options={{
 					loop: true,

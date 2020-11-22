@@ -1,5 +1,7 @@
 import React from "react";
-
+import { AiFillHighlight } from "react-icons/ai";
+import { RiArticleFill } from "react-icons/ri";
+import { FaQuoteRight } from "react-icons/fa";
 /**
  * This is the schema definition for the rich text fields used for
  * for this blog studio. When you import it in schemas.js it can be
@@ -24,11 +26,9 @@ export default {
 			// use your content.
 			styles: [
 				{ title: "Normal", value: "normal" },
-				{ title: "H1", value: "h1" },
 				{ title: "H2", value: "h2" },
 				{ title: "H3", value: "h3" },
 				{ title: "H4", value: "h4" },
-				{ title: "Quote", value: "blockquote" },
 			],
 			lists: [{ title: "Bullet", value: "bullet" }],
 			// Marks let you mark up inline text in the block editor.
@@ -36,6 +36,16 @@ export default {
 				// Decorators usually describe a single property – e.g. a typographic
 				// preference or highlighting by editors.
 				decorators: [
+					{
+						title: "Hightlight",
+						value: "highlight",
+						blockEditor: {
+							icon: () => <AiFillHighlight />,
+							render: ({ children }) => (
+								<span style={{ background: "yellow" }}>{children}</span>
+							),
+						},
+					},
 					{ title: "Strong", value: "strong" },
 					{ title: "Emphasis", value: "em" },
 					{ title: "Underline", value: "underline" },
@@ -44,13 +54,44 @@ export default {
 				// Annotations can be any object structure – e.g. a link or a footnote.
 				annotations: [
 					{
+						name: "quote",
+						type: "object",
+						title: "Quote",
+						blockEditor: {
+							icon: () => <FaQuoteRight />,
+							render: ({ children, author }) => (
+								<blockquote
+									style={{
+										borderLeft: "solid gray 2px",
+										margin: 0,
+										paddingLeft: "1rem",
+									}}
+								>
+									<p style={{ fontStyle: "italic" }}>{children}</p>
+									<figcaption style={{ textAlign: "right" }}>
+										&ndash; {author}
+									</figcaption>
+								</blockquote>
+							),
+						},
+						fields: [
+							{
+								name: "author",
+								type: "string",
+								title: "Author",
+							},
+						],
+					},
+
+					{
 						name: "internalLink",
 						type: "object",
 						title: "Internal Link",
-
 						blockEditor: {
-							// NOTE: The internal link button
-							icon: () => <div>🌹</div>,
+							icon: () => <RiArticleFill />,
+							render: ({ children }) => (
+								<span style={{ color: "#2d53fe" }}>{children}</span>
+							),
 						},
 
 						fields: [
@@ -65,6 +106,11 @@ export default {
 						title: "URL",
 						name: "link",
 						type: "object",
+						blockEditor: {
+							render: ({ children }) => (
+								<span style={{ color: "#e31c3d" }}>{children}</span>
+							),
+						},
 						fields: [
 							{
 								title: "URL",

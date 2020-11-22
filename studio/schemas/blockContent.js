@@ -1,7 +1,8 @@
 import React from "react";
 import { AiFillHighlight } from "react-icons/ai";
 import { RiArticleFill } from "react-icons/ri";
-import { FaQuoteRight } from "react-icons/fa";
+import { FaQuoteRight, FaImage } from "react-icons/fa";
+import { BiMoveHorizontal } from "react-icons/bi";
 /**
  * This is the schema definition for the rich text fields used for
  * for this blog studio. When you import it in schemas.js it can be
@@ -12,6 +13,7 @@ import { FaQuoteRight } from "react-icons/fa";
  *    type: 'blockContent'
  *  }
  */
+
 export default {
 	title: "Block Content",
 	name: "blockContent",
@@ -128,6 +130,7 @@ export default {
 		{
 			type: "image",
 			options: { hotspot: true },
+			icon: FaImage,
 			fields: [
 				{
 					type: "string",
@@ -144,7 +147,6 @@ export default {
 				},
 			],
 		},
-		// TODO: add icon to Insert > Youtube
 		{
 			type: "youtube",
 		},

@@ -7,7 +7,7 @@ import TextField from "./form/TextField";
 import { LOCAL_STORAGE } from "@src/assets/constants/StyleConstants";
 import Checkbox from "./form/Checkbox";
 import * as FormBuilder from "@src/components/form/FormBuilder";
-import * as idDataService from "@src/service/id";
+import { IdDataService } from "@src/service/id";
 import { CommentModel } from "@src/model/firebase/CommentModel";
 
 export type CommentFormValues = Pick<CommentModel, "username" | "text"> & {
@@ -43,7 +43,7 @@ const CommentWriter = React.forwardRef<Ref, Props>(
 		});
 
 		useEffect(() => {
-			WRITER_ID.current = idDataService.next();
+			WRITER_ID.current = IdDataService.getInstance().next();
 		}, []);
 
 		const onSubmit = handleSubmit(async (data) => {

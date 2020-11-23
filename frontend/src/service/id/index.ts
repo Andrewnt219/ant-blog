@@ -1,5 +1,16 @@
-let id = 0;
+export class IdDataService {
+	private static instance: IdDataService;
+	private static id = 0;
 
-export const next = () => ++id;
+	public static getInstance() {
+		if (!IdDataService.instance) {
+			IdDataService.instance = new IdDataService();
+		}
 
-export const get = () => id;
+		return IdDataService.instance;
+	}
+
+	next = () => ++IdDataService.id;
+
+	get = () => IdDataService.id;
+}

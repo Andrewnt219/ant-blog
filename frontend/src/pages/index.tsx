@@ -1,20 +1,21 @@
-import React from "react";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
+import React from "react";
+import useSWR from "swr";
 import { styled, theme } from "twin.macro";
+
 import {
 	NUMBER_CONSTANTS,
 	STYLE_CONSTANTS,
 } from "@src/assets/constants/StyleConstants";
+import Broken from "@src/components/Broken";
 import PinnedPostSet from "@src/components/post/PinnedPostSet";
-import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 import PostPreviewSet from "@src/components/post/PostPreviewSet";
 import RecentPostSet from "@src/components/post/RecentPostSet";
 import SidePostSet from "@src/components/post/SidePostSet";
-import useSWR from "swr";
 import { sanityFetcher } from "@src/lib/swr";
-import Broken from "@src/components/Broken";
 import { HomePostModel } from "@src/model/sanity";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 import { HOME_POSTS_QUERY } from "@src/service/sanity/sanity.query";
 
 const Index = ({

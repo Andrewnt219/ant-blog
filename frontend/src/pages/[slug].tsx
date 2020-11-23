@@ -1,28 +1,29 @@
-import React, { ReactElement } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import { calculateReadingMinutes } from "@src/utils";
-import PostHeader from "@src/components/post/PostHeader";
+import React, { ReactElement } from "react";
+import { SanityClientErrorResponse } from "sanity";
+import useSWR from "swr";
+import tw, { styled } from "twin.macro";
+
+import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import Broken from "@src/components/Broken";
+import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
+import Loading from "@src/components/Loading";
+import CommentSet from "@src/components/post/CommentSet";
 import PostBody from "@src/components/post/PostBody";
 import PostFooter from "@src/components/post/PostFooter";
-import tw, { styled } from "twin.macro";
-import ShareSideBar from "@src/components/ShareSideBar";
-import SidePostSet from "@src/components/post/SidePostSet";
-import useSWR from "swr";
-import { sanityFetcher } from "@src/lib/swr";
-import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { SanityClientErrorResponse } from "sanity";
-import Loading from "@src/components/Loading";
-import Broken from "@src/components/Broken";
-import { SanityDataService } from "@src/service/sanity/sanity.data-service";
-import * as sanityQueries from "@src/service/sanity/sanity.query";
+import PostHeader from "@src/components/post/PostHeader";
 import RelatedPostSet from "@src/components/post/RelatedPostSet";
-import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
+import SidePostSet from "@src/components/post/SidePostSet";
+import ShareSideBar from "@src/components/ShareSideBar";
 import { useCurrentLocation, usePostComments } from "@src/hooks";
-import CommentSet from "@src/components/post/CommentSet";
+import { sanityFetcher } from "@src/lib/swr";
+import { PostModel } from "@src/model/sanity";
 import { RelatedPostsModel } from "@src/model/sanity/RelatedPostModel";
 import { SidePostModel } from "@src/model/sanity/SidePostModel";
-import { PostModel } from "@src/model/sanity";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
+import * as sanityQueries from "@src/service/sanity/sanity.query";
+import { calculateReadingMinutes } from "@src/utils";
 
 // TODO: router.fallback
 const Post = ({

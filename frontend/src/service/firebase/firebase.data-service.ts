@@ -1,7 +1,8 @@
+import { AxiosError } from "axios";
+
 import { PostComment } from "@src/hooks";
 import { CommentModel } from "@src/model/firebase/CommentModel";
-import { AxiosError } from "axios";
-import firebase from "firebase/app";
+
 export class FireBaseDataService {
 	private static instance: FireBaseDataService;
 	private static db: firebase.firestore.Firestore | null = null;
@@ -45,20 +46,26 @@ export class FireBaseDataService {
 		reply: CommentModel,
 		catchHandler?: () => void
 	) => {
-		if (!FireBaseDataService.db) {
-			return;
-		}
+		import("firebase/app")
+			.then((module) => {
+				const firebase = module.default;
 
-		FireBaseDataService.db
-			.collection("comments")
-			.doc(postId)
-			.update({
-				replies: firebase.firestore.FieldValue.arrayUnion(reply),
+				if (!FireBaseDataService.db) {
+					return;
+				}
+
+				FireBaseDataService.db
+					.collection("comments")
+					.doc(postId)
+					.update({
+						replies: firebase.firestore.FieldValue.arrayUnion(reply),
+					})
+					.catch(() => {
+						catchHandler && catchHandler();
+						console.error("Failed to reply");
+					});
 			})
-			.catch(() => {
-				catchHandler && catchHandler();
-				console.error("Failed to reply");
-			});
+			.catch(() => console.error("Fail to import firebase"));
 	};
 
 	commentsListener = (

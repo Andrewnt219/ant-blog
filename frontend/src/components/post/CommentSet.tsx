@@ -90,7 +90,20 @@ function Comment({ data, _postId }: CommentProps) {
 	const [showAllReplies, setShowAllReplies] = useState<null | boolean>(null);
 
 	const containerRef = useRef<HTMLDivElement | null>(null);
-	useClickOutside(containerRef, () => setShowCommentEditor(false));
+
+	const handleClickOutside = () => {
+		if (containerRef.current) {
+			const textAreaValue = containerRef.current
+				.querySelector("textarea")
+				?.value.trim();
+
+			if (textAreaValue?.length === 0) {
+				setShowCommentEditor(false);
+			}
+		}
+	};
+
+	useClickOutside(containerRef, handleClickOutside);
 
 	const handleSubmit = (data: CommentFormValues) => {
 		setShowCommentEditor(false);

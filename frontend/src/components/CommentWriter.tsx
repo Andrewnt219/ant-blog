@@ -7,7 +7,7 @@ import TextField from "./form/TextField";
 import { LOCAL_STORAGE } from "@src/assets/constants/StyleConstants";
 import Checkbox from "./form/Checkbox";
 import * as FormBuilder from "@src/components/form/FormBuilder";
-import { getRandomNumberInclusive } from "@src/utils";
+import { getRandomNumberExclusive } from "@src/utils";
 import { CommentModel } from "@src/model/firebase/CommentModel";
 
 export type CommentFormValues = Pick<CommentModel, "username" | "text"> & {
@@ -41,7 +41,7 @@ const CommentWriter = React.forwardRef<Ref, Props>(
 		});
 
 		const WRITER_ID = useMemo(
-			() => getRandomNumberInclusive(0, 10) * Date.now(),
+			() => Math.pow(getRandomNumberExclusive(2.1, 10), 2),
 			[]
 		);
 

@@ -1,4 +1,3 @@
-import db from "@src/lib/firebase/db";
 import { CommentModel } from "@src/model/firebase/CommentModel";
 import { useEffect, useState } from "react";
 import * as firebaseDataService from "@src/service/firebase/firebase.data-service";

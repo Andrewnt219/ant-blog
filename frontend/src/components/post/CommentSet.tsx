@@ -7,7 +7,6 @@ import { FaReply } from "react-icons/fa";
 import CommentWriter, {
 	CommentFormValues,
 } from "@src/components/CommentWriter";
-import db from "@src/lib/firebase/db";
 import CenteredElementWithLine from "../CenteredElementWithLine";
 import { padZero } from "@src/utils";
 import { toFireStoreComment } from "@src/utils/dbUtils";

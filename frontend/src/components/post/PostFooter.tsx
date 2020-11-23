@@ -29,6 +29,7 @@ function PostFooter({ data, className }: Props): ReactElement {
 	const { categories, author } = data;
 
 	return (
+		// TODO add margin-top in case post does not end with a paragraph
 		<Footer className={className}>
 			<AdditionalInfo>
 				<CategorySet>

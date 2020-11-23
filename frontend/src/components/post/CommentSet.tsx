@@ -12,7 +12,7 @@ import { padZero } from "@src/utils";
 import { toFireStoreComment } from "@src/utils/dbUtils";
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import { CommentModel } from "@src/model/firebase/CommentModel";
-import * as firebaseDataService from "@src/service/firebase/firebase.data-service";
+import { FireBaseDataService } from "@src/service/firebase/firebase.data-service";
 
 dayjs.extend(relativeTime);
 
@@ -29,7 +29,9 @@ function CommentSet({ comments, _postId }: CommentSetProps): ReactElement {
 			replies: [],
 		});
 
-		firebaseDataService.addComment(submittedData);
+		FireBaseDataService.getInstance()
+			.then((instance) => instance.addComment(submittedData))
+			.catch(() => console.error("Fail to add comments"));
 	};
 
 	return (
@@ -99,9 +101,11 @@ function Comment({ data, _postId }: CommentProps) {
 			replies: [],
 		});
 
-		firebaseDataService.addReply(id, submittedData, () =>
-			setShowCommentEditor(true)
-		);
+		FireBaseDataService.getInstance()
+			.then((instance) =>
+				instance.addReply(id, submittedData, () => setShowCommentEditor(true))
+			)
+			.catch(() => console.error("Fail to add reply"));
 	};
 
 	const handleReplyClick = () => {

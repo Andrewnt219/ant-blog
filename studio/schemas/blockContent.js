@@ -1,7 +1,7 @@
 import React from "react";
 import { AiFillHighlight } from "react-icons/ai";
 import { RiArticleFill } from "react-icons/ri";
-import { FaQuoteRight, FaImage } from "react-icons/fa";
+import { FaPen, FaImage } from "react-icons/fa";
 import { BiMoveHorizontal } from "react-icons/bi";
 /**
  * This is the schema definition for the rich text fields used for
@@ -31,59 +31,75 @@ export default {
 				{ title: "H2", value: "h2" },
 				{ title: "H3", value: "h3" },
 				{ title: "H4", value: "h4" },
+				{ title: "Quote", value: "blockquote" },
 			],
-			lists: [{ title: "Bullet", value: "bullet" }],
+			lists: [
+				{ title: "Bullet", value: "bullet" },
+				{ title: "Number", value: "number" },
+			],
 			// Marks let you mark up inline text in the block editor.
 			marks: {
 				// Decorators usually describe a single property – e.g. a typographic
 				// preference or highlighting by editors.
 				decorators: [
-					{
-						title: "Hightlight",
-						value: "highlight",
-						blockEditor: {
-							icon: () => <AiFillHighlight />,
-							render: ({ children }) => (
-								<span style={{ background: "yellow" }}>{children}</span>
-							),
-						},
-					},
+					// {
+					// 	title: "Hightlight",
+					// 	value: "highlight",
+					// 	blockEditor: {
+					// 		icon: () => <AiFillHighlight />,
+					// 		render: ({ children }) => (
+					// 			<span style={{ background: "yellow" }}>{children}</span>
+					// 		),
+					// 	},
+					// },
 					{ title: "Strong", value: "strong" },
 					{ title: "Emphasis", value: "em" },
 					{ title: "Underline", value: "underline" },
 					{ title: "Strike", value: "strike-through" },
+					{
+						title: "Author",
+						value: "author",
+						blockEditor: {
+							icon: () => <FaPen />,
+							render: ({ children }) => (
+								<figcaption style={{ textAlign: "right" }}>
+									&ndash; {children}
+								</figcaption>
+							),
+						},
+					},
 				],
 				// Annotations can be any object structure – e.g. a link or a footnote.
 				annotations: [
-					{
-						name: "quote",
-						type: "object",
-						title: "Quote",
-						blockEditor: {
-							icon: () => <FaQuoteRight />,
-							render: ({ children, author }) => (
-								<blockquote
-									style={{
-										borderLeft: "solid gray 2px",
-										margin: 0,
-										paddingLeft: "1rem",
-									}}
-								>
-									<p style={{ fontStyle: "italic" }}>{children}</p>
-									<figcaption style={{ textAlign: "right" }}>
-										&ndash; {author}
-									</figcaption>
-								</blockquote>
-							),
-						},
-						fields: [
-							{
-								name: "author",
-								type: "string",
-								title: "Author",
-							},
-						],
-					},
+					// {
+					// 	name: "quote",
+					// 	type: "object",
+					// 	title: "Quote",
+					// 	blockEditor: {
+					// 		icon: () => <FaQuoteRight />,
+					// 		render: ({ children, author }) => (
+					// 			<blockquote
+					// 				style={{
+					// 					borderLeft: "solid gray 2px",
+					// 					margin: 0,
+					// 					paddingLeft: "1rem",
+					// 				}}
+					// 			>
+					// 				<p style={{ fontStyle: "italic" }}>{children}</p>
+					// 				<figcaption style={{ textAlign: "right" }}>
+					// 					&ndash; {author}
+					// 				</figcaption>
+					// 			</blockquote>
+					// 		),
+					// 	},
+					// 	fields: [
+					// 		{
+					// 			name: "author",
+					// 			type: "string",
+					// 			title: "Author",
+					// 		},
+					// 	],
+					// },
 
 					{
 						name: "internalLink",

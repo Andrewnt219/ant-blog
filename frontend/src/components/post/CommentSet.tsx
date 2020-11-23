@@ -48,20 +48,24 @@ function CommentSet({ comments, _postId }: CommentSetProps): ReactElement {
 		<>
 			<CommentWriter submitHandler={handleSubmit} />
 
-			<CenteredElementWithLine>
-				<Header>
-					<span tw="text-accent">{padZero(comments.length)}</span>{" "}
-					{comments.length > 1 ? "Comments" : "Comment"}
-				</Header>
-			</CenteredElementWithLine>
+			{comments.length > 0 && (
+				<>
+					<CenteredElementWithLine>
+						<Header>
+							<span tw="text-accent">{padZero(comments.length)}</span>{" "}
+							{comments.length > 1 ? "Comments" : "Comment"}
+						</Header>
+					</CenteredElementWithLine>
 
-			<StyledCommentSet>
-				{comments.map((comment) => (
-					<li key={comment.id}>
-						<Comment data={comment} _postId={_postId} />
-					</li>
-				))}
-			</StyledCommentSet>
+					<StyledCommentSet>
+						{comments.map((comment) => (
+							<li key={comment.id}>
+								<Comment data={comment} _postId={_postId} />
+							</li>
+						))}
+					</StyledCommentSet>
+				</>
+			)}
 		</>
 	);
 }

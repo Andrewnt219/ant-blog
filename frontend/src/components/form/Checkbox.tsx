@@ -3,9 +3,9 @@ import { UseFormMethods } from "react-hook-form";
 import * as FormBuilder from "@src/components/form/FormBuilder";
 import tw, { styled } from "twin.macro";
 
-type Props<FormKeys extends Record<string, any>> = InputHTMLAttributes<
-	HTMLInputElement
-> & {
+type Props<
+	FormKeys extends Record<string, any>
+> = InputHTMLAttributes<HTMLInputElement> & {
 	id: string;
 	type?: void;
 	name: keyof FormKeys;
@@ -13,6 +13,7 @@ type Props<FormKeys extends Record<string, any>> = InputHTMLAttributes<
 	labelText: string;
 	errors: UseFormMethods["errors"];
 	showCheckbox: boolean;
+	setCheckbox(checked: boolean): void;
 };
 
 function Checkbox<FormKeys extends Record<string, any>>({
@@ -22,12 +23,19 @@ function Checkbox<FormKeys extends Record<string, any>>({
 	labelText,
 	errors,
 	showCheckbox,
+	setCheckbox,
 	...inputProps
 }: Props<FormKeys>): ReactElement {
+	const handleFakeInputClick = () => {
+		setCheckbox(!showCheckbox);
+	};
+
 	return (
 		<Container>
 			<InputContainer>
-				<FakeInput tabIndex={0}>{showCheckbox && <Tick />}</FakeInput>
+				<FakeInput tabIndex={0} onClick={handleFakeInputClick}>
+					{showCheckbox && <Tick />}
+				</FakeInput>
 				<Input
 					hidden
 					aria-hidden

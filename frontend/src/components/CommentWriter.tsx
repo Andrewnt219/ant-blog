@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useMemo } from "react";
+import React, { ReactElement, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import tw, { styled } from "twin.macro";
 import CenteredElementWithLine from "./CenteredElementWithLine";
@@ -7,7 +7,7 @@ import TextField from "./form/TextField";
 import { LOCAL_STORAGE } from "@src/assets/constants/StyleConstants";
 import Checkbox from "./form/Checkbox";
 import * as FormBuilder from "@src/components/form/FormBuilder";
-import { getRandomNumberExclusive } from "@src/utils";
+import * as idDataService from "@src/service/id";
 import { CommentModel } from "@src/model/firebase/CommentModel";
 
 export type CommentFormValues = Pick<CommentModel, "username" | "text"> & {
@@ -29,6 +29,8 @@ const CommentWriter = React.forwardRef<Ref, Props>(
 	(props, ref): ReactElement => {
 		const { submitHandler, className, config } = props;
 
+		const WRITER_ID = useRef<number>(-1);
+
 		const {
 			register,
 			handleSubmit,
@@ -40,10 +42,9 @@ const CommentWriter = React.forwardRef<Ref, Props>(
 			mode: "onChange",
 		});
 
-		const WRITER_ID = useMemo(
-			() => Math.pow(getRandomNumberExclusive(2.1, 10), 2),
-			[]
-		);
+		useEffect(() => {
+			WRITER_ID.current = idDataService.next();
+		}, []);
 
 		const onSubmit = handleSubmit(async (data) => {
 			reset();
@@ -82,7 +83,7 @@ const CommentWriter = React.forwardRef<Ref, Props>(
 				</CenteredElementWithLine>
 
 				<TextField<CommentFormValues>
-					id={`comment-name-${WRITER_ID}`}
+					id={`comment-name-${WRITER_ID.current}`}
 					type="text"
 					name="username"
 					aria-required
@@ -95,7 +96,7 @@ const CommentWriter = React.forwardRef<Ref, Props>(
 				<TextArea<CommentFormValues>
 					name="text"
 					aria-required
-					id={`comment-text-${WRITER_ID}`}
+					id={`comment-text-${WRITER_ID.current}`}
 					register={register({
 						required: "Comment is required",
 					})}
@@ -105,11 +106,12 @@ const CommentWriter = React.forwardRef<Ref, Props>(
 				/>
 
 				<Checkbox
-					id={`save-user-checkbox-${WRITER_ID}`}
+					id={`save-user-checkbox-${WRITER_ID.current}`}
 					name="isSaved"
 					register={register}
 					labelText="Save my name in this browser for the next time."
 					errors={errors}
+					setCheckbox={(checked) => setValue("isSaved", checked)}
 					showCheckbox={watch("isSaved")}
 				/>
 

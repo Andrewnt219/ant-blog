@@ -1,12 +1,12 @@
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import { Post } from "@src/components/Post";
-import { RelatedPostsProps } from "@src/service/sanityDataService";
+import { RelatedPostsModel } from "@src/model/sanity/RelatedPostModel";
 import dayjs from "dayjs";
 import React, { ReactElement } from "react";
 import tw, { styled } from "twin.macro";
 
 type RelatedPostSetProps = {
-	posts: RelatedPostsProps[];
+	posts: RelatedPostsModel[];
 };
 
 function RelatedPostSet({ posts }: RelatedPostSetProps): ReactElement {
@@ -29,7 +29,7 @@ const PostSetContainer = styled.ul<PostSetContainerProps>`
 `;
 
 type Props = {
-	data: RelatedPostsProps;
+	data: RelatedPostsModel;
 };
 
 function RelatedPost({ data }: Props): ReactElement {

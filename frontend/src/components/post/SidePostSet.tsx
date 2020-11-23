@@ -3,22 +3,15 @@ import dayjs from "dayjs";
 import React, { ReactElement } from "react";
 import tw, { styled } from "twin.macro";
 import { Post } from "../Post";
+import { SidePostModel } from "@src/model/sanity/SidePostModel";
 
-export type SidePostSetProps = {
-	posts: SidePostProps["data"][];
+type SidePostSetProps = {
+	posts: SidePostModel[];
 	title: string;
 };
 
 type SidePostProps = {
-	data: {
-		title: string;
-		slug: string;
-		publishedAt: string;
-		image: {
-			url: string;
-			alt?: string;
-		};
-	};
+	data: SidePostModel;
 };
 
 function SidePostSet({ posts, title }: SidePostSetProps): ReactElement {

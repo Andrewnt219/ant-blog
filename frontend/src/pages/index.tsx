@@ -7,21 +7,27 @@ import {
 	STYLE_CONSTANTS,
 } from "@src/assets/constants/StyleConstants";
 import PinnedPostSet from "@src/components/post/PinnedPostSet";
-import sanityClient from "@src/lib/sanity/client";
+import * as sanityDataService from "@src/service/sanity/sanity.data-service";
 import PostPreviewSet from "@src/components/post/PostPreviewSet";
 import RecentPostSet from "@src/components/post/RecentPostSet";
 import SidePostSet from "@src/components/post/SidePostSet";
 import useSWR from "swr";
 import { sanityFetcher } from "@src/lib/swr";
 import Broken from "@src/components/Broken";
+import { HomePostModel } from "@src/model/sanity";
+import { HOME_POSTS_QUERY } from "@src/service/sanity/sanity.query";
 
 const Index = ({
 	prefetchedPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-	const { data: posts } = useSWR<Post[]>(queryString, sanityFetcher, {
-		initialData: prefetchedPosts ?? [],
-		refreshInterval: NUMBER_CONSTANTS.refreshInterval,
-	});
+	const { data: posts } = useSWR<HomePostModel[]>(
+		HOME_POSTS_QUERY,
+		sanityFetcher,
+		{
+			initialData: prefetchedPosts ?? [],
+			refreshInterval: NUMBER_CONSTANTS.refreshInterval,
+		}
+	);
 
 	return !posts || posts.length === 0 ? (
 		<>
@@ -74,49 +80,11 @@ const Index = ({
 	);
 };
 
-type Post = {
-	isPinned: boolean;
-	title: string;
-	slug: string;
-	publishedAt: string;
-	category: {
-		title: string;
-		slug: string;
-	};
-	contentSnippet: string;
-	author: string;
-	rawContent: string;
-	snippet: string;
-	image: {
-		alt?: string;
-		url: string;
-	};
-};
-
-// TODO: add lqip. "lqip": mainImage.asset->metadata.lqip
-// "lqip": body[].asset->metadata (watch out for null)
-const queryString = `
-			*[_type == "post" && !isArchived] | order(_updatedAt desc) {
-				isPinned,
-				title,
-				"slug": slug.current,
-				publishedAt,
-				"category": categories[] -> {title, "slug": slug.current}[0],
-				"author": author -> name,
-				rawContent,
-				"image": mainImage {
-					alt,
-					"url": asset -> url
-				},
-				snippet
-			}
-		`;
-
 export const getStaticProps: GetStaticProps<{
-	prefetchedPosts: Post[] | null;
+	prefetchedPosts: HomePostModel[] | null;
 }> = async () => {
 	try {
-		const posts = await sanityClient.fetch<Post[]>(queryString);
+		const posts = await sanityDataService.getPosts();
 		return {
 			props: { prefetchedPosts: posts },
 			revalidate: 1,

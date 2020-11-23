@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import sanityClient from "@src/lib/sanity/client";
 import Head from "next/head";
 import { calculateReadingMinutes } from "@src/utils";
 import PostHeader from "@src/components/post/PostHeader";
@@ -8,20 +7,22 @@ import PostBody from "@src/components/post/PostBody";
 import PostFooter from "@src/components/post/PostFooter";
 import tw, { styled } from "twin.macro";
 import ShareSideBar from "@src/components/ShareSideBar";
-import SidePostSet, {
-	SidePostSetProps,
-} from "@src/components/post/SidePostSet";
+import SidePostSet from "@src/components/post/SidePostSet";
 import useSWR from "swr";
 import { sanityFetcher } from "@src/lib/swr";
 import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import { SanityClientErrorResponse } from "sanity";
 import Loading from "@src/components/Loading";
 import Broken from "@src/components/Broken";
-import * as sanityDataService from "@src/service/sanityDataService";
+import * as sanityDataService from "@src/service/sanity/sanity.data-service";
+import * as sanityQueries from "@src/service/sanity/sanity.query";
 import RelatedPostSet from "@src/components/post/RelatedPostSet";
 import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
 import { useCurrentLocation, usePostComments } from "@src/hooks";
 import CommentSet from "@src/components/post/CommentSet";
+import { RelatedPostsModel } from "@src/model/sanity/RelatedPostModel";
+import { SidePostModel } from "@src/model/sanity/SidePostModel";
+import { PostModel } from "@src/model/sanity";
 
 // TODO: router.fallback
 const Post = ({
@@ -38,9 +39,9 @@ const Post = ({
 
 	// fetch sidePosts
 	const { data: sidePosts, error: sidePostsError } = useSWR<
-		SidePostSetProps["posts"],
+		SidePostModel[],
 		SanityClientErrorResponse
-	>(SIDE_POSTS_QUERY, sanityFetcher, {
+	>(sanityQueries.SIDE_POSTS_QUERY, sanityFetcher, {
 		initialData: initialSidePosts,
 		refreshInterval: NUMBER_CONSTANTS.refreshInterval,
 	});
@@ -48,11 +49,11 @@ const Post = ({
 	// TODO: fixed server fetch !== client fetch (probably category different)
 	// fetch relatedPosts
 	const { data: relatedPosts, error: relatedPostsError } = useSWR<
-		sanityDataService.RelatedPostsProps[],
+		RelatedPostsModel[],
 		SanityClientErrorResponse
 	>(
-		sanityDataService.getRelatedPosts.query,
-		sanityDataService.getRelatedPosts.fetch.bind(this, post.categories[0].slug),
+		sanityQueries.RELATED_POSTS_QUERY,
+		sanityDataService.getRelatedPosts.bind(this, post.categories[0].slug),
 		{
 			initialData: initialRelatedPosts,
 			refreshInterval: NUMBER_CONSTANTS.refreshInterval,
@@ -151,86 +152,26 @@ export default Post;
 /* -------------------------------------------------------------------------- */
 /*                                 SERVER-SIDE                                */
 /* -------------------------------------------------------------------------- */
-
-type Post = {
-	_id: string;
-	categories: {
-		title: string;
-		slug: string;
-	}[];
-	rawContent: string;
-	title: string;
-	thumbnailSrc: string;
-	body: any;
-	author: {
-		name: string;
-		avatarSrc: string;
-		slug: string;
-		bio: any;
-	};
-	publishedAt: string;
+type StaticProps = {
+	post: PostModel;
+	sidePosts: SidePostModel[];
+	relatedPosts: RelatedPostsModel[];
 };
 
-const SIDE_POSTS_QUERY = `
-		*[_type == "post" && !isArchived && !isPinned] | order(_updatedAt desc) {
-			title,
-			"slug": slug.current,
-			publishedAt,
-			"category": categories[] -> {title, "slug": slug.current}[0],
-			"image": mainImage {
-				alt,
-				"url": asset -> url
-			}
-		}[0...3]
-	`;
+type Params = {
+	slug: string;
+};
 
-export const getStaticProps: GetStaticProps<
-	{
-		post: Post;
-		sidePosts: SidePostSetProps["posts"];
-		relatedPosts: sanityDataService.RelatedPostsProps[];
-	},
-	{ slug: string }
-> = async ({ params }) => {
-	const post = await sanityClient.fetch<Post>(
-		`
-        *[slug.current == $slug] {
-						_id,
-						"categories": categories[] -> {title, "slug": slug.current},
-            title,
-            "thumbnailSrc": mainImage.asset -> url,
-						body[] {
-							...,
-							markDefs[] {
-								...,
-								_type == "internalLink" => {
-									...,
-									"url": "/" + @.post->slug.current,
-								}
-							}
-						},
-						author -> {
-							name,
-							"slug": slug.current,
-							"avatarSrc": image.asset -> url,
-							bio
-						},
-						publishedAt,
-						rawContent
-        }[0]
-    `,
-		{
-			slug: params?.slug,
-		}
-	);
+export const getStaticProps: GetStaticProps<StaticProps, Params> = async ({
+	params,
+}) => {
+	const post = await sanityDataService.getPost(params!.slug);
 
-	const relatedPosts = await sanityDataService.getRelatedPosts.fetch(
+	const relatedPosts = await sanityDataService.getRelatedPosts(
 		post.categories[0].slug
 	);
 
-	const sidePosts = await sanityClient.fetch<SidePostSetProps["posts"]>(
-		SIDE_POSTS_QUERY
-	);
+	const sidePosts = await sanityDataService.getSidePosts();
 
 	return {
 		props: { post, sidePosts, relatedPosts },
@@ -239,11 +180,11 @@ export const getStaticProps: GetStaticProps<
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const posts = await sanityClient.fetch<{ slug: { current: string } }[]>(
-		`*[_type == "post"]{slug{current}}`
-	);
+	const postSlugSet = await sanityDataService.getPostsSlug();
 
-	const paths = posts.map((post) => ({ params: { slug: post.slug.current } }));
+	const paths = postSlugSet.map((post) => ({
+		params: { slug: post.slug.current },
+	}));
 
 	return {
 		paths,

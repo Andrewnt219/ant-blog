@@ -1,5 +1,5 @@
 import Lottie from "react-lottie";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import animationData from "@src/assets/lottie/Dog smell.json";
 import tw, { styled } from "twin.macro";
 import { useLoadingDots } from "@src/hooks";

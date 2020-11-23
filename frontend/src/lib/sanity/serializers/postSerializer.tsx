@@ -1,7 +1,6 @@
 import { BlockRenderer } from "@src/components/BlockRenderer";
 import ExternalLink from "@src/components/ExternalLink";
 import PostImage from "@src/components/post/PostImage";
-import PostBlockquote from "@src/components/PostBlockquote";
 import RenderedYoutube from "@src/components/RenderedYoutube";
 import getYouTubeID from "get-youtube-id";
 import InternalLink from "../../../components/InternalLink";

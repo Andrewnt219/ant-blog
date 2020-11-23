@@ -25,7 +25,7 @@ export const useLoadingDots = ({
 		}, intervalInMs);
 
 		return () => clearInterval(id);
-	}, [intervalInMs]);
+	}, [intervalInMs, length, placeholder]);
 
 	return dots;
 };

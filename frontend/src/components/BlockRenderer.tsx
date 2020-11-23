@@ -3,30 +3,35 @@ import BlockContent from "@sanity/block-content-to-react";
 import tw, { styled } from "twin.macro";
 
 export const BlockRenderer = (props: any) => {
-	const { style = "normal" } = props.node;
+	let Block: any;
 
-	if (style === "normal") {
-		return <Normal>{props.children}</Normal>;
+	switch (props.node.style) {
+		case "normal":
+			Block = Normal;
+			break;
+
+		case "h2":
+			Block = Heading2;
+			break;
+
+		case "h3":
+			Block = Heading3;
+			break;
+
+		case "h4":
+			Block = Heading4;
+			break;
+
+		case "blockquote":
+			Block = Blockquote;
+			break;
+
+		// Fall back to default handling
+		default:
+			return (BlockContent as any).defaultSerializers.types.block(props);
 	}
 
-	if (style === "h1") {
-		return <h1>{props.children}</h1>;
-	}
-
-	if (style === "h2") {
-		return <h2>{props.children}</h2>;
-	}
-
-	if (style === "h3") {
-		return <Heading3>{props.children}</Heading3>;
-	}
-
-	if (style === "blockquote") {
-		return <Blockquote>{props.children}</Blockquote>;
-	}
-
-	// Fall back to default handling
-	return (BlockContent as any).defaultSerializers.types.block(props);
+	return <Block>{props.children}</Block>;
 };
 
 type NormalProps = {};
@@ -35,15 +40,19 @@ const Normal = styled.p<NormalProps>`
 	${tw`mb-6`}
 `;
 
-type Heading1Props = {};
-const Heading1 = styled.h1<Heading1Props>``;
-
 type Heading2Props = {};
-const Heading2 = styled.h2<Heading2Props>``;
+const Heading2 = styled.h2<Heading2Props>`
+	${tw`text-2xl font-700  mb-3 mt-12`}
+`;
 
 type Heading3Props = {};
 const Heading3 = styled.h3<Heading3Props>`
 	${tw`mt-10 mb-3 font-700 text-xl`}
+`;
+
+type Heading4Props = {};
+const Heading4 = styled.h3<Heading4Props>`
+	${tw`mt-8 mb-3 font-700 text-lg`}
 `;
 
 type BlockquoteProps = {};

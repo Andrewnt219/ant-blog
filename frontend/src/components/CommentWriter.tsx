@@ -8,10 +8,9 @@ import { LOCAL_STORAGE } from "@src/assets/constants/StyleConstants";
 import Checkbox from "./form/Checkbox";
 import * as FormBuilder from "@src/components/form/FormBuilder";
 import { getRandomNumberInclusive } from "@src/utils";
+import { CommentModel } from "@src/model/firebase/CommentModel";
 
-export type CommentFormValues = {
-	username: string;
-	text: string;
+export type CommentFormValues = Pick<CommentModel, "username" | "text"> & {
 	isSaved: boolean;
 };
 
@@ -30,9 +29,14 @@ const CommentWriter = React.forwardRef<Ref, Props>(
 	(props, ref): ReactElement => {
 		const { submitHandler, className, config } = props;
 
-		const { register, handleSubmit, reset, watch, errors, setValue } = useForm<
-			CommentFormValues
-		>({
+		const {
+			register,
+			handleSubmit,
+			reset,
+			watch,
+			errors,
+			setValue,
+		} = useForm<CommentFormValues>({
 			mode: "onChange",
 		});
 

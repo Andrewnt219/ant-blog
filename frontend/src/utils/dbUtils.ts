@@ -1,18 +1,18 @@
 import omit from "lodash/omit";
 import { CommentFormValues } from "@src/components/CommentWriter";
-import { FirestoreComment } from "@src/components/post/CommentSet";
+import { CommentModel } from "@src/model/firebase/CommentModel";
 
 type ToFireStoreCommentProps = {
 	data: CommentFormValues;
 	_postId: string;
-	replies: FirestoreComment["replies"];
+	replies: CommentModel["replies"];
 };
 
 export function toFireStoreComment({
 	data,
 	_postId,
 	replies,
-}: ToFireStoreCommentProps): FirestoreComment {
+}: ToFireStoreCommentProps): CommentModel {
 	return {
 		...omit(data, ["isSaved"]),
 		_postId,

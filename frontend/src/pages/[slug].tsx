@@ -33,7 +33,7 @@ const Post = ({
 	/* --------------------------------- STATES --------------------------------- */
 	// Post's comments
 	const comments = usePostComments(post._id);
-	console.log(comments);
+
 	// Full location to current page
 	const currentLocation = useCurrentLocation();
 

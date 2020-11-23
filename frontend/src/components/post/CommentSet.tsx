@@ -8,12 +8,12 @@ import CommentWriter, {
 	CommentFormValues,
 } from "@src/components/CommentWriter";
 import db from "@src/lib/firebase/db";
-import { AxiosError } from "axios";
 import CenteredElementWithLine from "../CenteredElementWithLine";
 import { padZero } from "@src/utils";
 import { toFireStoreComment } from "@src/utils/dbUtils";
-import firebase from "firebase/app";
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import { CommentModel } from "@src/model/firebase/CommentModel";
+import * as firebaseDataService from "@src/service/firebase/firebase.data-service";
 
 dayjs.extend(relativeTime);
 
@@ -22,26 +22,15 @@ type CommentSetProps = {
 	_postId: string;
 };
 
-export type FirestoreComment = Omit<CommentFormValues, "isSaved"> & {
-	_postId: string;
-	_createdAt: number;
-	replies: FirestoreComment[];
-};
-
 function CommentSet({ comments, _postId }: CommentSetProps): ReactElement {
 	const handleSubmit = (data: CommentFormValues) => {
-		const submittedData: FirestoreComment = toFireStoreComment({
+		const submittedData: CommentModel = toFireStoreComment({
 			data,
 			_postId,
 			replies: [],
 		});
 
-		try {
-			db.collection("comments").add(submittedData);
-		} catch (error) {
-			console.log((error as AxiosError).message);
-			console.log(error);
-		}
+		firebaseDataService.addComment(submittedData);
 	};
 
 	return (
@@ -105,21 +94,15 @@ function Comment({ data, _postId }: CommentProps) {
 	const handleSubmit = (data: CommentFormValues) => {
 		setShowCommentEditor(false);
 
-		const submittedData: FirestoreComment = toFireStoreComment({
+		const submittedData: CommentModel = toFireStoreComment({
 			data,
 			_postId,
 			replies: [],
 		});
 
-		db.collection("comments")
-			.doc(id)
-			.update({
-				replies: firebase.firestore.FieldValue.arrayUnion(submittedData),
-			})
-			.catch(() => {
-				setShowCommentEditor(true);
-				console.error("Failed to reply");
-			});
+		firebaseDataService.addReply(id, submittedData, () =>
+			setShowCommentEditor(true)
+		);
 	};
 
 	const handleReplyClick = () => {

@@ -7,7 +7,7 @@ import {
 	STYLE_CONSTANTS,
 } from "@src/assets/constants/StyleConstants";
 import PinnedPostSet from "@src/components/post/PinnedPostSet";
-import * as sanityDataService from "@src/service/sanity/sanity.data-service";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 import PostPreviewSet from "@src/components/post/PostPreviewSet";
 import RecentPostSet from "@src/components/post/RecentPostSet";
 import SidePostSet from "@src/components/post/SidePostSet";
@@ -84,7 +84,7 @@ export const getStaticProps: GetStaticProps<{
 	prefetchedPosts: HomePostModel[] | null;
 }> = async () => {
 	try {
-		const posts = await sanityDataService.getPosts();
+		const posts = await SanityDataService.getInstance().getHomePosts();
 		return {
 			props: { prefetchedPosts: posts },
 			revalidate: 1,

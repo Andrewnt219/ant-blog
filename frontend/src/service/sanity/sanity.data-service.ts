@@ -1,10 +1,12 @@
 import sanityClient from "@src/lib/sanity/client";
+
 import {
-	PostModel,
 	SidePostModel,
 	HomePostModel,
 	RelatedPostsModel,
+	PostModel,
 } from "@src/model/sanity";
+
 import {
 	HOME_POSTS_QUERY,
 	POSTS_SLUG_QUERY,
@@ -13,21 +15,36 @@ import {
 	SIDE_POSTS_QUERY,
 } from "./sanity.query";
 
-export const getRelatedPosts = (categorySlug: string) =>
-	sanityClient.fetch<RelatedPostsModel[]>(RELATED_POSTS_QUERY, {
-		categorySlug,
-	});
+export class SanityDataService {
+	private static instance: SanityDataService;
+	private static client = sanityClient;
 
-export const getSidePosts = () =>
-	sanityClient.fetch<SidePostModel[]>(SIDE_POSTS_QUERY);
+	public static getInstance = () => {
+		if (!SanityDataService.instance) {
+			SanityDataService.instance = new SanityDataService();
+		}
 
-export const getPost = (slug: string) =>
-	sanityClient.fetch<PostModel>(POST_QUERY, {
-		slug,
-	});
+		return SanityDataService.instance;
+	};
 
-export const getPostsSlug = () =>
-	sanityClient.fetch<{ slug: { current: string } }[]>(POSTS_SLUG_QUERY);
+	getRelatedPosts = (categorySlug: string) =>
+		SanityDataService.client.fetch<RelatedPostsModel[]>(RELATED_POSTS_QUERY, {
+			categorySlug,
+		});
 
-export const getPosts = () =>
-	sanityClient.fetch<HomePostModel[]>(HOME_POSTS_QUERY);
+	getSidePosts = () =>
+		SanityDataService.client.fetch<SidePostModel[]>(SIDE_POSTS_QUERY);
+
+	getPost = (slug: string) =>
+		SanityDataService.client.fetch<PostModel>(POST_QUERY, {
+			slug,
+		});
+
+	getPostsSlug = () =>
+		SanityDataService.client.fetch<{ slug: { current: string } }[]>(
+			POSTS_SLUG_QUERY
+		);
+
+	getHomePosts = () =>
+		SanityDataService.client.fetch<HomePostModel[]>(HOME_POSTS_QUERY);
+}

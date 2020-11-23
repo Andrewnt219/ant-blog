@@ -14,7 +14,7 @@ import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import { SanityClientErrorResponse } from "sanity";
 import Loading from "@src/components/Loading";
 import Broken from "@src/components/Broken";
-import * as sanityDataService from "@src/service/sanity/sanity.data-service";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 import * as sanityQueries from "@src/service/sanity/sanity.query";
 import RelatedPostSet from "@src/components/post/RelatedPostSet";
 import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
@@ -53,7 +53,10 @@ const Post = ({
 		SanityClientErrorResponse
 	>(
 		sanityQueries.RELATED_POSTS_QUERY,
-		sanityDataService.getRelatedPosts.bind(this, post.categories[0].slug),
+		SanityDataService.getInstance().getRelatedPosts.bind(
+			this,
+			post.categories[0].slug
+		),
 		{
 			initialData: initialRelatedPosts,
 			refreshInterval: NUMBER_CONSTANTS.refreshInterval,
@@ -165,13 +168,13 @@ type Params = {
 export const getStaticProps: GetStaticProps<StaticProps, Params> = async ({
 	params,
 }) => {
-	const post = await sanityDataService.getPost(params!.slug);
+	const post = await SanityDataService.getInstance().getPost(params!.slug);
 
-	const relatedPosts = await sanityDataService.getRelatedPosts(
+	const relatedPosts = await SanityDataService.getInstance().getRelatedPosts(
 		post.categories[0].slug
 	);
 
-	const sidePosts = await sanityDataService.getSidePosts();
+	const sidePosts = await SanityDataService.getInstance().getSidePosts();
 
 	return {
 		props: { post, sidePosts, relatedPosts },
@@ -180,7 +183,7 @@ export const getStaticProps: GetStaticProps<StaticProps, Params> = async ({
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const postSlugSet = await sanityDataService.getPostsSlug();
+	const postSlugSet = await SanityDataService.getInstance().getPostsSlug();
 
 	const paths = postSlugSet.map((post) => ({
 		params: { slug: post.slug.current },

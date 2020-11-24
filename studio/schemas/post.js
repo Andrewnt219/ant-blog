@@ -93,7 +93,7 @@ export default {
 			],
 			options: {
 				hotspot: true,
-				metadata: ["lqip"],
+				metadata: ["lqip", "dimensions"],
 			},
 			validation: (Rule) =>
 				Rule.required().error(

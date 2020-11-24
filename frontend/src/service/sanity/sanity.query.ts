@@ -33,6 +33,14 @@ export const POST_QUERY = `
             "thumbnailSrc": mainImage.asset -> url,
 						body[] {
 							...,
+							_type == "image" => {
+								...,
+								"metadata": @.asset -> metadata {
+									"width": dimensions.width, 
+									"height": dimensions.height,
+									lqip
+								}
+							},
 							markDefs[] {
 								...,
 								_type == "internalLink" => {

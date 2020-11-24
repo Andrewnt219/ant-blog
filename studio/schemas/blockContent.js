@@ -147,6 +147,9 @@ export default {
 			type: "image",
 			options: { hotspot: true },
 			icon: FaImage,
+			options: {
+				metadata: ["lqip", "dimensions"],
+			},
 			fields: [
 				{
 					type: "string",

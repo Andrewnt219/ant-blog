@@ -137,7 +137,7 @@ type ContentLayoutProps = {};
 const ContentLayout = styled.div<ContentLayoutProps>`
 	${tw`space-y-10`}
 	display: grid;
-	grid-template-columns: 5% 1fr 25%;
+	grid-template-columns: 5% 65ch 1fr;
 	padding: 0 10% 0 2.5%;
 	gap: 0 5%;
 

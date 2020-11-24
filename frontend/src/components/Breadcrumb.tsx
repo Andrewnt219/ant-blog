@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import tw, { css, styled } from "twin.macro";
 
 type Props = {
 	data: BreadCrumbProps[];
@@ -16,7 +16,7 @@ function Breadcrumb({ data }: Props): ReactElement {
 		<BreadcrumbItemSet>
 			{data.map(({ href, text }, index) => (
 				<React.Fragment key={href}>
-					<BreadCrumbItem>
+					<BreadCrumbItem lastItem={index === data.length - 1} title={text}>
 						<Link href={href}>
 							<a>{text}</a>
 						</Link>
@@ -36,10 +36,20 @@ const BreadcrumbItemSet = styled.ul<BreadcrumbItemSetProps>`
 	}
 `;
 
-type BreadCrumbItemProps = {};
+type BreadCrumbItemProps = {
+	lastItem: boolean;
+};
 const BreadCrumbItem = styled.li<BreadCrumbItemProps>`
 	transition: color 200ms ease;
 	${tw`hover:text-textColor hover:underline`}
+
+	${(p) =>
+		p.lastItem &&
+		css`
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		`}
 `;
 
 export default Breadcrumb;

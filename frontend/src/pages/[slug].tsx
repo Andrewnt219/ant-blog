@@ -23,7 +23,7 @@ import { RelatedPostsModel } from "@src/model/sanity/RelatedPostModel";
 import { SidePostModel } from "@src/model/sanity/SidePostModel";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 import * as sanityQueries from "@src/service/sanity/sanity.query";
-import { calculateReadingMinutes } from "@src/utils";
+import { blocksToText, calculateReadingMinutes } from "@src/utils";
 
 // TODO: router.fallback
 const Post = ({
@@ -66,7 +66,7 @@ const Post = ({
 
 	/* --------------------------------- RENDER --------------------------------- */
 
-	const { categories, rawContent } = post;
+	const { categories } = post;
 
 	const renderedSidePosts = renderPosts(
 		sidePosts,
@@ -90,7 +90,7 @@ const Post = ({
 				data={{
 					...post,
 					category: categories[0],
-					readMinute: calculateReadingMinutes(rawContent),
+					readMinute: calculateReadingMinutes(blocksToText(post.body)),
 				}}
 			/>
 			<ContentLayout>

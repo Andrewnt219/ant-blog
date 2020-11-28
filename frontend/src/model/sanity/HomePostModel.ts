@@ -9,10 +9,10 @@ export type HomePostModel = {
 	};
 	contentSnippet: string;
 	author: string;
-	rawContent: string;
 	snippet: string;
 	image: {
 		alt?: string;
 		url: string;
 	};
+	body: any;
 };

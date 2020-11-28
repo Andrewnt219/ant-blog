@@ -4,7 +4,6 @@ export type PostModel = {
 		title: string;
 		slug: string;
 	}[];
-	rawContent: string;
 	title: string;
 	thumbnailSrc: string;
 	body: any;

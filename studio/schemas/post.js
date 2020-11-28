@@ -1,5 +1,3 @@
-import client from "part:@sanity/base/client";
-
 export default {
 	name: "post",
 	title: "Post",
@@ -154,17 +152,6 @@ export default {
 
 					return true;
 				}),
-		},
-		{
-			name: "rawContent",
-			title: "Raw Content",
-			description: "Dùng để tính thời gian đọc và search keyword",
-			type: "string",
-
-			validation: (Rule) =>
-				Rule.required().error(
-					"Em copy nội dung từ body vào ô này nhé (Pro tip: dùng Ctrl + A)"
-				),
 		},
 	],
 

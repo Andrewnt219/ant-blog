@@ -1,5 +1,5 @@
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { calculateReadingMinutes } from "@src/utils";
+import { blocksToText, calculateReadingMinutes } from "@src/utils";
 import dayjs from "dayjs";
 import React, { ReactElement } from "react";
 import tw, { styled } from "twin.macro";
@@ -22,8 +22,8 @@ type RecentPostProps = {
 		slug: string;
 		title: string;
 		publishedAt: string;
-		rawContent: string;
 		snippet: string;
+		body: any;
 	};
 	isMain: boolean;
 };
@@ -44,15 +44,7 @@ function RecentPostSet({ posts }: RecentPostSetProps): ReactElement {
 }
 
 export function RecentPost({ data, isMain }: RecentPostProps): ReactElement {
-	const {
-		category,
-		slug,
-		image,
-		title,
-		publishedAt,
-		rawContent,
-		snippet,
-	} = data;
+	const { category, slug, image, title, publishedAt, snippet, body } = data;
 	const linkToPost = "/" + slug;
 
 	return (
@@ -65,7 +57,7 @@ export function RecentPost({ data, isMain }: RecentPostProps): ReactElement {
 					{dayjs(publishedAt).format(FORMAT_CONSTANTS.dateFormat)}
 				</SubInfo>
 				<SubInfo>
-					&nbsp;&nbsp;-&nbsp;&nbsp;{calculateReadingMinutes(rawContent)}
+					&nbsp;&nbsp;-&nbsp;&nbsp;{calculateReadingMinutes(blocksToText(body))}
 				</SubInfo>
 				{isMain && (
 					<>

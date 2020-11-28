@@ -1,5 +1,5 @@
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { calculateReadingMinutes } from "@src/utils";
+import { blocksToText, calculateReadingMinutes } from "@src/utils";
 import dayjs from "dayjs";
 import React, { ReactElement } from "react";
 import tw, { styled, theme } from "twin.macro";
@@ -22,9 +22,9 @@ type PostPreviewProps = {
 		};
 		title: string;
 		publishedAt: string;
-		rawContent: string;
 		snippet: string;
 		slug: string;
+		body: any;
 	};
 };
 
@@ -41,15 +41,7 @@ function PostPreviewSet({ posts }: PostPreviewSetProps) {
 }
 
 function PostPreview({ data }: PostPreviewProps): ReactElement {
-	const {
-		category,
-		title,
-		publishedAt,
-		slug,
-		snippet,
-		rawContent,
-		image,
-	} = data;
+	const { body, category, title, publishedAt, slug, snippet, image } = data;
 
 	const linkToPost = "/" + slug;
 
@@ -67,7 +59,8 @@ function PostPreview({ data }: PostPreviewProps): ReactElement {
 					</SubInfo>
 
 					<SubInfo>
-						&nbsp;&nbsp;-&nbsp;&nbsp;{calculateReadingMinutes(rawContent)}
+						&nbsp;&nbsp;-&nbsp;&nbsp;
+						{calculateReadingMinutes(blocksToText(body))}
 					</SubInfo>
 				</SubInfoContainer>
 

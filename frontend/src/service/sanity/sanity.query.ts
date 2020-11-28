@@ -55,8 +55,7 @@ export const POST_QUERY = `
 							"avatarSrc": image.asset -> url,
 							bio
 						},
-						publishedAt,
-						rawContent
+						publishedAt
         }[0]
     `;
 
@@ -76,11 +75,11 @@ export const HOME_POSTS_QUERY = `
 				publishedAt,
 				"category": categories[] -> {title, "slug": slug.current}[0],
 				"author": author -> name,
-				rawContent,
 				"image": mainImage {
 					alt,
 					"url": asset -> url
 				},
-				snippet
+				snippet,
+				body
 			}
 		`;

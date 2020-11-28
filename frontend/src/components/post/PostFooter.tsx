@@ -61,9 +61,10 @@ function PostFooter({ data, className }: Props): ReactElement {
 					{/* TODO: author image stale */}
 					<AuthorImageContainer>
 						<Image
-							src={author.avatarSrc}
-							alt={author.name + "avatar"}
 							unsized
+							sizes=", 7vw"
+							src={author.avatarSrc}
+							alt={author.name + " avatar"}
 						/>
 					</AuthorImageContainer>
 				</CenteredElementWithLine>

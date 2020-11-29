@@ -3,7 +3,7 @@ import { Post } from "@src/components/Post";
 import { RelatedPostsModel } from "@src/model/sanity/RelatedPostModel";
 import dayjs from "dayjs";
 import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import tw, { styled, theme } from "twin.macro";
 
 type RelatedPostSetProps = {
 	posts: RelatedPostsModel[];
@@ -28,8 +28,11 @@ function RelatedPostSet({
 type PostSetContainerProps = {};
 const PostSetContainer = styled.ul<PostSetContainerProps>`
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 3rem 1.5rem;
+
+	@media screen and (min-width: ${theme`screens.smDesktop`}) {
+		grid-template-columns: 1fr 1fr;
+		gap: 3rem 1.5rem;
+	}
 `;
 
 type Props = {

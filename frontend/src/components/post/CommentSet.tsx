@@ -1,5 +1,5 @@
 import React, { ReactElement, useRef, useState } from "react";
-import tw, { styled } from "twin.macro";
+import tw, { styled, theme } from "twin.macro";
 import { PostComment, useClickOutside } from "@src/hooks";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -271,7 +271,11 @@ const ReplyButton = styled(Button)`
 
 type SubCommentContainerProps = {};
 const SubCommentContainer = styled.div<SubCommentContainerProps>`
-	${tw`ml-10`}
+	${tw`ml-5`}
+
+	@media screen and (min-width: ${theme`screens.smDesktop`}) {
+		${tw`ml-10`}
+	}
 `;
 
 export default CommentSet;

@@ -143,7 +143,7 @@ type ContentLayoutProps = {};
 const ContentLayout = styled.div<ContentLayoutProps>`
 	${tw`space-y-10`}
 	display: grid;
-	padding: 0 ${STYLE_CONSTANTS.bodyPadding};
+	padding: 0 ${STYLE_CONSTANTS.mobileBodyPadding};
 
 	& > aside {
 		display: none;

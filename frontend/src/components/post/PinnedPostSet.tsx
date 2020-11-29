@@ -88,6 +88,8 @@ function PinnedPost({ data, isMainPinnedPost }: PinnedPostProps): ReactElement {
 	);
 }
 
+const _3columnsThreshold = theme`screens.smDesktop`;
+
 type StyledPinnedPostSetProps = {};
 const StyledPinnedPostSet = styled.ul<StyledPinnedPostSetProps>`
 	display: grid;
@@ -103,8 +105,7 @@ const StyledPinnedPostSet = styled.ul<StyledPinnedPostSetProps>`
 		}
 	}
 
-	/* NOTE: This is for 3 columns layout */
-	@media screen and (min-width: ${theme`screens.lgTablet`}) {
+	@media screen and (min-width: ${_3columnsThreshold}) {
 		grid-template-columns: 1.5fr 1fr 1fr;
 		grid-template-rows: initial;
 
@@ -144,8 +145,7 @@ const SubInfo = styled.div<SubInfoProps>`
 		css`
 			display: none;
 
-			/* NOTE: This is for 3 columns layout */
-			@media screen and (min-width: ${theme`screens.lgTablet`}) {
+			@media screen and (min-width: ${_3columnsThreshold}) {
 				display: inline-block;
 			}
 		`}
@@ -176,8 +176,7 @@ const Title = styled.h2<TitleProps>`
 			${tw`text-xl`}
 		`}
 
-	/* NOTE: This is for 3 columns layout */
-	@media screen and (min-width: ${theme`screens.lgTablet`}) {
+	@media screen and (min-width: ${_3columnsThreshold}) {
 		${tw`text-4xl`}
 
 		${(p) =>

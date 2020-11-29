@@ -123,8 +123,19 @@ const Main = styled.main<MainProps>`
 type RecentProps = {};
 const Recent = styled.section<RecentProps>`
 	display: grid;
-	grid-template-columns: 65% 30%;
-	column-gap: 5%;
+
+	& > aside {
+		display: none;
+	}
+
+	@media screen and (min-width: ${theme`screens.smDesktop`}) {
+		grid-template-columns: 65% 30%;
+		column-gap: 5%;
+
+		& > aside {
+			display: block;
+		}
+	}
 `;
 
 export default Index;

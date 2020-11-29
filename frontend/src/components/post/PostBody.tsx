@@ -1,6 +1,6 @@
 import BlockContent from "@sanity/block-content-to-react";
 import React, { ReactElement } from "react";
-import { styled } from "twin.macro";
+import { styled, theme } from "twin.macro";
 import sanityClient from "@src/lib/sanity/client";
 import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
 import Breadcrumb from "../Breadcrumb";
@@ -57,6 +57,14 @@ function PostBody({ data }: Props): ReactElement {
 }
 
 type ContainerProps = {};
-const Container = styled.div<ContainerProps>``;
+const Container = styled.div<ContainerProps>`
+	& > header {
+		display: none;
+	}
+
+	@media screen and (min-width: ${theme`screens.smDesktop`}) {
+		display: block;
+	}
+`;
 
 export default PostBody;

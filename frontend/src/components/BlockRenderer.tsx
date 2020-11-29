@@ -1,6 +1,6 @@
 import React from "react";
 import BlockContent from "@sanity/block-content-to-react";
-import tw, { styled } from "twin.macro";
+import tw, { styled, theme } from "twin.macro";
 
 export const BlockRenderer = (props: any) => {
 	let Block: any;
@@ -58,7 +58,7 @@ const Heading4 = styled.h3<Heading4Props>`
 type BlockquoteProps = {};
 const Blockquote = styled.blockquote<BlockquoteProps>`
 	${tw`font-500 text-2xl text-center leading-snug`}
-	${tw`relative my-10 pt-4 px-8`}
+	${tw`relative my-10 pt-4 px-2`}
 
 
 	::before {
@@ -74,5 +74,9 @@ const Blockquote = styled.blockquote<BlockquoteProps>`
 		transform: translate(-50%, -1rem) rotate(1deg);
 		font-family: "Georgia";
 		line-height: initial;
+	}
+
+	@media screen and (min-width: ${theme`screens.smDesktop`}) {
+		${tw`px-8`}
 	}
 `;

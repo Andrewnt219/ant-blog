@@ -59,7 +59,9 @@ function Checkbox<FormKeys extends Record<string, any>>({
 
 type ContainerProps = {};
 const Container = styled.div<ContainerProps>`
-	width: max-content;
+	// NOTE this flex prevent hover effect even when not on label
+	// NOTE max-width will cause problem on mobile
+	display: flex;
 `;
 
 type InputContainerProps = {};
@@ -77,6 +79,7 @@ const Input = styled.input<InputProps>``;
 type LabelProps = {};
 const Label = styled.label<LabelProps>`
 	transition: color 200ms ease;
+	cursor: pointer;
 `;
 
 type FakeInputProps = {};

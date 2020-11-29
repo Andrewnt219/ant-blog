@@ -3,9 +3,12 @@ import Head from "next/head";
 import React, { ReactElement } from "react";
 import { SanityClientErrorResponse } from "sanity";
 import useSWR from "swr";
-import tw, { styled } from "twin.macro";
+import tw, { styled, theme } from "twin.macro";
 
-import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import {
+	NUMBER_CONSTANTS,
+	STYLE_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
 import Broken from "@src/components/Broken";
 import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
 import Loading from "@src/components/Loading";
@@ -140,12 +143,24 @@ type ContentLayoutProps = {};
 const ContentLayout = styled.div<ContentLayoutProps>`
 	${tw`space-y-10`}
 	display: grid;
-	grid-template-columns: 5% 65ch 1fr;
-	padding: 0 10% 0 2.5%;
-	gap: 0 5%;
+	padding: 0 ${STYLE_CONSTANTS.bodyPadding};
 
-	& > *:not(aside) {
-		grid-column: 2/3;
+	& > aside {
+		display: none;
+	}
+
+	@media screen and (min-width: ${theme`screens.smDesktop`}) {
+		gap: 0 5%;
+		padding: 0 10% 0 2.5%;
+		grid-template-columns: 5% 65ch 1fr;
+
+		& > *:not(aside) {
+			grid-column: 2/3;
+		}
+
+		& > aside {
+			display: block;
+		}
 	}
 `;
 

@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useState } from "react";
-import tw, { css, styled } from "twin.macro";
+import tw, { css, styled, theme } from "twin.macro";
 import Lottie from "react-lottie";
 import angryAnimation from "@src/assets/lottie/angry-dog.json";
 import wowAnimation from "@src/assets/lottie/wow-dog.json";
@@ -50,8 +50,12 @@ function PostReactionSet({ itemHeight }: PostReactionSetProps): ReactElement {
 type PostReactionSetContainerProps = {};
 const PostReactionSetContainer = styled.ul<PostReactionSetContainerProps>`
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: repeat(2, 1fr);
 	gap: 1rem;
+
+	@media screen and (min-width: ${theme`screens.smDesktop`}) {
+		grid-template-columns: repeat(4, 1fr);
+	}
 `;
 
 /* -------------------------------------------------------------------------- */

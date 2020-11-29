@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import tw, { styled, theme } from "twin.macro";
 import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import Link from "next/link";
 import { PostReactionSet } from "./PostReactionSet";
@@ -94,9 +94,13 @@ type AdditionalInfoProps = {};
 const AdditionalInfo = styled.div<AdditionalInfoProps>`
 	${tw`text-xs`}
 	display: grid;
-	grid-template-columns: 1fr auto;
 	align-items: flex-start;
-	gap: 2rem;
+	gap: 1rem;
+
+	@media screen and (min-width: ${theme`screens.smDesktop`}) {
+		gap: 2rem;
+		grid-template-columns: 1fr auto;
+	}
 `;
 
 type CategorySetProps = {};

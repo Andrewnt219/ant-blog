@@ -1,13 +1,13 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useMemo } from "react";
 import tw, { styled, theme } from "twin.macro";
 import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import Link from "next/link";
 import { PostReactionSet } from "./PostReactionSet";
 import CenteredElementWithLine from "../CenteredElementWithLine";
-import Image from "next/image";
 import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
 import { ImageModel } from "@src/model/sanity";
 import { lqipBackground } from "@src/utils/cssHelpers";
+import { createSrcSet } from "@src/utils";
 
 type Props = {
 	data: {
@@ -29,6 +29,11 @@ type Props = {
 
 function PostFooter({ data, className }: Props): ReactElement {
 	const { categories, author } = data;
+
+	const srcset = useMemo(
+		() => createSrcSet(author.avatar.url, { format: "webp" }),
+		[author.avatar.url]
+	);
 
 	return (
 		// TODO add margin-top in case post does not end with a paragraph
@@ -60,12 +65,11 @@ function PostFooter({ data, className }: Props): ReactElement {
 
 			<AuthorContainer>
 				<CenteredElementWithLine>
-					{/* TODO: author image stale */}
 					<AuthorImageContainer lqip={author.avatar.metadata.lqip}>
-						<Image
-							unsized
+						<img
 							sizes=", 7vw"
 							src={author.avatar.url}
+							srcSet={srcset}
 							alt={author.name + " avatar"}
 						/>
 					</AuthorImageContainer>
@@ -162,13 +166,9 @@ type AuthorImageContainerProps = {
 const AuthorImageContainer = styled.div<AuthorImageContainerProps>`
 	${tw`w-24 h-24 rounded-full overflow-hidden`}
 
-	div,
 	img {
 		width: 100%;
 		height: 100%;
-	}
-
-	img {
 		object-fit: cover;
 		object-position: center center;
 

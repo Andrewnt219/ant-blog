@@ -2,13 +2,12 @@ import {
 	ENDPOINTS,
 	FORMAT_CONSTANTS,
 } from "@src/assets/constants/StyleConstants";
-import { preventOrphanText } from "@src/utils";
+import { createSrcSet, preventOrphanText } from "@src/utils";
 import dayjs from "dayjs";
 import Link from "next/link";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useMemo } from "react";
 import tw, { styled, theme } from "twin.macro";
 import { ImageModel } from "@src/model/sanity";
-import Image from "next/image";
 import { lqipBackground } from "@src/utils/cssHelpers";
 
 type Props = {
@@ -31,9 +30,18 @@ type Props = {
 function PostHeader({ data }: Props): ReactElement {
 	const { category, title, author, publishedAt, readMinute, thumbnail } = data;
 
+	const srcset = useMemo(
+		() => createSrcSet(thumbnail.url, { format: "webp", quality: 50 }),
+		[thumbnail.url]
+	);
+
 	return (
 		<Container>
-			<Thumbnail src={thumbnail.url} unsized lqip={thumbnail.metadata.lqip} />
+			<Thumbnail
+				src={thumbnail.url}
+				srcSet={srcset}
+				lqip={thumbnail.metadata.lqip}
+			/>
 			<InfoContainer>
 				<Link href={`${ENDPOINTS.category}/${category.slug}`}>
 					<a>
@@ -78,7 +86,7 @@ const Container = styled.header<ContainerProps>`
 type ThumbnailProps = {
 	lqip: string;
 };
-const Thumbnail = styled(Image)<ThumbnailProps>`
+const Thumbnail = styled.img<ThumbnailProps>`
 	position: absolute;
 	top: 0;
 	left: 0;

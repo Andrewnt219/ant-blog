@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useMemo } from "react";
 import { SanityClientErrorResponse } from "sanity";
 import useSWR from "swr";
 import tw, { styled, theme } from "twin.macro";
@@ -26,7 +26,11 @@ import { RelatedPostsModel } from "@src/model/sanity/RelatedPostModel";
 import { SidePostModel } from "@src/model/sanity/SidePostModel";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 import * as sanityQueries from "@src/service/sanity/sanity.query";
-import { blocksToText, calculateReadingMinutes } from "@src/utils";
+import {
+	blocksToText,
+	calculateReadingMinutes,
+	createSrcSet,
+} from "@src/utils";
 
 // TODO: router.fallback
 const Post = ({
@@ -86,10 +90,23 @@ const Post = ({
 		<RelatedPostSet imageSizes=", 25vw" posts={relatedPosts!} />
 	);
 
+	const heroSrcSet = useMemo(
+		() => createSrcSet(post.thumbnail.url, { format: "webp", quality: 50 }),
+		[post.thumbnail.url]
+	);
+
 	return (
 		<>
 			<Head>
 				<title>{post.title}</title>
+
+				<link
+					rel="preload"
+					as="image"
+					href={post.thumbnail.url}
+					// @ts-ignore
+					imagesrcset={heroSrcSet}
+				/>
 			</Head>
 
 			<PostHeader
@@ -98,6 +115,7 @@ const Post = ({
 					category: categories[0],
 					readMinute: calculateReadingMinutes(blocksToText(post.body)),
 				}}
+				srcset={heroSrcSet}
 			/>
 			<ContentLayout>
 				<ShareSideBar sharingUrl={currentLocation?.href ?? ""} />

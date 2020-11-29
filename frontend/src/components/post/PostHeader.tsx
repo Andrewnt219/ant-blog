@@ -2,10 +2,10 @@ import {
 	ENDPOINTS,
 	FORMAT_CONSTANTS,
 } from "@src/assets/constants/StyleConstants";
-import { createSrcSet, preventOrphanText } from "@src/utils";
+import { preventOrphanText } from "@src/utils";
 import dayjs from "dayjs";
 import Link from "next/link";
-import React, { ReactElement, useMemo } from "react";
+import React, { ReactElement } from "react";
 import tw, { styled, theme } from "twin.macro";
 import { ImageModel } from "@src/model/sanity";
 import { lqipBackground } from "@src/utils/cssHelpers";
@@ -25,15 +25,11 @@ type Props = {
 		publishedAt: string;
 		readMinute: string;
 	};
+	srcset: string;
 };
 
-function PostHeader({ data }: Props): ReactElement {
+function PostHeader({ data, srcset }: Props): ReactElement {
 	const { category, title, author, publishedAt, readMinute, thumbnail } = data;
-
-	const srcset = useMemo(
-		() => createSrcSet(thumbnail.url, { format: "webp", quality: 50 }),
-		[thumbnail.url]
-	);
 
 	return (
 		<Container>

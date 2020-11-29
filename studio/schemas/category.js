@@ -26,5 +26,20 @@ export default {
 			title: "Description",
 			type: "text",
 		},
+		{
+			name: "image",
+			title: "Image",
+			type: "image",
+			options: {
+				hotspot: true,
+				metadata: ["lqip"],
+			},
+		},
 	],
+	preview: {
+		select: {
+			title: "title",
+			media: "image",
+		},
+	},
 };

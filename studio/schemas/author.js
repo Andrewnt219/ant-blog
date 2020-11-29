@@ -23,7 +23,7 @@ export default {
 			type: "image",
 			options: {
 				hotspot: true,
-				metadata: ["lqip", "dimensions"],
+				metadata: ["lqip"],
 			},
 		},
 		{

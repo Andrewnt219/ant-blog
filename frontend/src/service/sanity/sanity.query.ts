@@ -1,6 +1,5 @@
-// TODO: && post.id !== currentPost
 export const RELATED_POSTS_QUERY = `
-  *[_type == "post" && categories[0]->slug.current == $categorySlug && post._id != $postId] {
+  *[_type == "post" && categories[0]->slug.current == $categorySlug && _id != $postId] {
     title,
     _id,
     publishedAt,

@@ -47,16 +47,26 @@ const Index = ({
 			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>
 				Others
 			</h2>
-			<PostPreviewSet posts={posts.filter((post) => !post.isPinned)} />
+			{/* TODO adjusted sizes */}
+			<PostPreviewSet
+				imageSizes=", 25vw"
+				posts={posts.filter((post) => !post.isPinned)}
+			/>
 
 			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>
 				Recent
 			</h2>
 
 			<Recent>
-				<RecentPostSet posts={posts.filter((post) => !post.isPinned)} />
+				{/* TODO adjusted sizes, note the main image is bigger */}
+				<RecentPostSet
+					imageSizes=", 25vw"
+					posts={posts.filter((post) => !post.isPinned)}
+				/>
 
+				{/* TODO adjusted sizes */}
 				<SidePostSet
+					imageSizes=", 10vw"
 					posts={posts.filter((post) => !post.isPinned).slice(0, 3)}
 					title="Latest"
 				/>

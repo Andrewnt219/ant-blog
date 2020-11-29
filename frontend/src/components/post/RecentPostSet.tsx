@@ -7,6 +7,7 @@ import { Post } from "../Post";
 
 type RecentPostSetProps = {
 	posts: RecentPostProps["data"][];
+	imageSizes: RecentPostProps["imageSizes"];
 };
 
 type RecentPostProps = {
@@ -26,9 +27,13 @@ type RecentPostProps = {
 		body: any;
 	};
 	isMain: boolean;
+	imageSizes: string;
 };
 
-function RecentPostSet({ posts }: RecentPostSetProps): ReactElement {
+function RecentPostSet({
+	posts,
+	imageSizes,
+}: RecentPostSetProps): ReactElement {
 	return (
 		<RecentPostSetContainer>
 			{posts.map((post, index) => (
@@ -36,20 +41,28 @@ function RecentPostSet({ posts }: RecentPostSetProps): ReactElement {
 					key={post.slug}
 					style={{ gridColumn: index === 0 ? "1/-1" : undefined }}
 				>
-					<RecentPost data={post} isMain={index === 0} />
+					<RecentPost
+						imageSizes={imageSizes}
+						data={post}
+						isMain={index === 0}
+					/>
 				</li>
 			))}
 		</RecentPostSetContainer>
 	);
 }
 
-export function RecentPost({ data, isMain }: RecentPostProps): ReactElement {
+export function RecentPost({
+	data,
+	isMain,
+	imageSizes,
+}: RecentPostProps): ReactElement {
 	const { category, slug, image, title, publishedAt, snippet, body } = data;
 	const linkToPost = "/" + slug;
 
 	return (
 		<RecentPostContainer>
-			<Thumbnail data={{ linkToPost, image }} />
+			<Thumbnail data={{ linkToPost, image }} sizes={imageSizes} />
 			<InfoContainer>
 				<Category data={category} />
 				<Title data={{ linkToPost, title }} />

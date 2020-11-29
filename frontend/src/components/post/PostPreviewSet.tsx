@@ -8,6 +8,7 @@ import SocialMediaIcon from "../SocialMediaIcon";
 
 type PostPreviewSetProps = {
 	posts: PostPreviewProps["data"][];
+	imageSizes: PostPreviewProps["imageSizes"];
 };
 
 type PostPreviewProps = {
@@ -26,28 +27,29 @@ type PostPreviewProps = {
 		slug: string;
 		body: any;
 	};
+	imageSizes: string;
 };
 
-function PostPreviewSet({ posts }: PostPreviewSetProps) {
+function PostPreviewSet({ posts, imageSizes }: PostPreviewSetProps) {
 	return (
 		<PostPreviewSetContainer>
 			{posts.map((post) => (
 				<li key={post.slug}>
-					<PostPreview data={post} />
+					<PostPreview data={post} imageSizes={imageSizes} />
 				</li>
 			))}
 		</PostPreviewSetContainer>
 	);
 }
 
-function PostPreview({ data }: PostPreviewProps): ReactElement {
+function PostPreview({ data, imageSizes }: PostPreviewProps): ReactElement {
 	const { body, category, title, publishedAt, slug, snippet, image } = data;
 
 	const linkToPost = "/" + slug;
 
 	return (
 		<PostPreviewContainer>
-			<Thumbnail data={{ linkToPost, image }} />
+			<Thumbnail data={{ linkToPost, image }} sizes={imageSizes} />
 
 			<CustomInfoContainer>
 				<Category data={category} />

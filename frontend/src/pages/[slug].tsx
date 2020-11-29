@@ -68,16 +68,18 @@ const Post = ({
 
 	const { categories } = post;
 
+	// TODO adjusted imageSizes
 	const renderedSidePosts = renderPosts(
 		sidePosts,
 		sidePostsError,
-		<SidePostSet posts={sidePosts!} title="Lastest Posts" />
+		<SidePostSet imageSizes=", 10vw" posts={sidePosts!} title="Lastest Posts" />
 	);
 
+	// TODO: adjust imageSizes
 	const renderedRelatedPosts = renderPosts(
 		relatedPosts,
 		relatedPostsError,
-		<RelatedPostSet posts={relatedPosts!} />
+		<RelatedPostSet imageSizes=", 25vw" posts={relatedPosts!} />
 	);
 
 	return (

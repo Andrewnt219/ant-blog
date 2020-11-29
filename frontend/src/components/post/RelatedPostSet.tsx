@@ -7,14 +7,18 @@ import tw, { styled } from "twin.macro";
 
 type RelatedPostSetProps = {
 	posts: RelatedPostsModel[];
+	imageSizes: Props["imageSizes"];
 };
 
-function RelatedPostSet({ posts }: RelatedPostSetProps): ReactElement {
+function RelatedPostSet({
+	posts,
+	imageSizes,
+}: RelatedPostSetProps): ReactElement {
 	return (
 		<PostSetContainer>
 			{posts.map((post) => (
 				<li key={post._id}>
-					<RelatedPost data={post} />
+					<RelatedPost imageSizes={imageSizes} data={post} />
 				</li>
 			))}
 		</PostSetContainer>
@@ -30,16 +34,17 @@ const PostSetContainer = styled.ul<PostSetContainerProps>`
 
 type Props = {
 	data: RelatedPostsModel;
+	imageSizes: string;
 };
 
-function RelatedPost({ data }: Props): ReactElement {
+function RelatedPost({ data, imageSizes }: Props): ReactElement {
 	const { slug, publishedAt, image, title } = data;
 
 	const linkToPost = `/${slug}`;
 
 	return (
 		<PostContainer>
-			<Post.Thumbnail data={{ linkToPost, image }} />
+			<Post.Thumbnail sizes={imageSizes} data={{ linkToPost, image }} />
 			<Post.InfoContainer>
 				<CustomPostTitle data={{ linkToPost, title }} />
 				<Post.SubInfoContainer>

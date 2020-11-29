@@ -8,13 +8,19 @@ import { SidePostModel } from "@src/model/sanity/SidePostModel";
 type SidePostSetProps = {
 	posts: SidePostModel[];
 	title: string;
+	imageSizes: SidePostProps["imageSizes"];
 };
 
 type SidePostProps = {
 	data: SidePostModel;
+	imageSizes: string;
 };
 
-function SidePostSet({ posts, title }: SidePostSetProps): ReactElement {
+function SidePostSet({
+	posts,
+	title,
+	imageSizes,
+}: SidePostSetProps): ReactElement {
 	return (
 		<Container>
 			<PostSetTitle>{title}</PostSetTitle>
@@ -22,7 +28,7 @@ function SidePostSet({ posts, title }: SidePostSetProps): ReactElement {
 			<SidePostSetContainer>
 				{posts.map((post) => (
 					<li key={post.slug}>
-						<SidePost data={post} />
+						<SidePost data={post} imageSizes={imageSizes} />
 					</li>
 				))}
 			</SidePostSetContainer>
@@ -30,14 +36,14 @@ function SidePostSet({ posts, title }: SidePostSetProps): ReactElement {
 	);
 }
 
-function SidePost({ data }: SidePostProps): ReactElement {
+function SidePost({ data, imageSizes }: SidePostProps): ReactElement {
 	const { title, slug, publishedAt, image } = data;
 
 	const linkToPost = "/" + slug;
 
 	return (
 		<SidePostContainer>
-			<Thumbnail data={{ image, linkToPost }} />
+			<Thumbnail sizes={imageSizes} data={{ image, linkToPost }} />
 			<CustomInfoContainer>
 				<CustomTitle data={{ title, linkToPost }} />
 				<SubInfo isTime>

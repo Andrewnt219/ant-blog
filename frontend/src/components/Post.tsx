@@ -151,6 +151,7 @@ const Snippet = styled.p<SnippetProps>``;
 /* -------------------------------------------------------------------------- */
 type ThumbnailProps = {
 	className?: string;
+	sizes: string;
 	data: {
 		linkToPost: string;
 		image: {
@@ -160,7 +161,7 @@ type ThumbnailProps = {
 	};
 };
 
-function Thumbnail({ data, className }: ThumbnailProps): ReactElement {
+function Thumbnail({ data, className, sizes }: ThumbnailProps): ReactElement {
 	const {
 		linkToPost,
 		image: { url, alt },
@@ -169,7 +170,12 @@ function Thumbnail({ data, className }: ThumbnailProps): ReactElement {
 	return (
 		<Link href={linkToPost} passHref>
 			<StyledThumbnail className={className}>
-				<Image src={url} alt={alt ?? "Article's thumbnail"} unsized />
+				<Image
+					sizes={sizes}
+					src={url}
+					alt={alt ?? "Article's thumbnail"}
+					unsized
+				/>
 			</StyledThumbnail>
 		</Link>
 	);

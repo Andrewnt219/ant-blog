@@ -1,4 +1,5 @@
 import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
+import { lqipBackground } from "@src/utils/cssHelpers";
 import Image from "next/image";
 import React, { ReactElement, ReactNode } from "react";
 import tw, { styled, theme } from "twin.macro";
@@ -80,8 +81,7 @@ const Picture = styled.picture<PictureProps>`
 		height: 100%;
 		object-fit: cover;
 
-		background-image: url(${(p) => p.lqip});
-		background-size: cover;
+		${(p) => p.lqip && lqipBackground(p.lqip)}
 	}
 `;
 

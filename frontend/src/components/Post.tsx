@@ -1,6 +1,7 @@
 import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
 import { ImageModel } from "@src/model/sanity";
 import { trimLastWord } from "@src/utils";
+import { lqipBackground } from "@src/utils/cssHelpers";
 import Image from "next/image";
 import Link from "next/link";
 import React, { ReactElement, ReactNode } from "react";
@@ -203,12 +204,11 @@ const StyledThumbnail = styled.a<StyledThumbnailProps>`
 		object-fit: cover;
 		height: 100%;
 		width: 100%;
-		background-image: url(${(p) => p.lqip});
-		background-size: cover;
-		background-repeat: no-repeat;
 		box-shadow: 0 3px 12px -1px rgba(7, 10, 25, 0.2),
 			0 22px 27px -20px rgba(7, 10, 25, 0.2);
 		transition: transform 300ms ease, box-shadow 300ms ease, filter 300ms ease;
+
+		${(p) => lqipBackground(p.lqip)}
 	}
 
 	:hover {

@@ -7,6 +7,7 @@ import CenteredElementWithLine from "../CenteredElementWithLine";
 import Image from "next/image";
 import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
 import { ImageModel } from "@src/model/sanity";
+import { lqipBackground } from "@src/utils/cssHelpers";
 
 type Props = {
 	data: {
@@ -167,9 +168,7 @@ const AuthorImageContainer = styled.div<AuthorImageContainerProps>`
 		object-fit: cover;
 		object-position: center center;
 
-		background-image: url(${(p) => p.lqip});
-		background-repeat: no-repeat;
-		background-size: cover;
+		${(p) => lqipBackground(p.lqip)}
 	}
 `;
 

@@ -9,6 +9,7 @@ import React, { ReactElement } from "react";
 import tw, { styled, theme } from "twin.macro";
 import { ImageModel } from "@src/model/sanity";
 import Image from "next/image";
+import { lqipBackground } from "@src/utils/cssHelpers";
 
 type Props = {
 	data: {
@@ -84,9 +85,8 @@ const Thumbnail = styled(Image)<ThumbnailProps>`
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	background-image: url(${(p) => p.lqip});
-	background-size: cover;
-	background-repeat: no-repeat;
+
+	${(p) => lqipBackground(p.lqip)}
 `;
 
 type InfoContainerProps = {};

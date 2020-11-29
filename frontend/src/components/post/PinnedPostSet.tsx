@@ -9,6 +9,7 @@ import {
 	FORMAT_CONSTANTS,
 } from "@src/assets/constants/StyleConstants";
 import { ImageModel } from "@src/model/sanity";
+import { lqipBackground } from "@src/utils/cssHelpers";
 
 type PinnedPostSetProps = {
 	posts: PinnedPostProps["data"][];
@@ -225,9 +226,7 @@ const Thumbnail = styled.a<ThumbnailProps>`
 
 		transition: transform 300ms ease, filter 300ms ease;
 
-		background-image: url(${(p) => p.lqip});
-		background-repeat: no-repeat;
-		background-size: cover;
+		${(p) => lqipBackground(p.lqip)}
 	}
 
 	:hover,

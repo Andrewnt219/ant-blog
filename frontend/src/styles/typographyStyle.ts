@@ -3,6 +3,7 @@ import { css } from "twin.macro";
 const bodyFontImport = css`
 	/* lora-regular - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Lora";
 		font-style: normal;
 		font-weight: 400;
@@ -13,6 +14,7 @@ const bodyFontImport = css`
 	}
 	/* lora-500 - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Lora";
 		font-style: normal;
 		font-weight: 500;
@@ -22,6 +24,7 @@ const bodyFontImport = css`
 	}
 	/* lora-700 - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Lora";
 		font-style: normal;
 		font-weight: 700;
@@ -31,6 +34,7 @@ const bodyFontImport = css`
 	}
 	/* lora-italic - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Lora";
 		font-style: italic;
 		font-weight: 400;
@@ -41,6 +45,7 @@ const bodyFontImport = css`
 	}
 	/* lora-500italic - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Lora";
 		font-style: italic;
 		font-weight: 500;
@@ -51,6 +56,7 @@ const bodyFontImport = css`
 	}
 	/* lora-700italic - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Lora";
 		font-style: italic;
 		font-weight: 700;
@@ -64,6 +70,7 @@ const bodyFontImport = css`
 const headingFontImport = css`
 	/* roboto-italic - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Roboto";
 		font-style: italic;
 		font-weight: 400;
@@ -74,6 +81,7 @@ const headingFontImport = css`
 	}
 	/* roboto-regular - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Roboto";
 		font-style: normal;
 		font-weight: 400;
@@ -84,6 +92,7 @@ const headingFontImport = css`
 	}
 	/* roboto-500 - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Roboto";
 		font-style: normal;
 		font-weight: 500;
@@ -94,6 +103,7 @@ const headingFontImport = css`
 	}
 	/* roboto-700 - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Roboto";
 		font-style: normal;
 		font-weight: 700;
@@ -104,6 +114,7 @@ const headingFontImport = css`
 	}
 	/* roboto-500italic - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Roboto";
 		font-style: italic;
 		font-weight: 500;
@@ -114,6 +125,7 @@ const headingFontImport = css`
 	}
 	/* roboto-700italic - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Roboto";
 		font-style: italic;
 		font-weight: 700;
@@ -124,6 +136,7 @@ const headingFontImport = css`
 	}
 	/* roboto-900 - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Roboto";
 		font-style: normal;
 		font-weight: 900;
@@ -134,6 +147,7 @@ const headingFontImport = css`
 	}
 	/* roboto-900italic - vietnamese */
 	@font-face {
+		font-display: swap;
 		font-family: "Roboto";
 		font-style: italic;
 		font-weight: 900;
@@ -147,6 +161,7 @@ const headingFontImport = css`
 const blockquoteFontImport = css`
 	/* ibm-plex-serif-500 - vietnamese_latin */
 	@font-face {
+		font-display: swap;
 		font-family: "IBM Plex Serif";
 		font-style: normal;
 		font-weight: 500;
@@ -157,6 +172,7 @@ const blockquoteFontImport = css`
 	}
 	/* ibm-plex-serif-500italic - vietnamese_latin */
 	@font-face {
+		font-display: swap;
 		font-family: "IBM Plex Serif";
 		font-style: italic;
 		font-weight: 500;

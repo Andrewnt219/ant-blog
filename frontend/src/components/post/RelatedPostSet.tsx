@@ -38,13 +38,13 @@ type Props = {
 };
 
 function RelatedPost({ data, imageSizes }: Props): ReactElement {
-	const { slug, publishedAt, image, title } = data;
+	const { slug, publishedAt, thumbnail, title } = data;
 
 	const linkToPost = `/${slug}`;
 
 	return (
 		<PostContainer>
-			<Post.Thumbnail sizes={imageSizes} data={{ linkToPost, image }} />
+			<Post.Thumbnail sizes={imageSizes} data={{ linkToPost, thumbnail }} />
 			<Post.InfoContainer>
 				<CustomPostTitle data={{ linkToPost, title }} />
 				<Post.SubInfoContainer>

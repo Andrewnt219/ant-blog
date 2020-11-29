@@ -1,12 +1,18 @@
 // TODO: && post.id !== currentPost
 export const RELATED_POSTS_QUERY = `
-  *[_type == "post" && categories[0]->slug.current == $categorySlug] {
+  *[_type == "post" && categories[0]->slug.current == $categorySlug && post._id != $postId] {
     title,
     _id,
     publishedAt,
-    "image": mainImage {
+    "thumbnail": mainImage {
       alt,
-      "url": asset -> url
+			"url": asset -> url,
+			"metadata": asset -> metadata {
+				"width": dimensions.width,
+				"height": dimensions.height,
+				lqip,
+				"ratio": dimensions.ratio
+			}
     },
     "slug": slug.current,
   }[0...4]
@@ -18,10 +24,16 @@ export const SIDE_POSTS_QUERY = `
 			"slug": slug.current,
 			publishedAt,
 			"category": categories[] -> {title, "slug": slug.current}[0],
-			"image": mainImage {
+			"thumbnail": mainImage {
 				alt,
-				"url": asset -> url
-			}
+				"url": asset -> url,
+				"metadata": asset -> metadata {
+					"width": dimensions.width,
+					"height": dimensions.height,
+					lqip,
+					"ratio": dimensions.ratio
+				}
+    	},
 		}[0...3]
   `;
 
@@ -83,9 +95,15 @@ export const HOME_POSTS_QUERY = `
 				publishedAt,
 				"category": categories[] -> {title, "slug": slug.current}[0],
 				"author": author -> name,
-				"image": mainImage {
+				"thumbnail": mainImage {
 					alt,
-					"url": asset -> url
+					"url": asset -> url,
+					"metadata": asset -> metadata {
+						"width": dimensions.width,
+						"height": dimensions.height,
+						lqip,
+						"ratio": dimensions.ratio
+					}
 				},
 				snippet,
 				body

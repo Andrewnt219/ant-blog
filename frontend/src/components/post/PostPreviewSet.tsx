@@ -1,4 +1,5 @@
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import { ImageModel } from "@src/model/sanity";
 import { blocksToText, calculateReadingMinutes } from "@src/utils";
 import dayjs from "dayjs";
 import React, { ReactElement } from "react";
@@ -17,10 +18,7 @@ type PostPreviewProps = {
 			title: string;
 			slug: string;
 		};
-		image: {
-			url: string;
-			alt?: string;
-		};
+		thumbnail: ImageModel;
 		title: string;
 		publishedAt: string;
 		snippet: string;
@@ -43,13 +41,13 @@ function PostPreviewSet({ posts, imageSizes }: PostPreviewSetProps) {
 }
 
 function PostPreview({ data, imageSizes }: PostPreviewProps): ReactElement {
-	const { body, category, title, publishedAt, slug, snippet, image } = data;
+	const { body, category, title, publishedAt, slug, snippet, thumbnail } = data;
 
 	const linkToPost = "/" + slug;
 
 	return (
 		<PostPreviewContainer>
-			<Thumbnail data={{ linkToPost, image }} sizes={imageSizes} />
+			<Thumbnail data={{ linkToPost, thumbnail }} sizes={imageSizes} />
 
 			<CustomInfoContainer>
 				<Category data={category} />

@@ -1,4 +1,5 @@
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import { ImageModel } from "@src/model/sanity";
 import { blocksToText, calculateReadingMinutes } from "@src/utils";
 import dayjs from "dayjs";
 import React, { ReactElement } from "react";
@@ -16,10 +17,7 @@ type RecentPostProps = {
 			title: string;
 			slug: string;
 		};
-		image: {
-			url: string;
-			alt?: string;
-		};
+		thumbnail: ImageModel;
 		slug: string;
 		title: string;
 		publishedAt: string;
@@ -57,12 +55,12 @@ export function RecentPost({
 	isMain,
 	imageSizes,
 }: RecentPostProps): ReactElement {
-	const { category, slug, image, title, publishedAt, snippet, body } = data;
+	const { category, slug, thumbnail, title, publishedAt, snippet, body } = data;
 	const linkToPost = "/" + slug;
 
 	return (
 		<RecentPostContainer>
-			<Thumbnail data={{ linkToPost, image }} sizes={imageSizes} />
+			<Thumbnail data={{ linkToPost, thumbnail }} sizes={imageSizes} />
 			<InfoContainer>
 				<Category data={category} />
 				<Title data={{ linkToPost, title }} />

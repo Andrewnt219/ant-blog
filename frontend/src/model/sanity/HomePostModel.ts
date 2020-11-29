@@ -1,3 +1,5 @@
+import { ImageModel } from "./ImageModel";
+
 export type HomePostModel = {
 	isPinned: boolean;
 	title: string;
@@ -10,9 +12,6 @@ export type HomePostModel = {
 	contentSnippet: string;
 	author: string;
 	snippet: string;
-	image: {
-		alt?: string;
-		url: string;
-	};
+	thumbnail: ImageModel;
 	body: any;
 };

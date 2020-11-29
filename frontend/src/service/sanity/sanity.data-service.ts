@@ -27,9 +27,10 @@ export class SanityDataService {
 		return SanityDataService.instance;
 	};
 
-	getRelatedPosts = (categorySlug: string) =>
+	getRelatedPosts = (categorySlug: string, postId: string) =>
 		SanityDataService.client.fetch<RelatedPostsModel[]>(RELATED_POSTS_QUERY, {
 			categorySlug,
+			postId,
 		});
 
 	getSidePosts = () =>

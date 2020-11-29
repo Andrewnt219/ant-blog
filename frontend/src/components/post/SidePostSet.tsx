@@ -37,13 +37,13 @@ function SidePostSet({
 }
 
 function SidePost({ data, imageSizes }: SidePostProps): ReactElement {
-	const { title, slug, publishedAt, image } = data;
+	const { title, slug, publishedAt, thumbnail } = data;
 
 	const linkToPost = "/" + slug;
 
 	return (
 		<SidePostContainer>
-			<Thumbnail sizes={imageSizes} data={{ image, linkToPost }} />
+			<Thumbnail sizes={imageSizes} data={{ thumbnail, linkToPost }} />
 			<CustomInfoContainer>
 				<CustomTitle data={{ title, linkToPost }} />
 				<SubInfo isTime>

@@ -1,4 +1,5 @@
 import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
+import { ImageModel } from "@src/model/sanity";
 import { trimLastWord } from "@src/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -154,22 +155,23 @@ type ThumbnailProps = {
 	sizes: string;
 	data: {
 		linkToPost: string;
-		image: {
-			url: string;
-			alt?: string;
-		};
+		thumbnail: ImageModel;
 	};
 };
 
 function Thumbnail({ data, className, sizes }: ThumbnailProps): ReactElement {
 	const {
 		linkToPost,
-		image: { url, alt },
+		thumbnail: {
+			url,
+			alt,
+			metadata: { lqip },
+		},
 	} = data;
 
 	return (
 		<Link href={linkToPost} passHref>
-			<StyledThumbnail className={className}>
+			<StyledThumbnail lqip={lqip} className={className}>
 				<Image
 					sizes={sizes}
 					src={url}
@@ -181,7 +183,9 @@ function Thumbnail({ data, className, sizes }: ThumbnailProps): ReactElement {
 	);
 }
 
-type StyledThumbnailProps = {};
+type StyledThumbnailProps = {
+	lqip: string;
+};
 const StyledThumbnail = styled.a<StyledThumbnailProps>`
 	${tw`block relative`}
 	width: 100%;
@@ -199,8 +203,9 @@ const StyledThumbnail = styled.a<StyledThumbnailProps>`
 		object-fit: cover;
 		height: 100%;
 		width: 100%;
-		/* box-shadow: 0 0.3rem 1.2rem -0.1rem rgba(7, 10, 25, 0.2),
-			0 2.2rem 2.7rem -2rem rgba(7, 10, 25, 0.2); */
+		background-image: url(${(p) => p.lqip});
+		background-size: cover;
+		background-repeat: no-repeat;
 		box-shadow: 0 3px 12px -1px rgba(7, 10, 25, 0.2),
 			0 22px 27px -20px rgba(7, 10, 25, 0.2);
 		transition: transform 300ms ease, box-shadow 300ms ease, filter 300ms ease;

@@ -56,7 +56,8 @@ const Post = ({
 		sanityQueries.RELATED_POSTS_QUERY,
 		SanityDataService.getInstance().getRelatedPosts.bind(
 			this,
-			post.categories[0].slug
+			post.categories[0].slug,
+			post._id
 		),
 		{
 			initialData: initialRelatedPosts,
@@ -174,7 +175,8 @@ export const getStaticProps: GetStaticProps<StaticProps, Params> = async ({
 	const post = await SanityDataService.getInstance().getPost(params!.slug);
 
 	const relatedPosts = await SanityDataService.getInstance().getRelatedPosts(
-		post.categories[0].slug
+		post.categories[0].slug,
+		post._id
 	);
 
 	const sidePosts = await SanityDataService.getInstance().getSidePosts();

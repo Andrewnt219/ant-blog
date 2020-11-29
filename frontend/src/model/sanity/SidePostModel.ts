@@ -1,9 +1,8 @@
+import { ImageModel } from "./ImageModel";
+
 export type SidePostModel = {
 	title: string;
 	slug: string;
 	publishedAt: string;
-	image: {
-		url: string;
-		alt?: string;
-	};
+	thumbnail: ImageModel;
 };

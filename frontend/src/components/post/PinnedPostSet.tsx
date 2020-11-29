@@ -8,6 +8,7 @@ import {
 	ENDPOINTS,
 	FORMAT_CONSTANTS,
 } from "@src/assets/constants/StyleConstants";
+import { ImageModel } from "@src/model/sanity";
 
 type PinnedPostSetProps = {
 	posts: PinnedPostProps["data"][];
@@ -22,10 +23,7 @@ type PinnedPostProps = {
 		title: string;
 		author: string;
 		publishedAt: string;
-		image: {
-			url: string;
-			alt?: string;
-		};
+		thumbnail: ImageModel;
 		slug: string;
 	};
 	isMainPinnedPost: boolean;
@@ -44,7 +42,7 @@ function PinnedPostSet({ posts }: PinnedPostSetProps) {
 }
 
 function PinnedPost({ data, isMainPinnedPost }: PinnedPostProps): ReactElement {
-	const { title, image, slug, category, publishedAt, author } = data;
+	const { title, thumbnail, slug, category, publishedAt, author } = data;
 	const [titleHead, titleTail] = trimLastWord(title);
 
 	let renderedTitle = <Title isMain={isMainPinnedPost}>{title}</Title>;
@@ -81,12 +79,8 @@ function PinnedPost({ data, isMainPinnedPost }: PinnedPostProps): ReactElement {
 			</Info>
 
 			<Link href={linkToPost} passHref>
-				<Thumbnail>
-					<Image
-						src={image.url}
-						alt={image.alt ?? "Pinned post thumbnail"}
-						unsized
-					/>
+				<Thumbnail lqip={thumbnail.metadata.lqip}>
+					<Image src={thumbnail.url} alt={thumbnail.alt ?? title} unsized />
 				</Thumbnail>
 			</Link>
 		</Container>
@@ -205,7 +199,9 @@ const Author = styled.span<AuthorProps>`
 type DateProps = {};
 const Date = styled.time<DateProps>``;
 
-type ThumbnailProps = {};
+type ThumbnailProps = {
+	lqip: string;
+};
 const Thumbnail = styled.a<ThumbnailProps>`
 	position: absolute;
 	top: 0;
@@ -228,6 +224,10 @@ const Thumbnail = styled.a<ThumbnailProps>`
 		filter: brightness(0.5);
 
 		transition: transform 300ms ease, filter 300ms ease;
+
+		background-image: url(${(p) => p.lqip});
+		background-repeat: no-repeat;
+		background-size: cover;
 	}
 
 	:hover,

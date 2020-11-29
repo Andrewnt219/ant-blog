@@ -6,4 +6,5 @@ export type ImageModel = {
 		ratio: number;
 	};
 	url: string;
+	alt?: string;
 };

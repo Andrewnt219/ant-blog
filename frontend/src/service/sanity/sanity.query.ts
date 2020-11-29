@@ -30,7 +30,15 @@ export const POST_QUERY = `
 						_id,
 						"categories": categories[] -> {title, "slug": slug.current},
             title,
-            "thumbnailSrc": mainImage.asset -> url,
+            "thumbnail": mainImage.asset -> {
+							url,
+							metadata {
+								lqip,
+								"width": dimensions.width,
+								"height": dimensions.height,
+								"ratio": dimensions.aspectRatio
+							}
+						},
 						body[] {
 							...,
 							_type == "image" => {

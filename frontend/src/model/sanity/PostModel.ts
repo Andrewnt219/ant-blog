@@ -1,3 +1,5 @@
+import { ImageModel } from "./ImageModel";
+
 export type PostModel = {
 	_id: string;
 	categories: {
@@ -5,7 +7,7 @@ export type PostModel = {
 		slug: string;
 	}[];
 	title: string;
-	thumbnailSrc: string;
+	thumbnail: ImageModel;
 	body: any;
 	author: {
 		name: string;

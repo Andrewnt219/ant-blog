@@ -1,19 +1,18 @@
 import {
 	ENDPOINTS,
 	FORMAT_CONSTANTS,
-	SizeKey,
 } from "@src/assets/constants/StyleConstants";
 import { preventOrphanText } from "@src/utils";
 import dayjs from "dayjs";
 import Link from "next/link";
-import React, { ReactElement, useMemo } from "react";
+import React, { ReactElement } from "react";
 import tw, { styled, theme } from "twin.macro";
-import { createImageSources } from "@src/utils/postHelpers";
-import { responsiveBackground } from "@src/utils/cssHelpers";
+import { ImageModel } from "@src/model/sanity";
+import Image from "next/image";
 
 type Props = {
 	data: {
-		thumbnailSrc: string;
+		thumbnail: ImageModel;
 		category: {
 			title: string;
 			slug: string;
@@ -29,22 +28,11 @@ type Props = {
 };
 
 function PostHeader({ data }: Props): ReactElement {
-	const {
-		category,
-		title,
-		author,
-		publishedAt,
-		readMinute,
-		thumbnailSrc,
-	} = data;
-
-	const sources = useMemo(
-		() => createImageSources(thumbnailSrc, { format: "webp", quality: 50 }),
-		[thumbnailSrc]
-	);
+	const { category, title, author, publishedAt, readMinute, thumbnail } = data;
 
 	return (
-		<Container bgSources={sources}>
+		<Container>
+			<Thumbnail src={thumbnail.url} unsized lqip={thumbnail.metadata.lqip} />
 			<InfoContainer>
 				<Link href={`${ENDPOINTS.category}/${category.slug}`}>
 					<a>
@@ -72,9 +60,7 @@ function PostHeader({ data }: Props): ReactElement {
 	);
 }
 
-type ContainerProps = {
-	bgSources: Map<SizeKey, string | null>;
-};
+type ContainerProps = {};
 const Container = styled.header<ContainerProps>`
 	${tw`relative`}
 	padding-bottom: max(37.5%, 25rem);
@@ -83,21 +69,31 @@ const Container = styled.header<ContainerProps>`
 	width: 100%;
 	${tw`mb-12`}
 
-	${(p) =>
-		responsiveBackground(
-			p.bgSources,
-			"linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))"
-		)}
-
 	@media screen and (min-width: ${theme`screens.smDesktop`}) {
 		background-attachment: fixed;
 	}
+`;
+
+type ThumbnailProps = {
+	lqip: string;
+};
+const Thumbnail = styled(Image)<ThumbnailProps>`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	background-image: url(${(p) => p.lqip});
+	background-size: cover;
+	background-repeat: no-repeat;
 `;
 
 type InfoContainerProps = {};
 const InfoContainer = styled.div<InfoContainerProps>`
 	${tw`absolute top-0 left-0 w-full h-full flex justify-center items-center flex-col text-xs  text-primary font-500 space-y-2  `}
 	padding: 2.5% 12.5%;
+	background: rgba(0, 0, 0, 0.5);
 
 	@media screen and (min-width: ${theme`screens.smDesktop`}) {
 		padding: 2.5% 15%;

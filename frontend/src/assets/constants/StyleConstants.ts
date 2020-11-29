@@ -20,3 +20,20 @@ export const ENDPOINTS = {
 export const LOCAL_STORAGE = {
 	commentName: "comment-name",
 };
+
+export type SizeKey = typeof OTHER_CONSTANTS.imageSizes[number];
+export const OTHER_CONSTANTS = {
+	imageSizes: [
+		320,
+		420,
+		768,
+		1024,
+		1200,
+		1600,
+		1920,
+		2560,
+		3840,
+		5120,
+		7680,
+	] as const,
+};

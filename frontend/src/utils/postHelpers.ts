@@ -1,3 +1,7 @@
+import { ImageUrlBuilderOptions } from "@sanity/image-url/lib/types/types";
+import { OTHER_CONSTANTS, SizeKey } from "@src/assets/constants/StyleConstants";
+import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
+
 /**
  * @description with 265 WPM, calculate reading minutes from pargraph(s)
  */
@@ -53,3 +57,34 @@ export function blocksToText(blocks: any, opts = {}): string {
 		})
 		.join("\n\n");
 }
+
+export const createImageSources = (
+	sanityImgSrc: string,
+	options: Partial<ImageUrlBuilderOptions> = {}
+): Map<SizeKey, string | null> => {
+	const sources: Map<SizeKey, string | null> = new Map();
+
+	OTHER_CONSTANTS.imageSizes.forEach((size) => {
+		sources.set(
+			size,
+			urlFor(sanityImgSrc).width(size).withOptions(options).url()
+		);
+	});
+
+	return sources;
+};
+
+export const createSrcSet = (
+	sanityImgSrc: string,
+	options: Partial<ImageUrlBuilderOptions> = {}
+): string => {
+	const srcset: string[] = [];
+
+	OTHER_CONSTANTS.imageSizes.forEach((size) => {
+		const src = urlFor(sanityImgSrc).width(size).withOptions(options).url();
+		const width = size + "w";
+		srcset.push(src + " " + width);
+	});
+
+	return srcset.join(", ");
+};

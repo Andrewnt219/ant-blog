@@ -1,12 +1,15 @@
 import {
 	ENDPOINTS,
 	FORMAT_CONSTANTS,
+	SizeKey,
 } from "@src/assets/constants/StyleConstants";
 import { preventOrphanText } from "@src/utils";
 import dayjs from "dayjs";
 import Link from "next/link";
-import React, { ReactElement } from "react";
+import React, { ReactElement, useMemo } from "react";
 import tw, { styled, theme } from "twin.macro";
+import { createImageSources } from "@src/utils/postHelpers";
+import { responsiveBackground } from "@src/utils/cssHelpers";
 
 type Props = {
 	data: {
@@ -35,8 +38,13 @@ function PostHeader({ data }: Props): ReactElement {
 		thumbnailSrc,
 	} = data;
 
+	const sources = useMemo(
+		() => createImageSources(thumbnailSrc, { format: "webp", quality: 50 }),
+		[thumbnailSrc]
+	);
+
 	return (
-		<Container bgSrc={thumbnailSrc}>
+		<Container bgSources={sources}>
 			<InfoContainer>
 				<Link href={`${ENDPOINTS.category}/${category.slug}`}>
 					<a>
@@ -65,18 +73,21 @@ function PostHeader({ data }: Props): ReactElement {
 }
 
 type ContainerProps = {
-	bgSrc: string;
+	bgSources: Map<SizeKey, string | null>;
 };
 const Container = styled.header<ContainerProps>`
 	${tw`relative`}
 	padding-bottom: max(37.5%, 25rem);
-
-	background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-		url("${(p) => p.bgSrc}");
 	background-size: cover;
 	background-position: center center;
 	width: 100%;
 	${tw`mb-12`}
+
+	${(p) =>
+		responsiveBackground(
+			p.bgSources,
+			"linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))"
+		)}
 
 	@media screen and (min-width: ${theme`screens.smDesktop`}) {
 		background-attachment: fixed;

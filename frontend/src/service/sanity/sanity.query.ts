@@ -72,7 +72,15 @@ export const POST_QUERY = `
 						author -> {
 							name,
 							"slug": slug.current,
-							"avatarSrc": image.asset -> url,
+							"avatar": image.asset -> {
+								url,
+								"metadata": metadata {
+									lqip,
+									"width": dimensions.width,
+									"height": dimensions.height,
+									"ratio": dimensions.aspectRatio,
+								}
+							},
 							bio
 						},
 						publishedAt
@@ -85,8 +93,6 @@ export const POSTS_SLUG_QUERY = `*[_type == "post"]{
       }
     }`;
 
-// TODO: add lqip. "lqip": mainImage.asset->metadata.lqip
-// "lqip": body[].asset->metadata (watch out for null)
 export const HOME_POSTS_QUERY = `
 			*[_type == "post" && !isArchived] | order(_updatedAt desc) {
 				isPinned,

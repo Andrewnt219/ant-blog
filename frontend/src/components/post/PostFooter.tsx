@@ -6,6 +6,7 @@ import { PostReactionSet } from "./PostReactionSet";
 import CenteredElementWithLine from "../CenteredElementWithLine";
 import Image from "next/image";
 import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
+import { ImageModel } from "@src/model/sanity";
 
 type Props = {
 	data: {
@@ -15,7 +16,7 @@ type Props = {
 		}[];
 
 		author: {
-			avatarSrc: string;
+			avatar: ImageModel;
 			name: string;
 			bio: string;
 			slug: string;
@@ -59,11 +60,11 @@ function PostFooter({ data, className }: Props): ReactElement {
 			<AuthorContainer>
 				<CenteredElementWithLine>
 					{/* TODO: author image stale */}
-					<AuthorImageContainer>
+					<AuthorImageContainer lqip={author.avatar.metadata.lqip}>
 						<Image
 							unsized
 							sizes=", 7vw"
-							src={author.avatarSrc}
+							src={author.avatar.url}
 							alt={author.name + " avatar"}
 						/>
 					</AuthorImageContainer>
@@ -150,7 +151,9 @@ const AuthorInfo = styled.div<AuthorInfoProps>`
 	${tw`flex flex-col items-center space-y-3 text-sm`}
 `;
 
-type AuthorImageContainerProps = {};
+type AuthorImageContainerProps = {
+	lqip: string;
+};
 const AuthorImageContainer = styled.div<AuthorImageContainerProps>`
 	${tw`w-24 h-24 rounded-full overflow-hidden`}
 
@@ -163,6 +166,10 @@ const AuthorImageContainer = styled.div<AuthorImageContainerProps>`
 	img {
 		object-fit: cover;
 		object-position: center center;
+
+		background-image: url(${(p) => p.lqip});
+		background-repeat: no-repeat;
+		background-size: cover;
 	}
 `;
 

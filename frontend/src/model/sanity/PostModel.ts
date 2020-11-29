@@ -11,7 +11,7 @@ export type PostModel = {
 	body: any;
 	author: {
 		name: string;
-		avatarSrc: string;
+		avatar: ImageModel;
 		slug: string;
 		bio: any;
 	};

@@ -1,6 +1,6 @@
-import Link from "next/link";
-import React, { ReactElement } from "react";
-import tw, { css, styled } from "twin.macro";
+import Link from 'next/link';
+import React, { ReactElement } from 'react';
+import tw, { css, styled } from 'twin.macro';
 
 type Props = {
 	data: BreadCrumbProps[];

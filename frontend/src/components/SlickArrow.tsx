@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
-import tw, { css, styled } from "twin.macro";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import React, { ReactElement } from 'react';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+import tw, { css, styled } from 'twin.macro';
 
 type Props = {
 	isNextArrow?: boolean;

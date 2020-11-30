@@ -1,10 +1,12 @@
-import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { ImageModel } from "@src/model/sanity";
-import { blocksToText, calculateReadingMinutes } from "@src/utils";
-import dayjs from "dayjs";
-import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
-import { Post } from "../Post";
+import dayjs from 'dayjs';
+import React, { ReactElement } from 'react';
+import tw, { styled } from 'twin.macro';
+
+import { FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { ImageModel } from '@src/model/sanity';
+import { blocksToText, calculateReadingMinutes } from '@src/utils';
+
+import { Post } from '../Post';
 
 type RecentPostSetProps = {
 	posts: RecentPostProps["data"][];

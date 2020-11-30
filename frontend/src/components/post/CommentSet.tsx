@@ -1,18 +1,18 @@
-import React, { ReactElement, useRef, useState } from "react";
-import tw, { styled, theme } from "twin.macro";
-import { PostComment, useClickOutside } from "@src/hooks";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
-import { FaReply } from "react-icons/fa";
-import CommentWriter, {
-	CommentFormValues,
-} from "@src/components/CommentWriter";
-import CenteredElementWithLine from "../CenteredElementWithLine";
-import { padZero } from "@src/utils";
-import { toFireStoreComment } from "@src/utils/dbUtils";
-import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { CommentModel } from "@src/model/firebase/CommentModel";
-import { FireBaseDataService } from "@src/service/firebase/firebase.data-service";
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import React, { ReactElement, useRef, useState } from 'react';
+import { FaReply } from 'react-icons/fa';
+import tw, { styled, theme } from 'twin.macro';
+
+import { FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import CommentWriter, { CommentFormValues } from '@src/components/CommentWriter';
+import { PostComment, useClickOutside } from '@src/hooks';
+import { CommentModel } from '@src/model/firebase/CommentModel';
+import { FireBaseDataService } from '@src/service/firebase/firebase.data-service';
+import { padZero } from '@src/utils';
+import { toFireStoreComment } from '@src/utils/dbUtils';
+
+import CenteredElementWithLine from '../CenteredElementWithLine';
 
 dayjs.extend(relativeTime);
 

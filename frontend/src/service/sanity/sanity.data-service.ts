@@ -1,19 +1,9 @@
-import sanityClient from "@src/lib/sanity/client";
+import sanityClient from '@src/lib/sanity/client';
+import { HomePostModel, PostModel, RelatedPostsModel, SidePostModel } from '@src/model/sanity';
 
 import {
-	SidePostModel,
-	HomePostModel,
-	RelatedPostsModel,
-	PostModel,
-} from "@src/model/sanity";
-
-import {
-	HOME_POSTS_QUERY,
-	POSTS_SLUG_QUERY,
-	POST_QUERY,
-	RELATED_POSTS_QUERY,
-	SIDE_POSTS_QUERY,
-} from "./sanity.query";
+    HOME_POSTS_QUERY, POST_QUERY, POSTS_SLUG_QUERY, RELATED_POSTS_QUERY, SIDE_POSTS_QUERY
+} from './sanity.query';
 
 export class SanityDataService {
 	private static instance: SanityDataService;

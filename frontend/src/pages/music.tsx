@@ -1,6 +1,7 @@
-import EmbeddedSpotify from "@src/components/EmbeddedSpotify";
-import React, { ReactElement, useState } from "react";
-import tw, { styled } from "twin.macro";
+import React, { ReactElement, useState } from 'react';
+import tw, { styled } from 'twin.macro';
+
+import EmbeddedSpotify from '@src/components/EmbeddedSpotify';
 
 type Props = {};
 

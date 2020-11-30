@@ -1,6 +1,7 @@
-import React from "react";
-import BlockContent from "@sanity/block-content-to-react";
-import tw, { styled, theme } from "twin.macro";
+import React from 'react';
+import tw, { styled, theme } from 'twin.macro';
+
+import BlockContent from '@sanity/block-content-to-react';
 
 export const BlockRenderer = (props: any) => {
 	let Block: any;

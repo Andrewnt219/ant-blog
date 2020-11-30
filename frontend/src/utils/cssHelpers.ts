@@ -1,5 +1,6 @@
-import { SizeKey } from "@src/assets/constants/StyleConstants";
-import { css, theme } from "twin.macro";
+import { css, theme } from 'twin.macro';
+
+import { SizeKey } from '@src/assets/constants/StyleConstants';
 
 export const lqipBackground = (lqip: string) => css`
 	background-image: url(${lqip});

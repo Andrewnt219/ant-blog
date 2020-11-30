@@ -1,7 +1,7 @@
-import { AxiosError } from "axios";
+import { AxiosError } from 'axios';
 
-import { PostComment } from "@src/hooks";
-import { CommentModel } from "@src/model/firebase/CommentModel";
+import { PostComment } from '@src/hooks';
+import { CommentModel } from '@src/model/firebase/CommentModel';
 
 export class FireBaseDataService {
 	private static instance: FireBaseDataService;

@@ -1,6 +1,7 @@
-import Appbar from "@src/components/Appbar";
-import Footer from "@src/components/Footer";
-import React, { ReactElement, ReactNode } from "react";
+import React, { ReactElement, ReactNode } from 'react';
+
+import Appbar from '@src/components/Appbar';
+import Footer from '@src/components/Footer';
 
 type Props = {
 	children: ReactNode;

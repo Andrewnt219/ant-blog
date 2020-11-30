@@ -1,6 +1,7 @@
-import React, { ReactElement } from "react";
-import { styled } from "twin.macro";
-import Loading from "./Loading";
+import React, { ReactElement } from 'react';
+import { styled } from 'twin.macro';
+
+import Loading from './Loading';
 
 type Props = {};
 

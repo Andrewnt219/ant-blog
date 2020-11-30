@@ -1,7 +1,6 @@
-import Link from "next/link";
-import React, { ReactElement } from "react";
-
-import tw, { styled } from "twin.macro";
+import Link from 'next/link';
+import React, { ReactElement } from 'react';
+import tw, { styled } from 'twin.macro';
 
 type Props = {
 	height?: string;

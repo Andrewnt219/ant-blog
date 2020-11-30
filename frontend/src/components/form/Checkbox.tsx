@@ -1,7 +1,8 @@
-import React, { InputHTMLAttributes, ReactElement } from "react";
-import { UseFormMethods } from "react-hook-form";
-import * as FormBuilder from "@src/components/form/FormBuilder";
-import tw, { styled } from "twin.macro";
+import React, { InputHTMLAttributes, ReactElement } from 'react';
+import { UseFormMethods } from 'react-hook-form';
+import tw, { styled } from 'twin.macro';
+
+import * as FormBuilder from '@src/components/form/FormBuilder';
 
 type Props<
 	FormKeys extends Record<string, any>

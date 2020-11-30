@@ -1,15 +1,13 @@
-import { trimLastWord } from "@src/utils";
-import Link from "next/link";
-import React, { ReactElement } from "react";
-import tw, { css, styled, theme } from "twin.macro";
-import Image from "next/image";
-import dayjs from "dayjs";
-import {
-	ENDPOINTS,
-	FORMAT_CONSTANTS,
-} from "@src/assets/constants/StyleConstants";
-import { ImageModel } from "@src/model/sanity";
-import { lqipBackground } from "@src/utils/cssHelpers";
+import dayjs from 'dayjs';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { ReactElement } from 'react';
+import tw, { css, styled, theme } from 'twin.macro';
+
+import { ENDPOINTS, FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { ImageModel } from '@src/model/sanity';
+import { trimLastWord } from '@src/utils';
+import { lqipBackground } from '@src/utils/cssHelpers';
 
 type PinnedPostSetProps = {
 	posts: PinnedPostProps["data"][];

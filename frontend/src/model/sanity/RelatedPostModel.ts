@@ -1,4 +1,4 @@
-import { ImageModel } from "./ImageModel";
+import { ImageModel } from './ImageModel';
 
 export type RelatedPostsModel = {
 	title: string;

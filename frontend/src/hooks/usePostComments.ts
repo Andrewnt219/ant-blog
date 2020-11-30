@@ -1,6 +1,7 @@
-import { CommentModel } from "@src/model/firebase/CommentModel";
-import { useEffect, useState } from "react";
-import { FireBaseDataService } from "@src/service/firebase/firebase.data-service";
+import { useEffect, useState } from 'react';
+
+import { CommentModel } from '@src/model/firebase/CommentModel';
+import { FireBaseDataService } from '@src/service/firebase/firebase.data-service';
 
 export type PostComment = CommentModel & {
 	id: string;

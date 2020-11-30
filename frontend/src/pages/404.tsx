@@ -1,6 +1,7 @@
-import React from "react";
-import Link from "next/link";
-import Broken from "@src/components/Broken";
+import Link from 'next/link';
+import React from 'react';
+
+import Broken from '@src/components/Broken';
 
 const PageNotFound = () => {
 	return (

@@ -1,12 +1,14 @@
-import React, { ReactElement } from "react";
-import tw, { styled, theme } from "twin.macro";
-import { routesData, RouteProps } from "@src/assets/data/routesData";
-import Link from "next/link";
-import Logo from "./Logo";
-import { FaSearch } from "react-icons/fa";
-import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { useRouteMatch } from "@src/hooks";
-import SocialMediaIcon from "./SocialMediaIcon";
+import Link from 'next/link';
+import React, { ReactElement } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import tw, { styled, theme } from 'twin.macro';
+
+import { STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { RouteProps, routesData } from '@src/assets/data/routesData';
+import { useRouteMatch } from '@src/hooks';
+
+import Logo from './Logo';
+import SocialMediaIcon from './SocialMediaIcon';
 
 /* TODO add router loading. NProgress maybe? */
 function Appbar(): ReactElement {

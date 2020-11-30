@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
-import { styled } from "twin.macro";
+import React, { ReactElement } from 'react';
+import { styled } from 'twin.macro';
 
 type Props = {
 	spotifyShareLink: string;

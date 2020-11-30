@@ -1,6 +1,7 @@
-import React, { ReactElement, TextareaHTMLAttributes } from "react";
-import { UseFormMethods } from "react-hook-form";
-import * as FormBuilder from "@src/components/form/FormBuilder";
+import React, { ReactElement, TextareaHTMLAttributes } from 'react';
+import { UseFormMethods } from 'react-hook-form';
+
+import * as FormBuilder from '@src/components/form/FormBuilder';
 
 type Props<FormKeys extends Record<string, any>> = TextareaHTMLAttributes<
 	HTMLTextAreaElement

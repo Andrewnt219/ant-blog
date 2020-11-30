@@ -1,7 +1,8 @@
-import React, { AnchorHTMLAttributes, ReactElement, ReactNode } from "react";
-import { FaExternalLinkAlt } from "react-icons/fa";
-import tw, { styled } from "twin.macro";
-import { StyledInternalLink } from "./InternalLink";
+import React, { AnchorHTMLAttributes, ReactElement, ReactNode } from 'react';
+import { FaExternalLinkAlt } from 'react-icons/fa';
+import tw, { styled } from 'twin.macro';
+
+import { StyledInternalLink } from './InternalLink';
 
 type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
 	children: ReactNode;

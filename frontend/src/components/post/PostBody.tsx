@@ -1,11 +1,13 @@
-import BlockContent from "@sanity/block-content-to-react";
-import React, { ReactElement } from "react";
-import { styled, theme } from "twin.macro";
-import sanityClient from "@src/lib/sanity/client";
-import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
-import Breadcrumb from "../Breadcrumb";
-import { useRouter } from "next/router";
-import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
+import { useRouter } from 'next/router';
+import React, { ReactElement } from 'react';
+import { styled, theme } from 'twin.macro';
+
+import BlockContent from '@sanity/block-content-to-react';
+import { ENDPOINTS } from '@src/assets/constants/StyleConstants';
+import sanityClient from '@src/lib/sanity/client';
+import { postSerializer } from '@src/lib/sanity/serializers/postSerializer';
+
+import Breadcrumb from '../Breadcrumb';
 
 type Props = {
 	data: {

@@ -1,6 +1,6 @@
-import React, { ReactNode } from "react";
-import { css } from "styled-components";
-import tw, { styled } from "twin.macro";
+import React, { ReactNode } from 'react';
+import { css } from 'styled-components';
+import tw, { styled } from 'twin.macro';
 
 type Props = {
 	type: "bullet" | "number";

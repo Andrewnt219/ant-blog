@@ -1,8 +1,9 @@
-import Lottie from "react-lottie";
-import React from "react";
-import animationData from "@src/assets/lottie/Dog smell.json";
-import tw, { styled } from "twin.macro";
-import { useLoadingDots } from "@src/hooks";
+import React from 'react';
+import Lottie from 'react-lottie';
+import tw, { styled } from 'twin.macro';
+
+import animationData from '@src/assets/lottie/Dog smell.json';
+import { useLoadingDots } from '@src/hooks';
 
 type Props = {
 	width?: string;

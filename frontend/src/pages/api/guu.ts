@@ -1,10 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { ApiError } from "api";
-import Axios, { AxiosError } from "axios";
-import { GuuArticle } from "guu";
-import { NextApiRequest, NextApiResponse } from "next";
-import Parser from "rss-parser";
+import { ApiError } from 'api';
+import Axios, { AxiosError } from 'axios';
+import { GuuArticle } from 'guu';
+import { NextApiRequest, NextApiResponse } from 'next';
+import Parser from 'rss-parser';
+
 const parser = new Parser();
 
 export default async (

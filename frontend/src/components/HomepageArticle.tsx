@@ -1,5 +1,5 @@
-import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import React, { ReactElement } from 'react';
+import tw, { styled } from 'twin.macro';
 
 export type HomepageArticleProps = {
 	title: string;

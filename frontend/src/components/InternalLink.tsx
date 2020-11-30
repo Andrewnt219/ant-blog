@@ -1,6 +1,6 @@
-import Link, { LinkProps } from "next/link";
-import React, { AnchorHTMLAttributes, ReactElement, ReactNode } from "react";
-import tw, { styled } from "twin.macro";
+import Link, { LinkProps } from 'next/link';
+import React, { AnchorHTMLAttributes, ReactElement, ReactNode } from 'react';
+import tw, { styled } from 'twin.macro';
 
 type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
 	nextLinkProps: LinkProps;

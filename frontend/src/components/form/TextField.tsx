@@ -1,6 +1,7 @@
-import React, { InputHTMLAttributes, ReactElement } from "react";
-import { UseFormMethods } from "react-hook-form";
-import * as FormBuilder from "@src/components/form/FormBuilder";
+import React, { InputHTMLAttributes, ReactElement } from 'react';
+import { UseFormMethods } from 'react-hook-form';
+
+import * as FormBuilder from '@src/components/form/FormBuilder';
 
 type Props<FormKeys extends Record<string, any>> = InputHTMLAttributes<
 	HTMLInputElement

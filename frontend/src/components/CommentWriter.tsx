@@ -1,14 +1,16 @@
-import React, { ReactElement, useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
-import tw, { styled } from "twin.macro";
-import CenteredElementWithLine from "./CenteredElementWithLine";
-import TextArea from "./form/TextArea";
-import TextField from "./form/TextField";
-import { LOCAL_STORAGE } from "@src/assets/constants/StyleConstants";
-import Checkbox from "./form/Checkbox";
-import * as FormBuilder from "@src/components/form/FormBuilder";
-import { IdDataService } from "@src/service/id";
-import { CommentModel } from "@src/model/firebase/CommentModel";
+import React, { ReactElement, useEffect, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import tw, { styled } from 'twin.macro';
+
+import { LOCAL_STORAGE } from '@src/assets/constants/StyleConstants';
+import * as FormBuilder from '@src/components/form/FormBuilder';
+import { CommentModel } from '@src/model/firebase/CommentModel';
+import { IdDataService } from '@src/service/id';
+
+import CenteredElementWithLine from './CenteredElementWithLine';
+import Checkbox from './form/Checkbox';
+import TextArea from './form/TextArea';
+import TextField from './form/TextField';
 
 export type CommentFormValues = Pick<CommentModel, "username" | "text"> & {
 	isSaved: boolean;

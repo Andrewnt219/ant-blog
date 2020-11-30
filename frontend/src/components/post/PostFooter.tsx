@@ -1,13 +1,15 @@
-import React, { ReactElement, useMemo } from "react";
-import tw, { styled, theme } from "twin.macro";
-import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
-import Link from "next/link";
-import { PostReactionSet } from "./PostReactionSet";
-import CenteredElementWithLine from "../CenteredElementWithLine";
-import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
-import { ImageModel } from "@src/model/sanity";
-import { lqipBackground } from "@src/utils/cssHelpers";
-import { createSrcSet } from "@src/utils";
+import Link from 'next/link';
+import React, { ReactElement, useMemo } from 'react';
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
+import tw, { styled, theme } from 'twin.macro';
+
+import { ENDPOINTS } from '@src/assets/constants/StyleConstants';
+import { ImageModel } from '@src/model/sanity';
+import { createSrcSet } from '@src/utils';
+import { lqipBackground } from '@src/utils/cssHelpers';
+
+import CenteredElementWithLine from '../CenteredElementWithLine';
+import { PostReactionSet } from './PostReactionSet';
 
 type Props = {
 	data: {

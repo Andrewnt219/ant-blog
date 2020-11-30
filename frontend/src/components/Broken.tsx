@@ -1,7 +1,8 @@
-import Lottie from "react-lottie";
-import React from "react";
-import animationData from "@src/assets/lottie/Dog news paper.json";
-import tw, { styled } from "twin.macro";
+import React from 'react';
+import Lottie from 'react-lottie';
+import tw, { styled } from 'twin.macro';
+
+import animationData from '@src/assets/lottie/Dog news paper.json';
 
 type Props = {
 	height: string;

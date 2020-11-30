@@ -1,12 +1,6 @@
-import Document, {
-	DocumentContext,
-	NextScript,
-	Main,
-	Html,
-	Head,
-} from "next/document";
-import { ReactElement } from "react";
-import { ServerStyleSheet } from "styled-components";
+import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
+import { ReactElement } from 'react';
+import { ServerStyleSheet } from 'styled-components';
 
 type GetInitialPropsReturn = {
 	styles: ReactElement;

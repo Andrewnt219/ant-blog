@@ -1,6 +1,7 @@
-import omit from "lodash/omit";
-import { CommentFormValues } from "@src/components/CommentWriter";
-import { CommentModel } from "@src/model/firebase/CommentModel";
+import omit from 'lodash/omit';
+
+import { CommentFormValues } from '@src/components/CommentWriter';
+import { CommentModel } from '@src/model/firebase/CommentModel';
 
 type ToFireStoreCommentProps = {
 	data: CommentFormValues;

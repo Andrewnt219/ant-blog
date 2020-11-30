@@ -1,14 +1,12 @@
-import {
-	ENDPOINTS,
-	FORMAT_CONSTANTS,
-} from "@src/assets/constants/StyleConstants";
-import { preventOrphanText } from "@src/utils";
-import dayjs from "dayjs";
-import Link from "next/link";
-import React, { ReactElement } from "react";
-import tw, { styled, theme } from "twin.macro";
-import { ImageModel } from "@src/model/sanity";
-import { lqipBackground } from "@src/utils/cssHelpers";
+import dayjs from 'dayjs';
+import Link from 'next/link';
+import React, { ReactElement } from 'react';
+import tw, { styled, theme } from 'twin.macro';
+
+import { ENDPOINTS, FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { ImageModel } from '@src/model/sanity';
+import { preventOrphanText } from '@src/utils';
+import { lqipBackground } from '@src/utils/cssHelpers';
 
 type Props = {
 	data: {

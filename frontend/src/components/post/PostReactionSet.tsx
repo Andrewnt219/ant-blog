@@ -1,10 +1,11 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import tw, { css, styled, theme } from "twin.macro";
-import Lottie from "react-lottie";
-import angryAnimation from "@src/assets/lottie/angry-dog.json";
-import wowAnimation from "@src/assets/lottie/wow-dog.json";
-import likeAnimation from "@src/assets/lottie/like-dog.json";
-import coolAnimation from "@src/assets/lottie/cool-dog.json";
+import React, { ReactElement, useEffect, useState } from 'react';
+import Lottie from 'react-lottie';
+import tw, { css, styled, theme } from 'twin.macro';
+
+import angryAnimation from '@src/assets/lottie/angry-dog.json';
+import coolAnimation from '@src/assets/lottie/cool-dog.json';
+import likeAnimation from '@src/assets/lottie/like-dog.json';
+import wowAnimation from '@src/assets/lottie/wow-dog.json';
 
 type PostReactionSetProps = {
 	itemHeight: PostReactionProps["height"];

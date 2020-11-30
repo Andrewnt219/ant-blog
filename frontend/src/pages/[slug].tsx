@@ -1,36 +1,29 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import Head from "next/head";
-import React, { ReactElement, useMemo } from "react";
-import { SanityClientErrorResponse } from "sanity";
-import useSWR from "swr";
-import tw, { styled, theme } from "twin.macro";
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
+import Head from 'next/head';
+import React, { ReactElement, useMemo } from 'react';
+import { SanityClientErrorResponse } from 'sanity';
+import useSWR from 'swr';
+import tw, { styled, theme } from 'twin.macro';
 
-import {
-	NUMBER_CONSTANTS,
-	STYLE_CONSTANTS,
-} from "@src/assets/constants/StyleConstants";
-import Broken from "@src/components/Broken";
-import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
-import Loading from "@src/components/Loading";
-import CommentSet from "@src/components/post/CommentSet";
-import PostBody from "@src/components/post/PostBody";
-import PostFooter from "@src/components/post/PostFooter";
-import PostHeader from "@src/components/post/PostHeader";
-import RelatedPostSet from "@src/components/post/RelatedPostSet";
-import SidePostSet from "@src/components/post/SidePostSet";
-import ShareSideBar from "@src/components/ShareSideBar";
-import { useCurrentLocation, usePostComments } from "@src/hooks";
-import { sanityFetcher } from "@src/lib/swr";
-import { PostModel } from "@src/model/sanity";
-import { RelatedPostsModel } from "@src/model/sanity/RelatedPostModel";
-import { SidePostModel } from "@src/model/sanity/SidePostModel";
-import { SanityDataService } from "@src/service/sanity/sanity.data-service";
-import * as sanityQueries from "@src/service/sanity/sanity.query";
-import {
-	blocksToText,
-	calculateReadingMinutes,
-	createSrcSet,
-} from "@src/utils";
+import { NUMBER_CONSTANTS, STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import Broken from '@src/components/Broken';
+import CenteredElementWithLine from '@src/components/CenteredElementWithLine';
+import Loading from '@src/components/Loading';
+import CommentSet from '@src/components/post/CommentSet';
+import PostBody from '@src/components/post/PostBody';
+import PostFooter from '@src/components/post/PostFooter';
+import PostHeader from '@src/components/post/PostHeader';
+import RelatedPostSet from '@src/components/post/RelatedPostSet';
+import SidePostSet from '@src/components/post/SidePostSet';
+import ShareSideBar from '@src/components/ShareSideBar';
+import { useCurrentLocation, usePostComments } from '@src/hooks';
+import { sanityFetcher } from '@src/lib/swr';
+import { PostModel } from '@src/model/sanity';
+import { RelatedPostsModel } from '@src/model/sanity/RelatedPostModel';
+import { SidePostModel } from '@src/model/sanity/SidePostModel';
+import { SanityDataService } from '@src/service/sanity/sanity.data-service';
+import * as sanityQueries from '@src/service/sanity/sanity.query';
+import { blocksToText, calculateReadingMinutes, createSrcSet } from '@src/utils';
 
 // TODO: router.fallback
 const Post = ({

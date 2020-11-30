@@ -1,5 +1,6 @@
-import React, { ReactNode } from "react";
-import { trimLastWord } from "./";
+import React, { ReactNode } from 'react';
+
+import { trimLastWord } from './';
 
 export function preventOrphanText(title: string): ReactNode {
 	const [titleHead, titleTail] = trimLastWord(title);

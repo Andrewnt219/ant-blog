@@ -1,11 +1,12 @@
-import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
-import { ImageModel } from "@src/model/sanity";
-import { trimLastWord } from "@src/utils";
-import { lqipBackground } from "@src/utils/cssHelpers";
-import Image from "next/image";
-import Link from "next/link";
-import React, { ReactElement, ReactNode } from "react";
-import tw, { styled } from "twin.macro";
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { ReactElement, ReactNode } from 'react';
+import tw, { styled } from 'twin.macro';
+
+import { ENDPOINTS } from '@src/assets/constants/StyleConstants';
+import { ImageModel } from '@src/model/sanity';
+import { trimLastWord } from '@src/utils';
+import { lqipBackground } from '@src/utils/cssHelpers';
 
 /* -------------------------------------------------------------------------- */
 /*                                  Category                                  */

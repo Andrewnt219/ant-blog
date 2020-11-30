@@ -1,6 +1,6 @@
-import React, { ReactElement } from "react";
-import { styled } from "twin.macro";
-import Youtube from "react-youtube";
+import React, { ReactElement } from 'react';
+import Youtube from 'react-youtube';
+import { styled } from 'twin.macro';
 
 type Props = {
 	youtubeVideoId: string;

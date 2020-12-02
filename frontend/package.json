@@ -4,10 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "cross-env ANALYZE=\"true\" next build",
     "start": "next start",
     "sanity": "cd .\\studio\\ && yarn start",
-    "full": "concurrently \"yarn dev\" \"yarn sanity\"",
     "test": "jest --watch"
   },
   "dependencies": {

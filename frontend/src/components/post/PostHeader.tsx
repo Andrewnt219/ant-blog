@@ -1,20 +1,21 @@
-import dayjs from 'dayjs';
-import Link from 'next/link';
-import React, { ReactElement } from 'react';
-import tw, { styled, theme } from 'twin.macro';
+import dayjs from "dayjs";
+import Link from "next/link";
+import React, { ReactElement } from "react";
+import tw, { styled, theme } from "twin.macro";
 
-import { ENDPOINTS, FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import { ImageModel } from '@src/model/sanity';
-import { preventOrphanText } from '@src/utils';
-import { lqipBackground } from '@src/utils/cssHelpers';
+import {
+	ENDPOINTS,
+	FORMAT_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
+import { ImageModel } from "@src/model/sanity";
+import { preventOrphanText } from "@src/utils";
+import { lqipBackground } from "@src/utils/cssHelpers";
+import { CategoryModel } from "@src/model/sanity/CategoryModel";
 
 type Props = {
 	data: {
 		thumbnail: ImageModel;
-		category: {
-			title: string;
-			slug: string;
-		};
+		category: CategoryModel;
 		title: string;
 		author: {
 			name: string;
@@ -37,7 +38,7 @@ function PostHeader({ data, srcset }: Props): ReactElement {
 				lqip={thumbnail.metadata.lqip}
 			/>
 			<InfoContainer>
-				<Link href={`${ENDPOINTS.category}/${category.slug}`}>
+				<Link href={`${ENDPOINTS.category}/${category.slug}`} passHref>
 					<a>
 						<Category>{category.title}</Category>
 					</a>
@@ -106,7 +107,7 @@ type CategoryProps = {};
 const Category = styled.span<CategoryProps>`
 	${tw`uppercase bg-textColor py-1 px-2 cursor-pointer tracking-widest`}
 
-	transition: background 200ms ease, color 200ms ease;
+	transition: background-color 200ms ease, color 200ms ease;
 
 	:hover,
 	:focus {

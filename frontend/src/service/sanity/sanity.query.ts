@@ -1,5 +1,5 @@
 export const RELATED_POSTS_QUERY = `
-  *[_type == "post" && categories[0]->slug.current == $categorySlug && _id != $postId] {
+  *[_type == "post" && categories[_type == 'mainCategory'][0] -> slug.current == $categorySlug && _id != $postId] {
     title,
     _id,
     publishedAt,
@@ -22,7 +22,7 @@ export const SIDE_POSTS_QUERY = `
 			title,
 			"slug": slug.current,
 			publishedAt,
-			"category": categories[] -> {title, "slug": slug.current}[0],
+			"category": categories[_type == 'mainCategory'][0] -> {title, "slug": slug.current},
 			"thumbnail": mainImage {
 				alt,
 				"url": asset -> url,
@@ -39,7 +39,34 @@ export const SIDE_POSTS_QUERY = `
 export const POST_QUERY = `
         *[slug.current == $slug] {
 						_id,
-						"categories": categories[] -> {title, "slug": slug.current},
+						"categories": {
+							"main": categories[_type == "mainCategory"] -> {
+								title,
+								"slug": slug.current,
+								"thumbnail": image.asset -> {
+									url,
+									"metadata": metadata {
+										lqip,
+										"width": dimensions.width,
+										"height": dimensions.height,
+										"ratio": dimensions.aspectRatio
+									}									
+								}
+							}[0],
+							"subs": categories[_type == "subcategory"] -> {
+								title,
+								"slug": slug.current,
+								"thumbnail": image.asset -> {
+									url,
+									"metadata": metadata {
+										lqip,
+										"width": dimensions.width,
+										"height": dimensions.height,
+										"ratio": dimensions.aspectRatio
+									}	
+								}
+							},
+						},
             title,
             "thumbnail": mainImage.asset -> {
 							url,
@@ -98,7 +125,7 @@ export const HOME_POSTS_QUERY = `
 				title,
 				"slug": slug.current,
 				publishedAt,
-				"category": categories[] -> {title, "slug": slug.current}[0],
+				"category": categories[_type == 'mainCategory'][0] -> {title, "slug": slug.current},
 				"author": author -> name,
 				"thumbnail": mainImage {
 					alt,

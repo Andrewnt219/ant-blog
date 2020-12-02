@@ -1,29 +1,36 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
-import Head from 'next/head';
-import React, { ReactElement, useMemo } from 'react';
-import { SanityClientErrorResponse } from 'sanity';
-import useSWR from 'swr';
-import tw, { styled, theme } from 'twin.macro';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import Head from "next/head";
+import React, { ReactElement, useMemo } from "react";
+import { SanityClientErrorResponse } from "sanity";
+import useSWR from "swr";
+import tw, { styled, theme } from "twin.macro";
 
-import { NUMBER_CONSTANTS, STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import Broken from '@src/components/Broken';
-import CenteredElementWithLine from '@src/components/CenteredElementWithLine';
-import Loading from '@src/components/Loading';
-import CommentSet from '@src/components/post/CommentSet';
-import PostBody from '@src/components/post/PostBody';
-import PostFooter from '@src/components/post/PostFooter';
-import PostHeader from '@src/components/post/PostHeader';
-import RelatedPostSet from '@src/components/post/RelatedPostSet';
-import SidePostSet from '@src/components/post/SidePostSet';
-import ShareSideBar from '@src/components/ShareSideBar';
-import { useCurrentLocation, usePostComments } from '@src/hooks';
-import { sanityFetcher } from '@src/lib/swr';
-import { PostModel } from '@src/model/sanity';
-import { RelatedPostsModel } from '@src/model/sanity/RelatedPostModel';
-import { SidePostModel } from '@src/model/sanity/SidePostModel';
-import { SanityDataService } from '@src/service/sanity/sanity.data-service';
-import * as sanityQueries from '@src/service/sanity/sanity.query';
-import { blocksToText, calculateReadingMinutes, createSrcSet } from '@src/utils';
+import {
+	NUMBER_CONSTANTS,
+	STYLE_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
+import Broken from "@src/components/Broken";
+import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
+import Loading from "@src/components/Loading";
+import CommentSet from "@src/components/post/CommentSet";
+import PostBody from "@src/components/post/PostBody";
+import PostFooter from "@src/components/post/PostFooter";
+import PostHeader from "@src/components/post/PostHeader";
+import RelatedPostSet from "@src/components/post/RelatedPostSet";
+import SidePostSet from "@src/components/post/SidePostSet";
+import ShareSideBar from "@src/components/ShareSideBar";
+import { useCurrentLocation, usePostComments } from "@src/hooks";
+import { sanityFetcher } from "@src/lib/swr";
+import { PostModel } from "@src/model/sanity";
+import { RelatedPostsModel } from "@src/model/sanity/RelatedPostModel";
+import { SidePostModel } from "@src/model/sanity/SidePostModel";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
+import * as sanityQueries from "@src/service/sanity/sanity.query";
+import {
+	blocksToText,
+	calculateReadingMinutes,
+	createSrcSet,
+} from "@src/utils";
 
 // TODO: router.fallback
 const Post = ({
@@ -47,7 +54,6 @@ const Post = ({
 		refreshInterval: NUMBER_CONSTANTS.refreshInterval,
 	});
 
-	// TODO: fixed server fetch !== client fetch (probably category different)
 	// fetch relatedPosts
 	const { data: relatedPosts, error: relatedPostsError } = useSWR<
 		RelatedPostsModel[],
@@ -56,7 +62,7 @@ const Post = ({
 		sanityQueries.RELATED_POSTS_QUERY,
 		SanityDataService.getInstance().getRelatedPosts.bind(
 			this,
-			post.categories[0].slug,
+			post.categories.main.slug,
 			post._id
 		),
 		{
@@ -67,9 +73,6 @@ const Post = ({
 
 	/* --------------------------------- RENDER --------------------------------- */
 
-	const { categories } = post;
-
-	// TODO adjusted imageSizes
 	const renderedSidePosts = renderPosts(
 		sidePosts,
 		sidePostsError,
@@ -105,7 +108,7 @@ const Post = ({
 			<PostHeader
 				data={{
 					...post,
-					category: categories[0],
+					category: post.categories.main,
 					readMinute: calculateReadingMinutes(blocksToText(post.body)),
 				}}
 				srcset={heroSrcSet}
@@ -201,7 +204,7 @@ export const getStaticProps: GetStaticProps<StaticProps, Params> = async ({
 	const post = await SanityDataService.getInstance().getPost(params!.slug);
 
 	const relatedPosts = await SanityDataService.getInstance().getRelatedPosts(
-		post.categories[0].slug,
+		post.categories.main.slug,
 		post._id
 	);
 

@@ -1,22 +1,21 @@
-import Link from 'next/link';
-import React, { ReactElement, useMemo } from 'react';
-import { FaFacebookF, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
-import tw, { styled, theme } from 'twin.macro';
+import Link from "next/link";
+import React, { ReactElement, useMemo } from "react";
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import tw, { styled, theme } from "twin.macro";
 
-import { ENDPOINTS } from '@src/assets/constants/StyleConstants';
-import { ImageModel } from '@src/model/sanity';
-import { createSrcSet } from '@src/utils';
-import { lqipBackground } from '@src/utils/cssHelpers';
+import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
+import { ImageModel } from "@src/model/sanity";
+import { createSrcSet } from "@src/utils";
+import { lqipBackground } from "@src/utils/cssHelpers";
 
-import CenteredElementWithLine from '../CenteredElementWithLine';
-import { PostReactionSet } from './PostReactionSet';
+import CenteredElementWithLine from "../CenteredElementWithLine";
+import { PostReactionSet } from "./PostReactionSet";
+import { CategoriesModel } from "@src/model/sanity/CategoriesModel";
+import { CategoryModel } from "@src/model/sanity/CategoryModel";
 
 type Props = {
 	data: {
-		categories: {
-			title: string;
-			slug: string;
-		}[];
+		categories: CategoriesModel;
 
 		author: {
 			avatar: ImageModel;
@@ -37,12 +36,17 @@ function PostFooter({ data, className }: Props): ReactElement {
 		[author.avatar.url]
 	);
 
+	const mixedCategories: CategoryModel[] = [
+		...categories.subs,
+		categories.main,
+	];
+
 	return (
 		// TODO add margin-top in case post does not end with a paragraph
 		<Footer className={className}>
 			<AdditionalInfo>
 				<CategorySet>
-					{categories
+					{mixedCategories
 						.sort((a, b) => a.title.localeCompare(b.title))
 						.map((category) => (
 							<Category key={category.slug}>

@@ -1,11 +1,9 @@
-import { ImageModel } from './ImageModel';
+import { CategoriesModel } from "./CategoriesModel";
+import { ImageModel } from "./ImageModel";
 
 export type PostModel = {
 	_id: string;
-	categories: {
-		title: string;
-		slug: string;
-	}[];
+	categories: CategoriesModel;
 	title: string;
 	thumbnail: ImageModel;
 	body: any;

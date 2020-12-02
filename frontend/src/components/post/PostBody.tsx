@@ -1,20 +1,18 @@
-import { useRouter } from 'next/router';
-import React, { ReactElement } from 'react';
-import { styled, theme } from 'twin.macro';
+import { useRouter } from "next/router";
+import React, { ReactElement } from "react";
+import { styled, theme } from "twin.macro";
 
-import BlockContent from '@sanity/block-content-to-react';
-import { ENDPOINTS } from '@src/assets/constants/StyleConstants';
-import sanityClient from '@src/lib/sanity/client';
-import { postSerializer } from '@src/lib/sanity/serializers/postSerializer';
+import BlockContent from "@sanity/block-content-to-react";
+import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
+import sanityClient from "@src/lib/sanity/client";
+import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
 
-import Breadcrumb from '../Breadcrumb';
+import Breadcrumb from "../Breadcrumb";
+import { CategoriesModel } from "@src/model/sanity/CategoriesModel";
 
 type Props = {
 	data: {
-		categories: {
-			title: string;
-			slug: string;
-		}[];
+		categories: CategoriesModel;
 		title: string;
 		body: any;
 	};
@@ -30,8 +28,8 @@ function PostBody({ data }: Props): ReactElement {
 			href: "/",
 		},
 		{
-			text: categories[0].title,
-			href: `${ENDPOINTS.category}/${categories[0].slug}`,
+			text: categories.main.title,
+			href: `${ENDPOINTS.category}/${categories.main.slug}`,
 		},
 		{
 			text: title,

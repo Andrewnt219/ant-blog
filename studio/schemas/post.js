@@ -1,3 +1,4 @@
+// TODO generate slug on publish action
 export default {
 	name: "post",
 	title: "Post",
@@ -7,6 +8,9 @@ export default {
 		isArchived: false,
 		publishedAt: new Date().toISOString(),
 		isPinned: false,
+		author: {
+			_ref: "efb8191b-4ada-41cf-9465-e3d348a5c0eb", // Rose
+		},
 	},
 
 	fields: [
@@ -15,20 +19,6 @@ export default {
 			title: "Pinned Post",
 			type: "boolean",
 			description: "Nếu bật thì bài post sẽ nằm trong slider ở đầu trang chủ.",
-			// validation: (Rule) =>
-			// 	Rule.required().custom(() =>
-			// 		client
-			// 			.fetch(
-			// 				`
-			// 					*[_type == 'post' && isPinned].isPinned
-			// 				`
-			// 			)
-			// 			.then((post) =>
-			// 				post.length > 3
-			// 					? "Em pin tối đa 03 bài thôi nha, tham thì thâm đó =))."
-			// 					: true
-			// 			)
-			// 	),
 		},
 
 		{
@@ -54,53 +44,6 @@ export default {
 			validation: (Rule) =>
 				Rule.required().error(
 					"Không có cái này không lấy bài được, ấn generate nếu lười type."
-				),
-		},
-
-		{
-			name: "snippet",
-			title: "Content snippet",
-			type: "text",
-			description: "A short introduction about the post",
-			validation: (Rule) => [
-				Rule.required().error("Vì tính thẩm mỹ của web, em nên ghi cái này."),
-				Rule.max(200).warning("Ngắn ngắn thôi em, 200 letters đổ lại."),
-			],
-			rows: 3,
-		},
-
-		{
-			name: "author",
-			title: "Author",
-			type: "reference",
-			to: { type: "author" },
-			validation: (Rule) =>
-				Rule.required().error(
-					"Hey, đừng ngại, cho mọi người biết ai đã viết bày này."
-				),
-		},
-
-		{
-			name: "mainImage",
-			title: "Main image",
-			type: "image",
-			fields: [
-				{
-					name: "alt",
-					title: "Alternate text",
-					type: "string",
-					options: {
-						isHightlighted: true,
-					},
-				},
-			],
-			options: {
-				hotspot: true,
-				metadata: ["lqip"],
-			},
-			validation: (Rule) =>
-				Rule.required().error(
-					"Main image (thumbnail) như avatar của bài viết á, cũng là tấm hình đầu tiên của bài viết."
 				),
 		},
 
@@ -156,7 +99,55 @@ export default {
 					return true;
 				}),
 			],
-			description: "Category xếp đầu tiên là category chính, còn lại là phụ.",
+		},
+
+		{
+			name: "body",
+			title: "Body",
+			type: "blockContent",
+			validation: (Rule) =>
+				Rule.required().error(
+					"Chờ chút, bài này là clickbait à? Nội dung bài viết đâu rồi =))."
+				),
+			options: {
+				metadata: ["lqip"],
+			},
+		},
+
+		{
+			name: "mainImage",
+			title: "Main image",
+			type: "image",
+			fields: [
+				{
+					name: "alt",
+					title: "Alternate text",
+					type: "string",
+					options: {
+						isHightlighted: true,
+					},
+				},
+			],
+			options: {
+				hotspot: true,
+				metadata: ["lqip"],
+			},
+			validation: (Rule) =>
+				Rule.required().error(
+					"Main image (thumbnail) như avatar của bài viết á, cũng là tấm hình đầu tiên của bài viết."
+				),
+		},
+
+		{
+			name: "snippet",
+			title: "Content snippet",
+			type: "text",
+			description: "A short introduction about the post",
+			validation: (Rule) => [
+				Rule.required().error("Vì tính thẩm mỹ của web, em nên ghi cái này."),
+				Rule.max(300).warning("Ngắn ngắn thôi em, 300 letters đổ lại."),
+			],
+			rows: 3,
 		},
 
 		{
@@ -171,16 +162,14 @@ export default {
 		},
 
 		{
-			name: "body",
-			title: "Body",
-			type: "blockContent",
+			name: "author",
+			title: "Author",
+			type: "reference",
+			to: { type: "author" },
 			validation: (Rule) =>
 				Rule.required().error(
-					"Chờ chút, bài này là clickbait à? Nội dung bài viết đâu rồi =))."
+					"Hey, đừng ngại, cho mọi người biết ai đã viết bày này."
 				),
-			options: {
-				metadata: ["lqip"],
-			},
 		},
 
 		{

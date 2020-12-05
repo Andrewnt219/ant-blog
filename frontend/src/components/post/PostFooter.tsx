@@ -73,7 +73,7 @@ function PostFooter({ data, className }: Props): ReactElement {
 				<CenteredElementWithLine>
 					<AuthorImageContainer lqip={author.avatar.metadata.lqip}>
 						<img
-							sizes=", 7vw"
+							sizes="(min-width: 1360px) 7.5vw, 95px"
 							src={author.avatar.url}
 							srcSet={srcset}
 							alt={author.name + " avatar"}

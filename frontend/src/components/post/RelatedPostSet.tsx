@@ -12,7 +12,6 @@ type RelatedPostSetProps = {
 };
 
 // TODO: fix y spacing
-// TODO: fix on tablet
 function RelatedPostSet({
 	posts,
 	imageSizes,
@@ -32,7 +31,7 @@ type PostSetContainerProps = {};
 const PostSetContainer = styled.ul<PostSetContainerProps>`
 	display: grid;
 
-	@media screen and (min-width: ${theme`screens.smDesktop`}) {
+	@media screen and (min-width: ${theme`screens.mdTablet`}) {
 		grid-template-columns: 1fr 1fr;
 		gap: 3rem 1.5rem;
 	}

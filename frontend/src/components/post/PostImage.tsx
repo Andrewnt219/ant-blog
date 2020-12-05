@@ -1,11 +1,11 @@
-import Image from 'next/image';
-import React, { ReactElement, ReactNode } from 'react';
-import tw, { styled, theme } from 'twin.macro';
+import Image from "next/image";
+import React, { ReactElement, ReactNode } from "react";
+import tw, { styled, theme } from "twin.macro";
 
-import { urlFor } from '@src/lib/sanity/utils/sanityUtils';
-import { lqipBackground } from '@src/utils/cssHelpers';
+import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
+import { lqipBackground } from "@src/utils/cssHelpers";
 
-import Loading from '../Loading';
+import Loading from "../Loading";
 
 type Props = {
 	node: {
@@ -36,7 +36,7 @@ function PostImage({ node, options }: Props): ReactElement {
 			<Image
 				unsized
 				src={imgSrc}
-				sizes={`(min-width: ${theme`screens.mdTablet`}) 80vw, 60vw`}
+				sizes="(min-width: 1280px) 45.64vw, 90vw"
 				alt={
 					node.alt ?? node.caption ?? "There is no alt text for this picture"
 				}
@@ -65,7 +65,7 @@ type PictureProps = {
 	imgWidth: number;
 	imgHeight: number;
 };
-const Picture = styled.picture<PictureProps>`
+const Picture = styled.div<PictureProps>`
 	${tw` relative`}
 	width: 100%;
 	padding-bottom: calc(100% / ${(p) => p.imgWidth / p.imgHeight});

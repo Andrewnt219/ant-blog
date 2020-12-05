@@ -1,12 +1,12 @@
-import dayjs from 'dayjs';
-import React, { ReactElement } from 'react';
-import tw, { styled } from 'twin.macro';
+import dayjs from "dayjs";
+import React, { ReactElement } from "react";
+import tw, { styled, theme } from "twin.macro";
 
-import { FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import { ImageModel } from '@src/model/sanity';
-import { blocksToText, calculateReadingMinutes } from '@src/utils';
+import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import { ImageModel } from "@src/model/sanity";
+import { blocksToText, calculateReadingMinutes } from "@src/utils";
 
-import { Post } from '../Post';
+import { Post } from "../Post";
 
 type RecentPostSetProps = {
 	posts: RecentPostProps["data"][];
@@ -27,7 +27,10 @@ type RecentPostProps = {
 		body: any;
 	};
 	isMain: boolean;
-	imageSizes: string;
+	imageSizes: {
+		default: string;
+		main: string;
+	};
 };
 
 function RecentPostSet({
@@ -62,7 +65,10 @@ export function RecentPost({
 
 	return (
 		<RecentPostContainer>
-			<Thumbnail data={{ linkToPost, thumbnail }} sizes={imageSizes} />
+			<Thumbnail
+				data={{ linkToPost, thumbnail }}
+				sizes={isMain ? imageSizes.main : imageSizes.default}
+			/>
 			<InfoContainer>
 				<Category data={category} />
 				<Title data={{ linkToPost, title }} />
@@ -86,8 +92,12 @@ export function RecentPost({
 type RecentPostSetContainerProps = {};
 const RecentPostSetContainer = styled.ul<RecentPostSetContainerProps>`
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+
 	gap: 3rem 1.5rem;
+
+	@media screen and (min-width: ${theme`screens.mdTablet`}) {
+		grid-template-columns: 1fr 1fr;
+	}
 `;
 
 type RecentPostContainerProps = {};

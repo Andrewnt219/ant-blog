@@ -36,6 +36,7 @@ function PostHeader({ data, srcset }: Props): ReactElement {
 				src={thumbnail.url}
 				srcSet={srcset}
 				lqip={thumbnail.metadata.lqip}
+				sizes="100vw"
 			/>
 			<InfoContainer>
 				<Link href={`${ENDPOINTS.category}/${category.slug}`} passHref>

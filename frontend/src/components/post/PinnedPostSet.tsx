@@ -1,16 +1,20 @@
-import dayjs from 'dayjs';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { ReactElement } from 'react';
-import tw, { css, styled, theme } from 'twin.macro';
+import dayjs from "dayjs";
+import Image from "next/image";
+import Link from "next/link";
+import React, { ReactElement } from "react";
+import tw, { css, styled, theme } from "twin.macro";
 
-import { ENDPOINTS, FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import { ImageModel } from '@src/model/sanity';
-import { trimLastWord } from '@src/utils';
-import { lqipBackground } from '@src/utils/cssHelpers';
+import {
+	ENDPOINTS,
+	FORMAT_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
+import { ImageModel } from "@src/model/sanity";
+import { trimLastWord } from "@src/utils";
+import { lqipBackground } from "@src/utils/cssHelpers";
 
 type PinnedPostSetProps = {
 	posts: PinnedPostProps["data"][];
+	imageSizes: PinnedPostProps["imageSizes"];
 };
 
 type PinnedPostProps = {
@@ -25,22 +29,34 @@ type PinnedPostProps = {
 		thumbnail: ImageModel;
 		slug: string;
 	};
+	imageSizes: {
+		default: string;
+		main: string;
+	};
 	isMainPinnedPost: boolean;
 };
 
-function PinnedPostSet({ posts }: PinnedPostSetProps) {
+function PinnedPostSet({ posts, imageSizes }: PinnedPostSetProps) {
 	return (
 		<StyledPinnedPostSet>
 			{posts.map((post, index) => (
 				<li key={post.slug}>
-					<PinnedPost data={post} isMainPinnedPost={index === 0} />
+					<PinnedPost
+						imageSizes={imageSizes}
+						data={post}
+						isMainPinnedPost={index === 0}
+					/>
 				</li>
 			))}
 		</StyledPinnedPostSet>
 	);
 }
 
-function PinnedPost({ data, isMainPinnedPost }: PinnedPostProps): ReactElement {
+function PinnedPost({
+	data,
+	isMainPinnedPost,
+	imageSizes,
+}: PinnedPostProps): ReactElement {
 	const { title, thumbnail, slug, category, publishedAt, author } = data;
 	const [titleHead, titleTail] = trimLastWord(title);
 
@@ -79,7 +95,12 @@ function PinnedPost({ data, isMainPinnedPost }: PinnedPostProps): ReactElement {
 
 			<Link href={linkToPost} passHref>
 				<Thumbnail lqip={thumbnail.metadata.lqip}>
-					<Image src={thumbnail.url} alt={thumbnail.alt ?? title} unsized />
+					<Image
+						src={thumbnail.url}
+						alt={thumbnail.alt ?? title}
+						sizes={isMainPinnedPost ? imageSizes.main : imageSizes.default}
+						unsized
+					/>
 				</Thumbnail>
 			</Link>
 		</Container>

@@ -1,19 +1,22 @@
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import Head from 'next/head';
-import React from 'react';
-import useSWR from 'swr';
-import { styled, theme } from 'twin.macro';
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import Head from "next/head";
+import React from "react";
+import useSWR from "swr";
+import { styled, theme } from "twin.macro";
 
-import { NUMBER_CONSTANTS, STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import Broken from '@src/components/Broken';
-import PinnedPostSet from '@src/components/post/PinnedPostSet';
-import PostPreviewSet from '@src/components/post/PostPreviewSet';
-import RecentPostSet from '@src/components/post/RecentPostSet';
-import SidePostSet from '@src/components/post/SidePostSet';
-import { sanityFetcher } from '@src/lib/swr';
-import { HomePostModel } from '@src/model/sanity';
-import { SanityDataService } from '@src/service/sanity/sanity.data-service';
-import { HOME_POSTS_QUERY } from '@src/service/sanity/sanity.query';
+import {
+	NUMBER_CONSTANTS,
+	STYLE_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
+import Broken from "@src/components/Broken";
+import PinnedPostSet from "@src/components/post/PinnedPostSet";
+import PostPreviewSet from "@src/components/post/PostPreviewSet";
+import RecentPostSet from "@src/components/post/RecentPostSet";
+import SidePostSet from "@src/components/post/SidePostSet";
+import { sanityFetcher } from "@src/lib/swr";
+import { HomePostModel } from "@src/model/sanity";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
+import { HOME_POSTS_QUERY } from "@src/service/sanity/sanity.query";
 
 const Index = ({
 	prefetchedPosts,
@@ -39,6 +42,11 @@ const Index = ({
 
 			<PinnedPostSet
 				posts={posts.filter((post) => post.isPinned).slice(0, 3)}
+				imageSizes={{
+					default:
+						"(min-width: 1280px) 22.79vw, (min-width: 640px) 40vw, (min-width: 480px) 45vw, 90vw",
+					main: "(min-width: 1280px) 34.19vw, (min-width: 640px) 80vw, 90.63vw",
+				}}
 			/>
 
 			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>

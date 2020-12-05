@@ -1,11 +1,11 @@
-import React, { ReactElement, useEffect, useState } from 'react';
-import Lottie from 'react-lottie';
-import tw, { css, styled, theme } from 'twin.macro';
+import React, { ReactElement, useEffect, useState } from "react";
+import Lottie from "react-lottie";
+import tw, { css, styled, theme } from "twin.macro";
 
-import angryAnimation from '@src/assets/lottie/angry-dog.json';
-import coolAnimation from '@src/assets/lottie/cool-dog.json';
-import likeAnimation from '@src/assets/lottie/like-dog.json';
-import wowAnimation from '@src/assets/lottie/wow-dog.json';
+import angryAnimation from "@src/assets/lottie/angry-dog.json";
+import coolAnimation from "@src/assets/lottie/cool-dog.json";
+import likeAnimation from "@src/assets/lottie/like-dog.json";
+import wowAnimation from "@src/assets/lottie/wow-dog.json";
 
 type PostReactionSetProps = {
 	itemHeight: PostReactionProps["height"];
@@ -18,6 +18,7 @@ const reactionSet: PostReactionProps["variant"][] = [
 	"cool",
 ];
 
+// TODO: fix on tablet
 function PostReactionSet({ itemHeight }: PostReactionSetProps): ReactElement {
 	const [selectedReaction, setSelectedReaction] = useState<
 		PostReactionProps["variant"]

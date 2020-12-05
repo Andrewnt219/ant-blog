@@ -52,9 +52,8 @@ const Index = ({
 			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>
 				Others
 			</h2>
-			{/* TODO adjusted sizes */}
 			<PostPreviewSet
-				imageSizes=", 25vw"
+				imageSizes="(min-width: 1020px) 25.61vw, (min-width: 680px) 40vw, (min-width: 640px) 80vw, 90vw"
 				posts={posts.filter((post) => !post.isPinned)}
 			/>
 
@@ -63,9 +62,13 @@ const Index = ({
 			</h2>
 
 			<Recent>
-				{/* TODO adjusted sizes, note the main image is bigger */}
 				<RecentPostSet
-					imageSizes=", 25vw"
+					imageSizes={{
+						main:
+							"(min-width: 1280px) 51.98vw, (min-width: 640px) 80vw, calc(87.19vw + 17px)",
+						default:
+							"(min-width: 1280px) 25.06vw, (min-width: 780px) 40vw, (min-width: 640px) 80vw, 90vw",
+					}}
 					posts={posts.filter((post) => !post.isPinned)}
 				/>
 

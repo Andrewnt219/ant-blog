@@ -1,3 +1,8 @@
-import sanityClient from '@src/lib/sanity/client';
+import sanityClient from "@src/lib/sanity/client";
 
-export const sanityFetcher = (args: string) => sanityClient.fetch(args);
+/**
+ * Interface for useSWR
+ * @param args [0] query string, [1] params object
+ */
+export const sanityFetcher = (...args: any[]) =>
+	sanityClient.fetch(args[0], args[1]);

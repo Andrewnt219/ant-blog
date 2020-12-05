@@ -55,16 +55,16 @@ const Post = ({
 	});
 
 	// fetch relatedPosts
+	// NOTE cannot use dataservice and bind because binded params does not change
 	const { data: relatedPosts, error: relatedPostsError } = useSWR<
 		RelatedPostsModel[],
 		SanityClientErrorResponse
 	>(
-		sanityQueries.RELATED_POSTS_QUERY,
-		SanityDataService.getInstance().getRelatedPosts.bind(
-			this,
-			post.categories.main.slug,
-			post._id
-		),
+		[
+			sanityQueries.RELATED_POSTS_QUERY,
+			{ categorySlug: post.categories.main.slug, postId: post._id },
+		],
+		sanityFetcher,
 		{
 			initialData: initialRelatedPosts,
 			refreshInterval: NUMBER_CONSTANTS.refreshInterval,
@@ -76,14 +76,20 @@ const Post = ({
 	const renderedSidePosts = renderPosts(
 		sidePosts,
 		sidePostsError,
-		<SidePostSet imageSizes=", 10vw" posts={sidePosts!} title="Lastest Posts" />
+		<SidePostSet
+			imageSizes="(min-width: 1280px) 11.51vw"
+			posts={sidePosts!}
+			title="Lastest Posts"
+		/>
 	);
 
-	// TODO: adjust imageSizes
 	const renderedRelatedPosts = renderPosts(
 		relatedPosts,
 		relatedPostsError,
-		<RelatedPostSet imageSizes=", 25vw" posts={relatedPosts!} />
+		<RelatedPostSet
+			imageSizes="(min-width: 1280px) 21.86vw, (min-width: 780px) 45vw, 90vw"
+			posts={relatedPosts!}
+		/>
 	);
 
 	const heroSrcSet = useMemo(
@@ -124,10 +130,14 @@ const Post = ({
 
 				<CommentSet _postId={post._id} comments={comments} />
 
-				<CenteredElementWithLine>
-					<Title>Related posts</Title>
-				</CenteredElementWithLine>
-				{renderedRelatedPosts}
+				{relatedPosts && relatedPosts.length > 0 && (
+					<>
+						<CenteredElementWithLine>
+							<Title>Related posts</Title>
+						</CenteredElementWithLine>
+						{renderedRelatedPosts}
+					</>
+				)}
 			</ContentLayout>
 		</>
 	);

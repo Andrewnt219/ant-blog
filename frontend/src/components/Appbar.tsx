@@ -1,16 +1,24 @@
-import Link from 'next/link';
-import React, { ReactElement } from 'react';
-import { FaSearch } from 'react-icons/fa';
-import tw, { styled, theme } from 'twin.macro';
+import Link from "next/link";
+import React, { ReactElement, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import tw, { styled, theme } from "twin.macro";
 
-import { STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import { RouteProps, routesData } from '@src/assets/data/routesData';
-import { useRouteMatch } from '@src/hooks';
+import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import { RouteProps, routesData } from "@src/assets/data/routesData";
+import { useRouteMatch } from "@src/hooks";
 
-import Logo from './Logo';
-import SocialMediaIcon from './SocialMediaIcon';
+import Logo from "./Logo";
+import SocialMediaIcon from "./SocialMediaIcon";
+import { SocialMedia } from "@src/assets/enums/IconEnum";
+import DropDown from "./DropDown";
 
 /* TODO add router loading. NProgress maybe? */
+// TODO make mobile navigations
+const icons: SocialMedia[] = [
+	SocialMedia.FACEBOOK,
+	SocialMedia.INSTAGRAM,
+	SocialMedia.LINKEDIN,
+];
 function Appbar(): ReactElement {
 	return (
 		<Header>
@@ -26,16 +34,13 @@ function Appbar(): ReactElement {
 				</MenuItemSet>
 
 				<SocialMediaSet>
-					<li>
-						<SocialMediaIcon variants="facebook" />
-					</li>
-					<li>
-						<SocialMediaIcon variants="instagram" />
-					</li>
-					<li>
-						<SocialMediaIcon variants="linkedin" />
-					</li>
+					{icons.map((icon) => (
+						<li key={icon}>
+							<SocialMediaIcon variants={icon} />
+						</li>
+					))}
 				</SocialMediaSet>
+
 				<SearchContainer>
 					<FaSearch tabIndex={0} />
 				</SearchContainer>
@@ -47,10 +52,26 @@ function Appbar(): ReactElement {
 function MenuItem({ route }: { route: RouteProps }) {
 	const isActive = useRouteMatch(route.href.toString(), route.exact);
 
+	const [showDropdown, setShowDropdown] = useState(false);
+
+	const handleMouseEnter = () => {
+		setShowDropdown(true);
+	};
+
+	const handleMouseLeave = () => {
+		setShowDropdown(false);
+	};
+
 	return (
-		<Link passHref href={route.href}>
-			<StyledMenuItem isActive={isActive}>{route.text}</StyledMenuItem>
-		</Link>
+		<MenuItemContainer
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+		>
+			<Link passHref href={route.href}>
+				<StyledMenuItem isActive={isActive}>{route.text}</StyledMenuItem>
+			</Link>
+			{route.dropdown && showDropdown && <DropDown data={route.dropdown} />}
+		</MenuItemContainer>
 	);
 }
 
@@ -81,6 +102,11 @@ const MenuItemSet = styled.ul<MenuItemSetProps>`
 		${tw`ml-4 flex justify-center`}
 		flex: 1;
 	}
+`;
+
+type MenuItemContainerProps = {};
+const MenuItemContainer = styled.div<MenuItemContainerProps>`
+	position: relative;
 `;
 
 type StyledMenuItem = {

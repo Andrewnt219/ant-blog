@@ -8,6 +8,8 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import React, { ReactElement } from "react";
 import tw, { styled, theme } from "twin.macro";
 
+// TODO make useSWR hook for sidePosts and add it here too
+// TODO add header with category name
 type Props = InferGetStaticPropsType<typeof getStaticProps> & {};
 
 function Category({ posts, latestPosts }: Props): ReactElement {

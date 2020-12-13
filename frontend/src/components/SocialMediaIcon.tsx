@@ -1,10 +1,11 @@
-import React, { ReactElement } from 'react';
-import { AiFillInstagram } from 'react-icons/ai';
-import { FaFacebookF, FaLinkedinIn } from 'react-icons/fa';
-import { styled } from 'twin.macro';
+import { SocialMedia } from "@src/assets/enums/IconEnum";
+import React, { ReactElement } from "react";
+import { AiFillInstagram } from "react-icons/ai";
+import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
+import { styled } from "twin.macro";
 
 type Props = {
-	variants: "facebook" | "instagram" | "linkedin";
+	variants: SocialMedia;
 };
 
 function SocialMediaIcon({ variants }: Props): ReactElement {
@@ -12,23 +13,23 @@ function SocialMediaIcon({ variants }: Props): ReactElement {
 	let linkToProfile = "";
 
 	switch (variants) {
-		case "facebook":
+		case SocialMedia.FACEBOOK:
 			Icon = FaFacebookF;
 			linkToProfile = "facebook.com";
 			break;
 
-		case "instagram":
+		case SocialMedia.INSTAGRAM:
 			Icon = AiFillInstagram;
 			linkToProfile = "instagram.com";
 			break;
 
-		case "linkedin":
+		case SocialMedia.LINKEDIN:
 			Icon = FaLinkedinIn;
 			linkToProfile = "linkedin.com";
 			break;
 
 		default:
-			throw new Error("variants does not exist");
+			throw new Error(variants + " does not exist");
 	}
 	return (
 		<Container href={linkToProfile} target="_blank" rel="noopener noreferrer">

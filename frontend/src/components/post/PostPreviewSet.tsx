@@ -1,13 +1,14 @@
-import dayjs from 'dayjs';
-import React, { ReactElement } from 'react';
-import tw, { styled, theme } from 'twin.macro';
+import dayjs from "dayjs";
+import React, { ReactElement } from "react";
+import tw, { styled, theme } from "twin.macro";
 
-import { FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import { ImageModel } from '@src/model/sanity';
-import { blocksToText, calculateReadingMinutes } from '@src/utils';
+import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import { ImageModel } from "@src/model/sanity";
+import { blocksToText, calculateReadingMinutes } from "@src/utils";
 
-import { Post } from '../Post';
-import SocialMediaIcon from '../SocialMediaIcon';
+import { Post } from "../Post";
+import SocialMediaIcon from "../SocialMediaIcon";
+import { SocialMedia } from "@src/assets/enums/IconEnum";
 
 type PostPreviewSetProps = {
 	posts: PostPreviewProps["data"][];
@@ -70,13 +71,11 @@ function PostPreview({ data, imageSizes }: PostPreviewProps): ReactElement {
 
 				<Footer>
 					<SocialMediaSet>
-						<li>
-							<SocialMediaIcon variants="facebook" />
-						</li>
-
-						<li>
-							<SocialMediaIcon variants="instagram" />
-						</li>
+						{[SocialMedia.FACEBOOK, SocialMedia.INSTAGRAM].map((icon) => (
+							<li key={icon}>
+								<SocialMediaIcon variants={icon} />
+							</li>
+						))}
 					</SocialMediaSet>
 				</Footer>
 			</CustomInfoContainer>

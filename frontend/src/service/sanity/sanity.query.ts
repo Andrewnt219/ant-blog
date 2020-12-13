@@ -165,7 +165,6 @@ export const CATEGORIES_QUERY = `
 			}
 		`;
 
-// TODO update query
 export const POSTS_BY_CATEGORY_QUERY = `
 	*[_type == "post" 
 		&& !isArchived 

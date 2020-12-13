@@ -31,6 +31,7 @@ import {
 	calculateReadingMinutes,
 	createSrcSet,
 } from "@src/utils";
+import SidebarLayout from "@src/layouts/SidebarLayout";
 
 // TODO: router.fallback
 const Post = ({
@@ -77,7 +78,7 @@ const Post = ({
 		sidePosts,
 		sidePostsError,
 		<SidePostSet
-			imageSizes="(min-width: 1280px) 11.51vw"
+			imageSizes={STYLE_CONSTANTS.sidePostsSizes}
 			posts={sidePosts!}
 			title="Lastest Posts"
 		/>
@@ -119,13 +120,13 @@ const Post = ({
 				}}
 				srcset={heroSrcSet}
 			/>
-			<ContentLayout>
+			<SidebarLayout>
 				<ShareSideBar sharingUrl={currentLocation?.href ?? ""} />
 				<PostBody data={post} />
 				{renderedSidePosts}
-			</ContentLayout>
+			</SidebarLayout>
 
-			<ContentLayout>
+			<SidebarLayout>
 				<PostFooter data={post} />
 
 				<CommentSet _postId={post._id} comments={comments} />
@@ -138,7 +139,7 @@ const Post = ({
 						{renderedRelatedPosts}
 					</>
 				)}
-			</ContentLayout>
+			</SidebarLayout>
 		</>
 	);
 };

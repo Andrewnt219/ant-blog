@@ -3,7 +3,7 @@ import React, { ReactElement } from "react";
 import tw, { styled, theme } from "twin.macro";
 
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { ImageModel } from "@src/model/sanity";
+import { HomePostModel } from "@src/model/sanity";
 import { blocksToText, calculateReadingMinutes } from "@src/utils";
 
 import { Post } from "../Post";
@@ -14,18 +14,19 @@ type RecentPostSetProps = {
 };
 
 type RecentPostProps = {
-	data: {
-		category: {
-			title: string;
-			slug: string;
-		};
-		thumbnail: ImageModel;
-		slug: string;
-		title: string;
-		publishedAt: string;
-		snippet: string;
-		body: any;
-	};
+	data: HomePostModel;
+	//  {
+	// 	category: {
+	// 		title: string;
+	// 		slug: string;
+	// 	};
+	// 	thumbnail: ImageModel;
+	// 	slug: string;
+	// 	title: string;
+	// 	publishedAt: string;
+	// 	snippet: string;
+	// 	body: any;
+	// };
 	isMain: boolean;
 	imageSizes: {
 		default: string;

@@ -63,16 +63,10 @@ const Index = ({
 
 			<Recent>
 				<RecentPostSet
-					imageSizes={{
-						main:
-							"(min-width: 1280px) 51.98vw, (min-width: 640px) 80vw, calc(87.19vw + 17px)",
-						default:
-							"(min-width: 1280px) 25.06vw, (min-width: 780px) 40vw, (min-width: 640px) 80vw, 90vw",
-					}}
+					imageSizes={STYLE_CONSTANTS.recentPostSizes}
 					posts={posts.filter((post) => !post.isPinned)}
 				/>
 
-				{/* TODO adjusted sizes */}
 				<SidePostSet
 					imageSizes=", 10vw"
 					posts={posts.filter((post) => !post.isPinned).slice(0, 3)}

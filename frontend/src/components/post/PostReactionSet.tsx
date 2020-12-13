@@ -18,7 +18,6 @@ const reactionSet: PostReactionProps["variant"][] = [
 	"cool",
 ];
 
-// TODO: fix on tablet
 function PostReactionSet({ itemHeight }: PostReactionSetProps): ReactElement {
 	const [selectedReaction, setSelectedReaction] = useState<
 		PostReactionProps["variant"]

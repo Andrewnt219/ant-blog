@@ -1,6 +1,13 @@
 export const STYLE_CONSTANTS = {
 	mobileBodyPadding: "5vw",
 	bodyPadding: "10vw",
+	recentPostSizes: {
+		main:
+			"(min-width: 1280px) 51.98vw, (min-width: 640px) 80vw, calc(87.19vw + 17px)",
+		default:
+			"(min-width: 1280px) 25.06vw, (min-width: 780px) 40vw, (min-width: 640px) 80vw, 90vw",
+	},
+	sidePostsSizes: "(min-width: 1280px) 11.51vw",
 };
 
 export const FORMAT_CONSTANTS = {

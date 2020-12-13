@@ -169,5 +169,8 @@ export default {
 		{
 			type: "youtube",
 		},
+		{
+			type: "breaker",
+		},
 	],
 };

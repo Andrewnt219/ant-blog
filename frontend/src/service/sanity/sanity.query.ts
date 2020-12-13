@@ -1,5 +1,9 @@
 export const RELATED_POSTS_QUERY = `
-  *[_type == "post" && categories[_type == 'mainCategory'][0] -> slug.current == $categorySlug && _id != $postId] {
+	*[_type == "post" 
+			&&  !isArchived 
+			&& categories[_type == 'mainCategory'][0] -> slug.current == $categorySlug 
+			&& _id != $postId
+		] {
     title,
     _id,
     publishedAt,
@@ -18,7 +22,10 @@ export const RELATED_POSTS_QUERY = `
 `;
 
 export const SIDE_POSTS_QUERY = `
-		*[_type == "post" && !isArchived && !isPinned] | order(_updatedAt desc) {
+		*[_type == "post" 
+				&& !isArchived 
+				&& !isPinned
+			] | order(_updatedAt desc) {
 			title,
 			"slug": slug.current,
 			publishedAt,
@@ -113,7 +120,7 @@ export const POST_QUERY = `
         }[0]
     `;
 
-export const POSTS_SLUG_QUERY = `*[_type == "post"]{
+export const POSTS_SLUG_QUERY = `*[_type == "post" && !isArchived] {
       slug{
         current
       }
@@ -141,3 +148,46 @@ export const HOME_POSTS_QUERY = `
 				body
 			}
 		`;
+
+export const CATEGORIES_QUERY = `
+			*[_type == "category"] {
+				title,
+				"slug": slug.current,
+				"thumbnail": image.asset -> {
+					url,
+					"metadata": metadata {
+						lqip,
+						"width": dimensions.width,
+						"height": dimensions.height,
+						"ratio": dimensions.aspectRatio
+					}		
+				}
+			}
+		`;
+
+// TODO update query
+export const POSTS_BY_CATEGORY_QUERY = `
+	*[_type == "post" 
+		&& !isArchived 
+		&& categories[] -> slug.current match $categorySlug 
+	] | order(_updatedAt desc) {
+				isPinned,
+				title,
+				"slug": slug.current,
+				publishedAt,
+				"category": categories[_type == 'mainCategory'][0] -> {title, "slug": slug.current},
+				"author": author -> name,
+				"thumbnail": mainImage {
+					alt,
+					"url": asset -> url,
+					"metadata": asset -> metadata {
+						"width": dimensions.width,
+						"height": dimensions.height,
+						lqip,
+						"ratio": dimensions.ratio
+					}
+				},
+				snippet,
+				body
+		}
+`;

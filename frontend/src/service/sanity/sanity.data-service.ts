@@ -4,6 +4,7 @@ import {
 	PostModel,
 	RelatedPostsModel,
 	SidePostModel,
+	CategoryModel,
 } from "@src/model/sanity";
 
 import {
@@ -12,6 +13,8 @@ import {
 	POSTS_SLUG_QUERY,
 	RELATED_POSTS_QUERY,
 	SIDE_POSTS_QUERY,
+	CATEGORIES_QUERY,
+	POSTS_BY_CATEGORY_QUERY,
 } from "./sanity.query";
 
 export class SanityDataService {
@@ -47,4 +50,12 @@ export class SanityDataService {
 
 	getHomePosts = () =>
 		SanityDataService.client.fetch<HomePostModel[]>(HOME_POSTS_QUERY);
+
+	getCategories = () =>
+		SanityDataService.client.fetch<CategoryModel[]>(CATEGORIES_QUERY);
+
+	getPostsByCategory = (categorySlug: string) =>
+		SanityDataService.client.fetch<HomePostModel[]>(POSTS_BY_CATEGORY_QUERY, {
+			categorySlug,
+		});
 }

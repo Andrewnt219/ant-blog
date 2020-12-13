@@ -1,4 +1,5 @@
-import { LinkProps } from 'next/link';
+import { LinkProps } from "next/link";
+import { ENDPOINTS } from "../constants/StyleConstants";
 
 export type RouteProps = Pick<LinkProps, "href" | "as"> & {
 	text: string;
@@ -18,5 +19,9 @@ export const routesData: RouteProps[] = [
 	{
 		text: "Music",
 		href: "/music",
+	},
+	{
+		text: "Categories",
+		href: ENDPOINTS.category,
 	},
 ];

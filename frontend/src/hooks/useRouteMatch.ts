@@ -1,17 +1,17 @@
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
 /**
  * @param linkHref the href of the link
  * @param exact on = matches exactly / off = matches subpath also
  */
 export const useRouteMatch = (linkHref: string, exact?: boolean): boolean => {
-	const { pathname } = useRouter();
+	const { asPath } = useRouter();
 	let isActive = false;
 
 	if (exact) {
-		isActive = pathname === linkHref;
+		isActive = asPath === linkHref;
 	} else {
-		isActive = pathname.startsWith(linkHref);
+		isActive = asPath.startsWith(linkHref);
 	}
 
 	return isActive;

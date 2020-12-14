@@ -1,3 +1,24 @@
+//TODO refactor everything to imageModel
+const imageModel = `
+	{
+		url,
+		alt,
+		"metadata": metadata {
+			lqip,
+			"width": dimensions.width,
+			"height": dimensions.height,
+			"ratio": dimensions.aspectRatio
+		}									
+	}
+`;
+
+const categoryModel = `
+	{
+		title,
+		"slug": slug.current,
+		"thumbnail": image.asset -> ${imageModel}
+	}
+`;
 export const RELATED_POSTS_QUERY = `
 	*[_type == "post" 
 			&&  !isArchived 
@@ -189,4 +210,8 @@ export const POSTS_BY_CATEGORY_QUERY = `
 				snippet,
 				body
 		}
+`;
+
+export const CATEGORY_QUERY = `
+		*[_type=="category" && slug.current==$categorySlug] ${categoryModel}[0]
 `;

@@ -19,7 +19,12 @@ import PostHeader from "@src/components/post/PostHeader";
 import RelatedPostSet from "@src/components/post/RelatedPostSet";
 import SidePostSet from "@src/components/post/SidePostSet";
 import ShareSideBar from "@src/components/ShareSideBar";
-import { useCurrentLocation, usePostComments } from "@src/hooks";
+import {
+	useCurrentLocation,
+	usePostComments,
+	useRelatedPosts,
+	useSidePosts,
+} from "@src/hooks";
 import { sanityFetcher } from "@src/lib/swr";
 import { PostModel } from "@src/model/sanity";
 import { RelatedPostsModel } from "@src/model/sanity/RelatedPostModel";
@@ -30,6 +35,7 @@ import {
 	blocksToText,
 	calculateReadingMinutes,
 	createSrcSet,
+	renderPosts,
 } from "@src/utils";
 import SidebarLayout from "@src/layouts/SidebarLayout";
 
@@ -46,31 +52,14 @@ const Post = ({
 	// Full location to current page
 	const currentLocation = useCurrentLocation();
 
-	// fetch sidePosts
-	const { data: sidePosts, error: sidePostsError } = useSWR<
-		SidePostModel[],
-		SanityClientErrorResponse
-	>(sanityQueries.SIDE_POSTS_QUERY, sanityFetcher, {
-		initialData: initialSidePosts,
-		refreshInterval: NUMBER_CONSTANTS.refreshInterval,
-	});
-
-	// fetch relatedPosts
-	// NOTE cannot use dataservice and bind because binded params does not change
-	const { data: relatedPosts, error: relatedPostsError } = useSWR<
-		RelatedPostsModel[],
-		SanityClientErrorResponse
-	>(
-		[
-			sanityQueries.RELATED_POSTS_QUERY,
-			{ categorySlug: post.categories.main.slug, postId: post._id },
-		],
-		sanityFetcher,
-		{
-			initialData: initialRelatedPosts,
-			refreshInterval: NUMBER_CONSTANTS.refreshInterval,
-		}
+	const { data: sidePosts, error: sidePostsError } = useSidePosts(
+		initialSidePosts
 	);
+
+	const { data: relatedPosts, error: relatedPostsError } = useRelatedPosts({
+		post,
+		initialRelatedPosts,
+	});
 
 	/* --------------------------------- RENDER --------------------------------- */
 
@@ -143,26 +132,6 @@ const Post = ({
 		</>
 	);
 };
-
-function renderPosts<P extends any[], E extends SanityClientErrorResponse>(
-	posts: P | undefined,
-	error: E | undefined,
-	Component: JSX.Element
-): ReactElement {
-	let renderedPosts = <Loading height="10rem" loadingText="Fetching posts" />;
-
-	if (error) {
-		renderedPosts = (
-			<Broken errorText="Fail to fetch posts :(" height="10rem" />
-		);
-	}
-
-	if (posts) {
-		renderedPosts = Component;
-	}
-
-	return renderedPosts;
-}
 
 type ContentLayoutProps = {};
 const ContentLayout = styled.div<ContentLayoutProps>`

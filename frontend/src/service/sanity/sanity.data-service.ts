@@ -15,6 +15,7 @@ import {
 	SIDE_POSTS_QUERY,
 	CATEGORIES_QUERY,
 	POSTS_BY_CATEGORY_QUERY,
+	CATEGORY_QUERY,
 } from "./sanity.query";
 
 export class SanityDataService {
@@ -56,6 +57,11 @@ export class SanityDataService {
 
 	getPostsByCategory = (categorySlug: string) =>
 		SanityDataService.client.fetch<HomePostModel[]>(POSTS_BY_CATEGORY_QUERY, {
+			categorySlug,
+		});
+
+	getCategory = (categorySlug: string) =>
+		SanityDataService.client.fetch<CategoryModel>(CATEGORY_QUERY, {
 			categorySlug,
 		});
 }

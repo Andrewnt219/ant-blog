@@ -124,7 +124,7 @@ export const SIDE_POSTS_QUERY = `
 		*[_type == "post" 
 				&& !isArchived 
 				&& !isPinned
-			] | order(_updatedAt desc) {
+			] | order(_createdAt desc) {
 			title,
 			"slug": slug.current,
 			publishedAt,
@@ -153,7 +153,7 @@ export const POSTS_SLUG_QUERY = `*[_type == "post" && !isArchived] {
     }`;
 
 export const HOME_POSTS_QUERY = `
-			*[_type == "post" && !isArchived] | order(_updatedAt desc) {
+			*[_type == "post" && !isArchived] | order(_createdAt desc) {
 				isPinned,
 				title,
 				"slug": slug.current,
@@ -195,7 +195,7 @@ export const POSTS_BY_CATEGORY_QUERY = `
 	*[_type == "post" 
 		&& !isArchived 
 		&& categories[] -> slug.current match $categorySlug 
-	] | order(_updatedAt desc) {
+	] | order(_createdAt desc) {
 				isPinned,
 				title,
 				"slug": slug.current,

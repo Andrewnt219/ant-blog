@@ -14,4 +14,5 @@ export type PostModel = {
 		bio: any;
 	};
 	publishedAt: string;
+	views: number;
 };

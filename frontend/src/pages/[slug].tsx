@@ -1,17 +1,10 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import React, { ReactElement, useMemo } from "react";
-import { SanityClientErrorResponse } from "sanity";
-import useSWR from "swr";
+import React, { useMemo } from "react";
 import tw, { styled, theme } from "twin.macro";
 
-import {
-	NUMBER_CONSTANTS,
-	STYLE_CONSTANTS,
-} from "@src/assets/constants/StyleConstants";
-import Broken from "@src/components/Broken";
+import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
-import Loading from "@src/components/Loading";
 import CommentSet from "@src/components/post/CommentSet";
 import PostBody from "@src/components/post/PostBody";
 import PostFooter from "@src/components/post/PostFooter";
@@ -25,12 +18,10 @@ import {
 	useRelatedPosts,
 	useSidePosts,
 } from "@src/hooks";
-import { sanityFetcher } from "@src/lib/swr";
 import { PostModel } from "@src/model/sanity";
 import { RelatedPostsModel } from "@src/model/sanity/RelatedPostModel";
 import { SidePostModel } from "@src/model/sanity/SidePostModel";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
-import * as sanityQueries from "@src/service/sanity/sanity.query";
 import {
 	blocksToText,
 	calculateReadingMinutes,
@@ -38,7 +29,9 @@ import {
 	renderPosts,
 } from "@src/utils";
 import SidebarLayout from "@src/layouts/SidebarLayout";
+import { useIncreasePostViews } from "@src/hooks/useIncreasePostViews";
 
+// TODO add view count and react count to firebase
 // TODO: router.fallback
 const Post = ({
 	post,
@@ -87,6 +80,8 @@ const Post = ({
 		[post.thumbnail.url]
 	);
 
+	useIncreasePostViews(post._id);
+
 	return (
 		<>
 			<Head>
@@ -132,31 +127,6 @@ const Post = ({
 		</>
 	);
 };
-
-type ContentLayoutProps = {};
-const ContentLayout = styled.div<ContentLayoutProps>`
-	${tw`space-y-10`}
-	display: grid;
-	padding: 0 ${STYLE_CONSTANTS.mobileBodyPadding};
-
-	& > aside {
-		display: none;
-	}
-
-	@media screen and (min-width: ${theme`screens.smDesktop`}) {
-		gap: 0 5%;
-		padding: 0 10% 0 2.5%;
-		grid-template-columns: 5% 65ch 1fr;
-
-		& > *:not(aside) {
-			grid-column: 2/3;
-		}
-
-		& > aside {
-			display: block;
-		}
-	}
-`;
 
 type TitleProps = {};
 const Title = styled.span<TitleProps>`

@@ -8,6 +8,7 @@ export default {
 		isArchived: false,
 		publishedAt: new Date().toISOString(),
 		isPinned: false,
+		views: 0,
 		author: {
 			_ref: "efb8191b-4ada-41cf-9465-e3d348a5c0eb", // Rose
 		},
@@ -187,18 +188,27 @@ export default {
 					return true;
 				}),
 		},
+
+		{
+			name: "views",
+			title: "Views",
+			type: "number",
+			description: "Số lượt xem của bài viết",
+			readOnly: true,
+		},
 	],
 
 	preview: {
 		select: {
 			title: "title",
 			author: "author.name",
+			views: "views",
 			media: "mainImage",
 			isPinned: "isPinned",
 			isArchived: "isArchived",
 		},
 		prepare(selection) {
-			const { author, isPinned, title, isArchived } = selection;
+			const { author, views, isPinned, title, isArchived } = selection;
 
 			let attributedTitle = title;
 
@@ -213,7 +223,7 @@ export default {
 			return {
 				...selection,
 				title: attributedTitle,
-				subtitle: author && `by ${author}`,
+				subtitle: `By ${author} (${views} view${views > 1 ? "s" : ""})`,
 			};
 		},
 	},

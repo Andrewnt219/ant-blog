@@ -19,6 +19,84 @@ const categoryModel = `
 		"thumbnail": image.asset -> ${imageModel}
 	}
 `;
+
+const postModel = `
+	{
+		_id,
+		"categories": {
+			"main": categories[_type == "mainCategory"] -> {
+				title,
+				"slug": slug.current,
+				"thumbnail": image.asset -> {
+					url,
+					"metadata": metadata {
+						lqip,
+						"width": dimensions.width,
+						"height": dimensions.height,
+						"ratio": dimensions.aspectRatio
+					}									
+				}
+			}[0],
+			"subs": categories[_type == "subcategory"] -> {
+				title,
+				"slug": slug.current,
+				"thumbnail": image.asset -> {
+					url,
+					"metadata": metadata {
+						lqip,
+						"width": dimensions.width,
+						"height": dimensions.height,
+						"ratio": dimensions.aspectRatio
+					}	
+				}
+			},
+		},
+		title,
+		"thumbnail": mainImage.asset -> {
+			url,
+			metadata {
+				lqip,
+				"width": dimensions.width,
+				"height": dimensions.height,
+				"ratio": dimensions.aspectRatio
+			}
+		},
+		body[] {
+			...,
+			_type == "image" => {
+				...,
+				"metadata": @.asset -> metadata {
+					"width": dimensions.width, 
+					"height": dimensions.height,
+					lqip
+				}
+			},
+			markDefs[] {
+				...,
+				_type == "internalLink" => {
+					...,
+					"url": "/" + @.post->slug.current,
+				}
+			}
+		},
+		author -> {
+			name,
+			"slug": slug.current,
+			"avatar": image.asset -> {
+				url,
+				"metadata": metadata {
+					lqip,
+					"width": dimensions.width,
+					"height": dimensions.height,
+					"ratio": dimensions.aspectRatio,
+				}
+			},
+			bio
+		},
+		publishedAt,
+		views
+	}
+`;
 export const RELATED_POSTS_QUERY = `
 	*[_type == "post" 
 			&&  !isArchived 
@@ -65,80 +143,7 @@ export const SIDE_POSTS_QUERY = `
   `;
 
 export const POST_QUERY = `
-        *[slug.current == $slug] {
-						_id,
-						"categories": {
-							"main": categories[_type == "mainCategory"] -> {
-								title,
-								"slug": slug.current,
-								"thumbnail": image.asset -> {
-									url,
-									"metadata": metadata {
-										lqip,
-										"width": dimensions.width,
-										"height": dimensions.height,
-										"ratio": dimensions.aspectRatio
-									}									
-								}
-							}[0],
-							"subs": categories[_type == "subcategory"] -> {
-								title,
-								"slug": slug.current,
-								"thumbnail": image.asset -> {
-									url,
-									"metadata": metadata {
-										lqip,
-										"width": dimensions.width,
-										"height": dimensions.height,
-										"ratio": dimensions.aspectRatio
-									}	
-								}
-							},
-						},
-            title,
-            "thumbnail": mainImage.asset -> {
-							url,
-							metadata {
-								lqip,
-								"width": dimensions.width,
-								"height": dimensions.height,
-								"ratio": dimensions.aspectRatio
-							}
-						},
-						body[] {
-							...,
-							_type == "image" => {
-								...,
-								"metadata": @.asset -> metadata {
-									"width": dimensions.width, 
-									"height": dimensions.height,
-									lqip
-								}
-							},
-							markDefs[] {
-								...,
-								_type == "internalLink" => {
-									...,
-									"url": "/" + @.post->slug.current,
-								}
-							}
-						},
-						author -> {
-							name,
-							"slug": slug.current,
-							"avatar": image.asset -> {
-								url,
-								"metadata": metadata {
-									lqip,
-									"width": dimensions.width,
-									"height": dimensions.height,
-									"ratio": dimensions.aspectRatio,
-								}
-							},
-							bio
-						},
-						publishedAt
-        }[0]
+        *[slug.current == $slug] ${postModel} [0]
     `;
 
 export const POSTS_SLUG_QUERY = `*[_type == "post" && !isArchived] {

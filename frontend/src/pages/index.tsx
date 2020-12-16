@@ -52,6 +52,7 @@ const Index = ({
 			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>
 				Others
 			</h2>
+			{/* TODO add views to these posts, make it trending/popular posts */}
 			<PostPreviewSet
 				imageSizes="(min-width: 1020px) 25.61vw, (min-width: 680px) 40vw, (min-width: 640px) 80vw, 90vw"
 				posts={posts.filter((post) => !post.isPinned)}

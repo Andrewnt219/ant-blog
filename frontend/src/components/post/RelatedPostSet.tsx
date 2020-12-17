@@ -11,7 +11,7 @@ type RelatedPostSetProps = {
 	imageSizes: Props["imageSizes"];
 };
 
-// TODO: fix y spacing
+// TODO: fix y spacing mobile
 function RelatedPostSet({
 	posts,
 	imageSizes,

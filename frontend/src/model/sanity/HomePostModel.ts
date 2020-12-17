@@ -14,6 +14,7 @@ export type HomePostModel = {
 	snippet: string;
 	thumbnail: ImageModel;
 	body: any;
+	views: number;
 };
 
 export const homePostModelQuery = `
@@ -26,6 +27,7 @@ export const homePostModelQuery = `
 		"author": author -> name,
 		"thumbnail": mainImage.asset -> ${imageModelQuery},
 		snippet,
-		body
+		body,
+		views
 	}
 `;

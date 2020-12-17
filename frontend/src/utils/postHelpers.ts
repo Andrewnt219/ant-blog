@@ -1,6 +1,6 @@
-import { ImageUrlBuilderOptions } from '@sanity/image-url/lib/types/types';
-import { OTHER_CONSTANTS, SizeKey } from '@src/assets/constants/StyleConstants';
-import { urlFor } from '@src/lib/sanity/utils/sanityUtils';
+import { ImageUrlBuilderOptions } from "@sanity/image-url/lib/types/types";
+import { OTHER_CONSTANTS, SizeKey } from "@src/assets/constants/StyleConstants";
+import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
 
 /**
  * @description with 265 WPM, calculate reading minutes from pargraph(s)
@@ -10,7 +10,7 @@ export const calculateReadingMinutes = (text: string): string => {
 	const READING_SPEED = 265;
 	const readingMinutes = Math.floor(wordsCount / READING_SPEED);
 
-	return readingMinutes < 1 ? "1 min read" : readingMinutes + " mins read";
+	return readingMinutes <= 1 ? "1 min read" : readingMinutes + " mins read";
 };
 
 /**

@@ -3,8 +3,12 @@ import React, { ReactElement } from "react";
 import tw, { styled, theme } from "twin.macro";
 
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { ImageModel } from "@src/model/sanity";
-import { blocksToText, calculateReadingMinutes } from "@src/utils";
+import { HomePostModel } from "@src/model/sanity";
+import {
+	blocksToText,
+	calculateReadingMinutes,
+	formatQuantityWithUnit,
+} from "@src/utils";
 
 import { Post } from "../Post";
 import SocialMediaIcon from "../SocialMediaIcon";
@@ -16,18 +20,17 @@ type PostPreviewSetProps = {
 };
 
 type PostPreviewProps = {
-	data: {
-		category: {
-			title: string;
-			slug: string;
-		};
-		thumbnail: ImageModel;
-		title: string;
-		publishedAt: string;
-		snippet: string;
-		slug: string;
-		body: any;
-	};
+	data: Pick<
+		HomePostModel,
+		| "category"
+		| "thumbnail"
+		| "title"
+		| "publishedAt"
+		| "snippet"
+		| "body"
+		| "slug"
+		| "views"
+	>;
 	imageSizes: string;
 };
 
@@ -44,7 +47,16 @@ function PostPreviewSet({ posts, imageSizes }: PostPreviewSetProps) {
 }
 
 function PostPreview({ data, imageSizes }: PostPreviewProps): ReactElement {
-	const { body, category, title, publishedAt, slug, snippet, thumbnail } = data;
+	const {
+		views,
+		body,
+		category,
+		title,
+		publishedAt,
+		slug,
+		snippet,
+		thumbnail,
+	} = data;
 
 	const linkToPost = "/" + slug;
 
@@ -71,6 +83,9 @@ function PostPreview({ data, imageSizes }: PostPreviewProps): ReactElement {
 
 				<Footer>
 					<SocialMediaSet>
+						<ViewCount>
+							{formatQuantityWithUnit(views, "view", "views")}
+						</ViewCount>
 						{[SocialMedia.FACEBOOK, SocialMedia.INSTAGRAM].map((icon) => (
 							<li key={icon}>
 								<SocialMediaIcon variants={icon} />
@@ -125,7 +140,18 @@ const Footer = styled.footer<FooterProps>`
 type SocialMediaSetProps = {};
 const SocialMediaSet = styled.ul<SocialMediaSetProps>`
 	font-size: smaller;
-	${tw`mt-5 flex items-center justify-center border-t border-lborderColor border-b border-solid p-3 space-x-3`}
+	${tw`flex items-center justify-center `}
+	${tw`border-t border-lborderColor border-b border-solid`}
+	${tw`mt-5 p-3 space-x-3`}
+`;
+
+type ViewCountProps = {};
+const ViewCount = styled.span<ViewCountProps>`
+	/* font-size: smaller; */
+	${tw`flex items-center font-500 text-ltextColor`}
+
+	// NOTE pr-3 should equal space-x-3 of parent
+	${tw`pr-3 border-r border-solid border-borderColor`}
 `;
 
 export default PostPreviewSet;

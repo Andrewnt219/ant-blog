@@ -3,3 +3,4 @@ export * from "./numberUtils";
 export * from "./nodeUtils";
 export * from "./jsxHelper";
 export * from "./cssHelpers";
+export * from "./stringUtils";

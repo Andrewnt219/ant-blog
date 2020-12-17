@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { ReactElement, ReactNode } from "react";
-import tw, { styled, theme } from "twin.macro";
+import tw, { styled } from "twin.macro";
 
 import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
 import { lqipBackground } from "@src/utils/cssHelpers";

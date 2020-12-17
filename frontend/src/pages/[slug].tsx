@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import React, { useMemo } from "react";
-import tw, { styled, theme } from "twin.macro";
+import tw, { styled } from "twin.macro";
 
 import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import CenteredElementWithLine from "@src/components/CenteredElementWithLine";

@@ -1,5 +1,4 @@
 import { CategoriesModel, categoriesModelQuery } from "./CategoriesModel";
-import { categoryModelQuery } from "./CategoryModel";
 import { ImageModel, imageModelQuery } from "./ImageModel";
 
 export type PostModel = {

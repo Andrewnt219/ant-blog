@@ -5,7 +5,7 @@ import { useSidePosts } from "@src/hooks";
 import SidebarLayout from "@src/layouts/SidebarLayout";
 import { CategoryModel, HomePostModel, SidePostModel } from "@src/model/sanity";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
-import { createImageSources, createSrcSet, renderPosts } from "@src/utils";
+import { createSrcSet, renderPosts } from "@src/utils";
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
 import React, { ReactElement, useMemo } from "react";
 import tw, { styled, theme } from "twin.macro";

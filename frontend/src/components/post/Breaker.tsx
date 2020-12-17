@@ -1,10 +1,8 @@
 import React, { ReactElement } from "react";
 import tw, { styled } from "twin.macro";
 
-type Props = {};
-
-function Breaker({}: Props): ReactElement {
-	return <Container></Container>;
+function Breaker(): ReactElement {
+	return <Container />;
 }
 
 type ContainerProps = {};

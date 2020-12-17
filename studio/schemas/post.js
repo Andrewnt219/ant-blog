@@ -227,4 +227,23 @@ export default {
 			};
 		},
 	},
+
+	orderings: [
+		{
+			title: "Least views",
+			name: "viewsAsc",
+			by: [
+				{ field: "views", direction: "asc" },
+				{ field: "title", direction: "asc" },
+			],
+		},
+		{
+			title: "Most views",
+			name: "viewsDesc",
+			by: [
+				{ field: "views", direction: "desc" },
+				{ field: "title", direction: "asc" },
+			],
+		},
+	],
 };

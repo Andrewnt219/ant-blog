@@ -21,6 +21,7 @@ import { HOME_POSTS_QUERY } from "@src/service/sanity/sanity.query";
 const Index = ({
 	prefetchedPosts,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+	//TODO  add another post for the trending ones, and lower the refresh interval for those
 	const { data: posts } = useSWR<HomePostModel[]>(
 		HOME_POSTS_QUERY,
 		sanityFetcher,

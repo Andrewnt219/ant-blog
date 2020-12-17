@@ -34,6 +34,7 @@ export const POSTS_SLUG_QUERY = `*[_type == "post" && !isArchived] {
       }
     }`;
 
+// TODO lower scope or divide into small chunks, this queries too many
 export const HOME_POSTS_QUERY = `
 			*[_type == "post" && !isArchived] | order(_createdAt desc) ${homePostModelQuery}
 		`;

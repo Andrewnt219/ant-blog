@@ -1,5 +1,6 @@
-import { CategoriesModel } from "./CategoriesModel";
-import { ImageModel } from "./ImageModel";
+import { CategoriesModel, categoriesModelQuery } from "./CategoriesModel";
+import { categoryModelQuery } from "./CategoryModel";
+import { ImageModel, imageModelQuery } from "./ImageModel";
 
 export type PostModel = {
 	_id: string;
@@ -16,3 +17,38 @@ export type PostModel = {
 	publishedAt: string;
 	views: number;
 };
+
+export const postModelQuery = `
+	{
+		_id,
+		"categories": ${categoriesModelQuery},
+		title,
+		"thumbnail": mainImage.asset -> ${imageModelQuery},
+		body[] {
+			...,
+			_type == "image" => {
+				...,
+				"metadata": @.asset -> metadata {
+					"width": dimensions.width, 
+					"height": dimensions.height,
+					lqip
+				}
+			},
+			markDefs[] {
+				...,
+				_type == "internalLink" => {
+					...,
+					"url": "/" + @.post->slug.current,
+				}
+			}
+		},
+		author -> {
+			name,
+			"slug": slug.current,
+			"avatar": image.asset -> ${imageModelQuery},
+			bio
+		},
+		publishedAt,
+		views
+	}
+`;

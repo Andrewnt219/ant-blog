@@ -8,3 +8,16 @@ export type ImageModel = {
 	url: string;
 	alt?: string;
 };
+
+export const imageModelQuery = `
+	{
+		url,
+		alt,
+		"metadata": metadata {
+			lqip,
+			"width": dimensions.width,
+			"height": dimensions.height,
+			"ratio": dimensions.aspectRatio
+		}									
+	}
+`;

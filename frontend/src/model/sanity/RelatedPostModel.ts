@@ -1,4 +1,4 @@
-import { ImageModel } from './ImageModel';
+import { ImageModel, imageModelQuery } from "./ImageModel";
 
 export type RelatedPostsModel = {
 	title: string;
@@ -7,3 +7,13 @@ export type RelatedPostsModel = {
 	thumbnail: ImageModel;
 	slug: string;
 };
+
+export const relatedPostsModelQuery = `
+	{
+    title,
+    _id,
+    publishedAt,
+    "thumbnail": mainImage.asset -> ${imageModelQuery},
+    "slug": slug.current,
+  }
+`;

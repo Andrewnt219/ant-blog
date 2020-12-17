@@ -9,4 +9,5 @@ export const writableClient = client({
 	projectId: "3c8xizwy",
 	dataset: "production",
 	token: process.env.SANITY_WRITE_TOKEN,
+	useCdn: false,
 });

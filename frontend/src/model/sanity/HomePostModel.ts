@@ -1,4 +1,4 @@
-import { ImageModel } from './ImageModel';
+import { ImageModel, imageModelQuery } from "./ImageModel";
 
 export type HomePostModel = {
 	isPinned: boolean;
@@ -15,3 +15,17 @@ export type HomePostModel = {
 	thumbnail: ImageModel;
 	body: any;
 };
+
+export const homePostModelQuery = `
+	{
+		isPinned,
+		title,
+		"slug": slug.current,
+		publishedAt,
+		"category": categories[_type == 'mainCategory'][0] -> {title, "slug": slug.current},
+		"author": author -> name,
+		"thumbnail": mainImage.asset -> ${imageModelQuery},
+		snippet,
+		body
+	}
+`;

@@ -153,7 +153,7 @@ type PostReactionContainerProps = {
 	isSelected: boolean;
 };
 const PostReactionContainer = styled.button<PostReactionContainerProps>`
-	${tw`p-2 flex flex-col space-y-2 items-center justify-center`}
+	${tw`p-2 flex flex-col space-y-2 items-center justify-center w-full`}
 	${tw`border border-solid border-lborderColor`}
 
 	div {

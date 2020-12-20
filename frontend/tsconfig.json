@@ -35,7 +35,7 @@
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		"public/scripts/theme.script.js",
+		"public/scripts/theme.script.js", "src/hooks/useMuiControlled.js", "src/hooks/useMuiControlled.js", "src/hooks/useMuiPagination.js",
 	],
 	"exclude": [
 		"node_modules",

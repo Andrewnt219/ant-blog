@@ -8,7 +8,7 @@ import {
 	ENDPOINTS,
 	FORMAT_CONSTANTS,
 } from "@src/assets/constants/StyleConstants";
-import { ImageModel } from "@src/model/sanity";
+import { PinnedPostModel } from "@src/model/sanity";
 import { trimLastWord } from "@src/utils";
 import { lqipBackground } from "@src/utils/cssHelpers";
 
@@ -18,17 +18,7 @@ type PinnedPostSetProps = {
 };
 
 type PinnedPostProps = {
-	data: {
-		category: {
-			title: string;
-			slug: string;
-		};
-		title: string;
-		author: string;
-		publishedAt: string;
-		thumbnail: ImageModel;
-		slug: string;
-	};
+	data: PinnedPostModel;
 	imageSizes: {
 		default: string;
 		main: string;
@@ -84,6 +74,7 @@ function PinnedPost({
 				</Link>
 
 				<SubInfo isMainPinnedPost={isMainPinnedPost}>
+					{/* TODO author should have an url */}
 					<Author>{author}</Author>
 
 					<Date>

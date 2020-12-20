@@ -3,7 +3,7 @@ import { UsePaginationProps } from "./useMuiPagination";
 import { usePageQuery } from "./usePageQuery";
 
 type Props = Omit<UsePaginationProps, "onChange" | "page"> & {
-	onPageChange(newPage: number | null): void;
+	onPageChange?(newPage: number | null): void;
 };
 
 /**

@@ -16,7 +16,7 @@ export const FORMAT_CONSTANTS = {
 };
 
 export const NUMBER_CONSTANTS = {
-	refreshInterval: 10000,
+	refreshInterval: 30000,
 };
 
 export const ENDPOINTS = {

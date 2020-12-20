@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import queryString from "query-string";
 
 type Props = {
-	onPageChange(newPage: number | null): void;
+	onPageChange?(newPage: number | null): void;
 };
 
 /**
@@ -31,7 +31,7 @@ export const usePageQuery = ({ onPageChange }: Props) => {
 
 	useEffect(() => {
 		setCurrentPage(pageQuery ? +pageQuery : 1);
-		onPageChange(pageQuery ? +pageQuery : 1);
+		onPageChange && onPageChange(pageQuery ? +pageQuery : 1);
 	}, [pageQuery, onPageChange]);
 
 	return { currentPage, pageQuery, changeCurrentPage };

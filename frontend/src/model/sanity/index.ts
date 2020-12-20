@@ -5,3 +5,6 @@ export * from "./HomePostModel";
 export * from "./ImageModel";
 export * from "./CategoryModel";
 export * from "./CategoriesModel";
+export * from "./PinnedPostModel";
+export * from "./MostViewedPostModel";
+export * from "./RecentPostModel";

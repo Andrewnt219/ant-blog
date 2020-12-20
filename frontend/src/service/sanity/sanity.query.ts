@@ -5,6 +5,9 @@ import {
 	postModelQuery,
 	relatedPostsModelQuery,
 	sidePostModelQuery,
+	pinnedPostModelQuery,
+	mostViewedPostModelQuery,
+	recentPostModelQuery,
 } from "@src/model/sanity";
 
 export const RELATED_POSTS_QUERY = `
@@ -38,6 +41,25 @@ export const POSTS_SLUG_QUERY = `*[_type == "post" && !isArchived] {
 export const HOME_POSTS_QUERY = `
 			*[_type == "post" && !isArchived] | order(_createdAt desc) ${homePostModelQuery}
 		`;
+
+export const PINNED_POSTS_QUERY = `
+			*[_type == "post" && isPinned] | order(_createdAt desc) ${pinnedPostModelQuery} [0...3]
+		`;
+
+export const MOST_VIEWED_POSTS_QUERY = `
+		*[_type == "post" && !isArchived] | order(views desc) | order(_createdAt desc) ${mostViewedPostModelQuery} [0...6]
+	`;
+
+export const RECENT_POSTS_QUERY = `
+		*[_type == "post" && !isArchived] | order(_createdAt desc) ${recentPostModelQuery} [$start...$end]
+`;
+
+export const HOME_PAGE_CONTENT_QUERY = `
+		{	
+			"pinnedPosts": ${PINNED_POSTS_QUERY},
+			"mostViewedPosts": ${MOST_VIEWED_POSTS_QUERY},
+			"recentPosts": ${RECENT_POSTS_QUERY},
+		}`;
 
 export const CATEGORIES_QUERY = `
 			*[_type == "category"] {

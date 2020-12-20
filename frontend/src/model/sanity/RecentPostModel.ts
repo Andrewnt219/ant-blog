@@ -1,7 +1,6 @@
 import { ImageModel, imageModelQuery } from "./ImageModel";
 
-export type HomePostModel = {
-	isPinned: boolean;
+export type RecentPostModel = {
 	title: string;
 	slug: string;
 	publishedAt: string;
@@ -10,21 +9,17 @@ export type HomePostModel = {
 		slug: string;
 	};
 	thumbnail: ImageModel;
-	author: string;
 	contentSnippet: string;
 	snippet: string;
 	body: any;
-	views: number;
 };
 
-export const homePostModelQuery = `
+export const recentPostModelQuery = `  
 	{
-		isPinned,
 		title,
 		"slug": slug.current,
 		publishedAt,
-		"category": categories[_type == 'mainCategory'][0] -> {title, "slug": slug.current},
-		"author": author -> name,
+		"category": categories[_type == 'mainCategory'][0] -> {title, "slug": slug.current},	
 		"thumbnail": mainImage.asset -> ${imageModelQuery},
 		snippet,
 		body,

@@ -4,22 +4,37 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { UsePaginationItem } from "@src/hooks/useMuiPagination";
 type Props = {
 	items: UsePaginationItem[];
+	onItemClicked?(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
 };
 
-const Pagination = ({ items }: Props): ReactElement => {
-	return <Container>{renderControllers(items)}</Container>;
+const Pagination = ({ items, onItemClicked }: Props): ReactElement => {
+	return (
+		<nav>
+			<Container>{renderControllers(items, onItemClicked)}</Container>
+		</nav>
+	);
 };
 
 // Render all the pagination controllers
-function renderControllers(items: UsePaginationItem[]) {
-	return items.map(({ page, type, ...item }, index) => {
+function renderControllers(
+	items: Props["items"],
+	onClick: Props["onItemClicked"]
+) {
+	return items.map(({ page, type, onClick: onMuiClick, ...item }, index) => {
 		let children = null;
+
+		const handleItemClick = (
+			event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+		) => {
+			onMuiClick(event);
+			onClick && onClick(event);
+		};
 
 		switch (type) {
 			case "start-ellipsis":
 			case "end-ellipsis":
 				children = (
-					<Button isEllipsis type="button" {...item}>
+					<Button tabIndex={-1} isEllipsis type="button" {...item}>
 						...
 					</Button>
 				);
@@ -27,7 +42,7 @@ function renderControllers(items: UsePaginationItem[]) {
 
 			case "page":
 				children = (
-					<Button type="button" {...item}>
+					<Button type="button" {...item} onClick={handleItemClick}>
 						{page}
 					</Button>
 				);
@@ -35,7 +50,7 @@ function renderControllers(items: UsePaginationItem[]) {
 
 			case "next":
 				children = (
-					<Button type="button" {...item}>
+					<Button type="button" {...item} onClick={handleItemClick}>
 						<FaArrowRight />
 					</Button>
 				);
@@ -43,7 +58,7 @@ function renderControllers(items: UsePaginationItem[]) {
 
 			case "previous":
 				children = (
-					<Button type="button" {...item}>
+					<Button type="button" {...item} onClick={handleItemClick}>
 						<FaArrowLeft />
 					</Button>
 				);
@@ -51,7 +66,7 @@ function renderControllers(items: UsePaginationItem[]) {
 
 			default:
 				children = (
-					<Button type="button" {...item}>
+					<Button type="button" {...item} onClick={handleItemClick}>
 						{type}
 					</Button>
 				);
@@ -78,7 +93,7 @@ const Button = styled.button<ButtonProps>`
 	${(p) =>
 		p.isEllipsis &&
 		css`
-			${tw`bg-transparent`}
+			${tw`bg-transparent pointer-events-none`}
 		`}
 		
 	${(p) =>

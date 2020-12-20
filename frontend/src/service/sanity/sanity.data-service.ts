@@ -1,4 +1,5 @@
 import sanityClient from "@src/lib/sanity/client";
+import { HomePageContent } from "@src/model/HomePageContentModel";
 import {
 	HomePostModel,
 	PostModel,
@@ -16,6 +17,7 @@ import {
 	CATEGORIES_QUERY,
 	POSTS_BY_CATEGORY_QUERY,
 	CATEGORY_QUERY,
+	HOME_PAGE_CONTENT_QUERY,
 } from "./sanity.query";
 
 export class SanityDataService {
@@ -64,4 +66,26 @@ export class SanityDataService {
 		SanityDataService.client.fetch<CategoryModel>(CATEGORY_QUERY, {
 			categorySlug,
 		});
+
+	getHomePageContent = (page: number | undefined, perPage = 5) => {
+		let recentPostStart: number;
+
+		if (!page || page < 0) {
+			recentPostStart = 0;
+		} else {
+			recentPostStart = (page - 1) * perPage; // -1 because index
+		}
+
+		const recentPostsEnd = recentPostStart + perPage;
+
+		console.log({ page, recentPostStart, recentPostsEnd });
+
+		return SanityDataService.client.fetch<HomePageContent>(
+			HOME_PAGE_CONTENT_QUERY,
+			{
+				start: recentPostStart,
+				end: recentPostsEnd,
+			}
+		);
+	};
 }

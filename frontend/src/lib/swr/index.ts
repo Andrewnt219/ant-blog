@@ -1,4 +1,5 @@
 import sanityClient from "@src/lib/sanity/client";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 
 /**
  * Interface for useSWR
@@ -6,3 +7,6 @@ import sanityClient from "@src/lib/sanity/client";
  */
 export const sanityFetcher = (...args: any[]) =>
 	sanityClient.fetch(args[0], args[1]);
+
+export const homePageContentFetcher = (page: number, perPage?: number) =>
+	SanityDataService.getInstance().getHomePageContent(page, perPage);

@@ -1,6 +1,6 @@
-import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
-import React from "react";
+import React, { useEffect } from "react";
 import useSWR from "swr";
 import { styled, theme } from "twin.macro";
 
@@ -12,29 +12,37 @@ import Broken from "@src/components/Broken";
 import PinnedPostSet from "@src/components/post/PinnedPostSet";
 import PostPreviewSet from "@src/components/post/PostPreviewSet";
 import RecentPostSet from "@src/components/post/RecentPostSet";
-import SidePostSet from "@src/components/post/SidePostSet";
-import { sanityFetcher } from "@src/lib/swr";
-import { HomePostModel } from "@src/model/sanity";
+import { homePageContentFetcher } from "@src/lib/swr";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
-import { HOME_POSTS_QUERY } from "@src/service/sanity/sanity.query";
+import { HomePageContent } from "@src/model/HomePageContentModel";
+import { useRouter } from "next/router";
+import Loading from "@src/components/Loading";
+
+const defaultData = { pinnedPosts: [], mostViewedPosts: [], recentPosts: [] };
 
 const Index = ({
-	prefetchedPosts,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
-	//TODO  add another post for the trending ones, and lower the refresh interval for those
-	const { data: posts } = useSWR<HomePostModel[]>(
-		HOME_POSTS_QUERY,
-		sanityFetcher,
+	prefetchedContent,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+	const router = useRouter();
+	const { data: content, error, revalidate } = useSWR<HomePageContent>(
+		[router.query.page ? +router.query.page : 1],
+		homePageContentFetcher,
 		{
-			initialData: prefetchedPosts ?? [],
+			initialData: prefetchedContent ?? defaultData,
 			refreshInterval: NUMBER_CONSTANTS.refreshInterval,
 		}
 	);
 
-	return !posts || posts.length === 0 ? (
-		<>
-			<Broken height="20rem" errorText="Something went wrong" />
-		</>
+	useEffect(() => {
+		revalidate();
+	}, [router.query.page, revalidate]);
+
+	if (error) {
+		return <Broken height="20rem" errorText="Something went wrong" />;
+	}
+
+	return !content ? (
+		<Loading height="10rem" />
 	) : (
 		<Main>
 			<Head>
@@ -42,7 +50,7 @@ const Index = ({
 			</Head>
 
 			<PinnedPostSet
-				posts={posts.filter((post) => post.isPinned).slice(0, 3)}
+				posts={content.pinnedPosts}
 				imageSizes={{
 					default:
 						"(min-width: 1280px) 22.79vw, (min-width: 640px) 40vw, (min-width: 480px) 45vw, 90vw",
@@ -51,29 +59,33 @@ const Index = ({
 			/>
 
 			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>
-				Others
+				Most viewed
 			</h2>
 			{/* TODO add views to these posts, make it trending/popular posts */}
 			<PostPreviewSet
 				imageSizes="(min-width: 1020px) 25.61vw, (min-width: 680px) 40vw, (min-width: 640px) 80vw, 90vw"
-				posts={posts.filter((post) => !post.isPinned)}
+				posts={content.mostViewedPosts}
 			/>
 
-			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>
+			<h2
+				style={{ fontSize: "1.5em", margin: "1.5em 0.5em 1.5em 0" }}
+				id="recent-posts-header"
+			>
 				Recent
 			</h2>
 
 			<Recent>
 				<RecentPostSet
 					imageSizes={STYLE_CONSTANTS.recentPostSizes}
-					posts={posts.filter((post) => !post.isPinned)}
+					posts={content.recentPosts}
 				/>
 
-				<SidePostSet
+				{/* <SidePostSet
 					imageSizes=", 10vw"
 					posts={posts.filter((post) => !post.isPinned).slice(0, 3)}
 					title="Latest"
-				/>
+				/> */}
+				<aside>ASIDE</aside>
 			</Recent>
 
 			<h1>
@@ -95,21 +107,31 @@ const Index = ({
 	);
 };
 
-export const getStaticProps: GetStaticProps<{
-	prefetchedPosts: HomePostModel[] | null;
-}> = async () => {
+type ServerProps = {
+	prefetchedContent: HomePageContent | null;
+};
+
+type Query = {
+	page: string;
+	perPage: string;
+};
+
+export const getServerSideProps: GetServerSideProps<
+	ServerProps,
+	Query
+> = async ({ query }) => {
 	try {
-		const posts = await SanityDataService.getInstance().getHomePosts();
+		const prefetchedContent = await SanityDataService.getInstance().getHomePageContent(
+			query.page ? +query.page : 1
+		);
 		return {
-			props: { prefetchedPosts: posts },
-			revalidate: 1,
+			props: { prefetchedContent },
 		};
 	} catch (error) {
 		console.log(error);
 
 		return {
-			props: { prefetchedPosts: null },
-			revalidate: 1,
+			props: { prefetchedContent: null },
 		};
 	}
 };

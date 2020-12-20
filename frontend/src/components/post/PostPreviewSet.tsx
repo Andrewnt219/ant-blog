@@ -3,7 +3,7 @@ import React, { ReactElement } from "react";
 import tw, { styled, theme } from "twin.macro";
 
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { HomePostModel } from "@src/model/sanity";
+import { MostViewedPostModel } from "@src/model/sanity";
 import {
 	blocksToText,
 	calculateReadingMinutes,
@@ -20,17 +20,7 @@ type PostPreviewSetProps = {
 };
 
 type PostPreviewProps = {
-	data: Pick<
-		HomePostModel,
-		| "category"
-		| "thumbnail"
-		| "title"
-		| "publishedAt"
-		| "snippet"
-		| "body"
-		| "slug"
-		| "views"
-	>;
+	data: MostViewedPostModel;
 	imageSizes: string;
 };
 

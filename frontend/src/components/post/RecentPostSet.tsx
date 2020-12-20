@@ -1,12 +1,14 @@
 import dayjs from "dayjs";
-import React, { ReactElement } from "react";
+import React, { forwardRef, ReactElement } from "react";
 import tw, { styled, theme } from "twin.macro";
 
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { HomePostModel } from "@src/model/sanity";
+import { RecentPostModel } from "@src/model/sanity";
 import { blocksToText, calculateReadingMinutes } from "@src/utils";
 
 import { Post } from "../Post";
+import Pagination from "../Pagination";
+import { useQueryPaginationItems } from "@src/hooks";
 
 type RecentPostSetProps = {
 	posts: RecentPostProps["data"][];
@@ -14,19 +16,7 @@ type RecentPostSetProps = {
 };
 
 type RecentPostProps = {
-	data: HomePostModel;
-	//  {
-	// 	category: {
-	// 		title: string;
-	// 		slug: string;
-	// 	};
-	// 	thumbnail: ImageModel;
-	// 	slug: string;
-	// 	title: string;
-	// 	publishedAt: string;
-	// 	snippet: string;
-	// 	body: any;
-	// };
+	data: RecentPostModel;
 	isMain: boolean;
 	imageSizes: {
 		default: string;
@@ -38,57 +28,79 @@ function RecentPostSet({
 	posts,
 	imageSizes,
 }: RecentPostSetProps): ReactElement {
+	const onPaginationItemClicked = () => {
+		setTimeout(() => {
+			document.getElementById("recent-posts-header")?.scrollIntoView();
+		}, 300); // This is not because posts aren't loaded, just for some weird reason.
+	};
+
+	const { items } = useQueryPaginationItems({ count: 5 });
+
 	return (
-		<RecentPostSetContainer>
-			{posts.map((post, index) => (
-				<li
-					key={post.slug}
-					style={{ gridColumn: index === 0 ? "1/-1" : undefined }}
-				>
-					<RecentPost
-						imageSizes={imageSizes}
-						data={post}
-						isMain={index === 0}
-					/>
-				</li>
-			))}
-		</RecentPostSetContainer>
+		<Container>
+			<RecentPostSetContainer>
+				{posts.map((post, index) => (
+					<li
+						key={post.slug}
+						style={{ gridColumn: index === 0 ? "1/-1" : undefined }}
+					>
+						<RecentPost
+							imageSizes={imageSizes}
+							data={post}
+							isMain={index === 0}
+						/>
+					</li>
+				))}
+			</RecentPostSetContainer>
+			<Pagination items={items} onItemClicked={onPaginationItemClicked} />
+		</Container>
 	);
 }
 
-export function RecentPost({
-	data,
-	isMain,
-	imageSizes,
-}: RecentPostProps): ReactElement {
-	const { category, slug, thumbnail, title, publishedAt, snippet, body } = data;
-	const linkToPost = "/" + slug;
+type Ref = HTMLElement;
+export const RecentPost = forwardRef<Ref, RecentPostProps>(
+	({ data, isMain, imageSizes }, articleRef): ReactElement => {
+		const {
+			category,
+			slug,
+			thumbnail,
+			title,
+			publishedAt,
+			snippet,
+			body,
+		} = data;
+		const linkToPost = "/" + slug;
 
-	return (
-		<RecentPostContainer>
-			<Thumbnail
-				data={{ linkToPost, thumbnail }}
-				sizes={isMain ? imageSizes.main : imageSizes.default}
-			/>
-			<InfoContainer>
-				<Category data={category} />
-				<Title data={{ linkToPost, title }} />
-				<SubInfo isTime>
-					{dayjs(publishedAt).format(FORMAT_CONSTANTS.dateFormat)}
-				</SubInfo>
-				<SubInfo>
-					&nbsp;&nbsp;-&nbsp;&nbsp;{calculateReadingMinutes(blocksToText(body))}
-				</SubInfo>
-				{isMain && (
-					<>
-						<Snippet>{snippet}</Snippet>
-						<ReadMoreButton>Read more</ReadMoreButton>
-					</>
-				)}
-			</InfoContainer>
-		</RecentPostContainer>
-	);
-}
+		return (
+			<RecentPostContainer ref={articleRef}>
+				<Thumbnail
+					data={{ linkToPost, thumbnail }}
+					sizes={isMain ? imageSizes.main : imageSizes.default}
+				/>
+				<InfoContainer>
+					<Category data={category} />
+					<Title data={{ linkToPost, title }} />
+					<SubInfo isTime>
+						{dayjs(publishedAt).format(FORMAT_CONSTANTS.dateFormat)}
+					</SubInfo>
+					<SubInfo>
+						&nbsp;&nbsp;-&nbsp;&nbsp;
+						{calculateReadingMinutes(blocksToText(body))}
+					</SubInfo>
+					{isMain && (
+						<>
+							<Snippet>{snippet}</Snippet>
+							<ReadMoreButton>Read more</ReadMoreButton>
+						</>
+					)}
+				</InfoContainer>
+			</RecentPostContainer>
+		);
+	}
+);
+
+type ContainerProps = {};
+const Container = styled.div<ContainerProps>``;
 
 type RecentPostSetContainerProps = {};
 const RecentPostSetContainer = styled.ul<RecentPostSetContainerProps>`

@@ -5,4 +5,7 @@ export * from "./useClickOutside";
 export * from "./useLoadingDots";
 export * from "./useRelatedPosts";
 export * from "./useSidePosts";
-export * from "./usePagination";
+export { default as useMuiControlled } from "./useMuiControlled";
+export { default as useMuiPagination } from "./useMuiPagination";
+export * from "./useQueryPaginationItems";
+export * from "./usePageQuery";

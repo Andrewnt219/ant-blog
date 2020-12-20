@@ -12,6 +12,7 @@ import { useQueryPaginationItems } from "@src/hooks";
 
 type RecentPostSetProps = {
 	posts: RecentPostProps["data"][];
+	numberOfPages: number;
 	imageSizes: RecentPostProps["imageSizes"];
 };
 
@@ -27,6 +28,7 @@ type RecentPostProps = {
 function RecentPostSet({
 	posts,
 	imageSizes,
+	numberOfPages,
 }: RecentPostSetProps): ReactElement {
 	const onPaginationItemClicked = () => {
 		setTimeout(() => {
@@ -34,7 +36,7 @@ function RecentPostSet({
 		}, 300); // This is not because posts aren't loaded, just for some weird reason.
 	};
 
-	const { items } = useQueryPaginationItems({ count: 5 });
+	const { items } = useQueryPaginationItems({ count: numberOfPages });
 
 	return (
 		<Container>

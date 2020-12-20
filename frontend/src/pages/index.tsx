@@ -18,7 +18,12 @@ import { HomePageContent } from "@src/model/HomePageContentModel";
 import { useRouter } from "next/router";
 import Loading from "@src/components/Loading";
 
-const defaultData = { pinnedPosts: [], mostViewedPosts: [], recentPosts: [] };
+const defaultData: HomePageContent = {
+	pinnedPosts: [],
+	mostViewedPosts: [],
+	recentPosts: [],
+	postsCount: 0,
+};
 
 const Index = ({
 	prefetchedContent,
@@ -76,6 +81,9 @@ const Index = ({
 
 			<Recent>
 				<RecentPostSet
+					numberOfPages={Math.ceil(
+						content.postsCount / NUMBER_CONSTANTS.defaultPerPage
+					)}
 					imageSizes={STYLE_CONSTANTS.recentPostSizes}
 					posts={content.recentPosts}
 				/>

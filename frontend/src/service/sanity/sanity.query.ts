@@ -37,7 +37,6 @@ export const POSTS_SLUG_QUERY = `*[_type == "post" && !isArchived] {
       }
     }`;
 
-// TODO lower scope or divide into small chunks, this queries too many
 export const HOME_POSTS_QUERY = `
 			*[_type == "post" && !isArchived] | order(_createdAt desc) ${homePostModelQuery}
 		`;
@@ -54,11 +53,16 @@ export const RECENT_POSTS_QUERY = `
 		*[_type == "post" && !isArchived] | order(_createdAt desc) ${recentPostModelQuery} [$start...$end]
 `;
 
+export const TOTAL_POSTS_QUERY = `
+	count(*[_type == "post" && !isArchived] {})
+`;
+
 export const HOME_PAGE_CONTENT_QUERY = `
 		{	
 			"pinnedPosts": ${PINNED_POSTS_QUERY},
 			"mostViewedPosts": ${MOST_VIEWED_POSTS_QUERY},
 			"recentPosts": ${RECENT_POSTS_QUERY},
+			"postsCount": ${TOTAL_POSTS_QUERY}
 		}`;
 
 export const CATEGORIES_QUERY = `

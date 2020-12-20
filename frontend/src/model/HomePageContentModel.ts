@@ -8,4 +8,5 @@ export type HomePageContent = {
 	pinnedPosts: PinnedPostModel[];
 	mostViewedPosts: MostViewedPostModel[];
 	recentPosts: RecentPostModel[];
+	postsCount: number;
 };

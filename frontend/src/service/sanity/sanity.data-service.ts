@@ -1,3 +1,4 @@
+import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import sanityClient from "@src/lib/sanity/client";
 import { HomePageContent } from "@src/model/HomePageContentModel";
 import {
@@ -18,6 +19,7 @@ import {
 	POSTS_BY_CATEGORY_QUERY,
 	CATEGORY_QUERY,
 	HOME_PAGE_CONTENT_QUERY,
+	TOTAL_POSTS_QUERY,
 } from "./sanity.query";
 
 export class SanityDataService {
@@ -67,7 +69,10 @@ export class SanityDataService {
 			categorySlug,
 		});
 
-	getHomePageContent = (page: number | undefined, perPage = 5) => {
+	getHomePageContent = (
+		page: number | undefined,
+		perPage = NUMBER_CONSTANTS.defaultPerPage
+	) => {
 		let recentPostStart: number;
 
 		if (!page || page < 0) {
@@ -77,8 +82,6 @@ export class SanityDataService {
 		}
 
 		const recentPostsEnd = recentPostStart + perPage;
-
-		console.log({ page, recentPostStart, recentPostsEnd });
 
 		return SanityDataService.client.fetch<HomePageContent>(
 			HOME_PAGE_CONTENT_QUERY,

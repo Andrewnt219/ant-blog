@@ -32,7 +32,7 @@ export const usePageQuery = ({ onPageChange }: Props) => {
 	useEffect(() => {
 		setCurrentPage(pageQuery ? +pageQuery : 1);
 		onPageChange(pageQuery ? +pageQuery : 1);
-	}, [pageQuery]);
+	}, [pageQuery, onPageChange]);
 
 	return { currentPage, pageQuery, changeCurrentPage };
 };

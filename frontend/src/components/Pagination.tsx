@@ -1,38 +1,16 @@
-import Axios from "axios";
-import React, {
-	ReactElement,
-	useCallback,
-	useEffect,
-	useMemo,
-	useState,
-} from "react";
+import React, { ReactElement } from "react";
 import tw, { css, styled } from "twin.macro";
-import { useMuiPagination, useQueryPaginationItems } from "@src/hooks";
-import { useRouter } from "next/router";
-import queryString from "query-string";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { UsePaginationItem } from "@src/hooks/useMuiPagination";
-type Props = {};
-
-const Pagination = (): ReactElement => {
-	const [todos, setTodos] = useState<any>(null);
-
-	const onPageChange = useCallback((newPage: number | null) => {
-		Axios.get(`https://jsonplaceholder.typicode.com/todos/${newPage ?? 1}`)
-			.then((res) => setTodos(res.data))
-			.catch((err) => console.error(err));
-	}, []);
-
-	const { items } = useQueryPaginationItems({ count: 8, onPageChange });
-
-	return (
-		<>
-			<Container>{renderControllers(items)}</Container>
-			<code>{JSON.stringify(todos, null, 2)}</code>
-		</>
-	);
+type Props = {
+	items: UsePaginationItem[];
 };
 
+const Pagination = ({ items }: Props): ReactElement => {
+	return <Container>{renderControllers(items)}</Container>;
+};
+
+// Render all the pagination controllers
 function renderControllers(items: UsePaginationItem[]) {
 	return items.map(({ page, type, ...item }, index) => {
 		let children = null;

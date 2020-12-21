@@ -19,7 +19,6 @@ import {
 	POSTS_BY_CATEGORY_QUERY,
 	CATEGORY_QUERY,
 	HOME_PAGE_CONTENT_QUERY,
-	TOTAL_POSTS_QUERY,
 } from "./sanity.query";
 
 export class SanityDataService {

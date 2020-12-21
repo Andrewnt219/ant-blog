@@ -1,7 +1,6 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
-import React, { useEffect } from "react";
-import useSWR from "swr";
+import React from "react";
 import { styled, theme } from "twin.macro";
 
 import {
@@ -10,37 +9,17 @@ import {
 } from "@src/assets/constants/StyleConstants";
 import Broken from "@src/components/Broken";
 import PinnedPostSet from "@src/components/post/PinnedPostSet";
-import PostPreviewSet from "@src/components/post/PostPreviewSet";
+import MostViewedPostSet from "@src/components/post/MostViewedPostSet";
 import RecentPostSet from "@src/components/post/RecentPostSet";
-import { homePageContentFetcher } from "@src/lib/swr";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 import { HomePageContent } from "@src/model/HomePageContentModel";
-import { useRouter } from "next/router";
 import Loading from "@src/components/Loading";
-
-const defaultData: HomePageContent = {
-	pinnedPosts: [],
-	mostViewedPosts: [],
-	recentPosts: [],
-	postsCount: 0,
-};
+import { useHomePageContent } from "@src/hooks";
 
 const Index = ({
 	prefetchedContent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-	const router = useRouter();
-	const { data: content, error, revalidate } = useSWR<HomePageContent>(
-		[router.query.page ? +router.query.page : 1],
-		homePageContentFetcher,
-		{
-			initialData: prefetchedContent ?? defaultData,
-			refreshInterval: NUMBER_CONSTANTS.refreshInterval,
-		}
-	);
-
-	useEffect(() => {
-		revalidate();
-	}, [router.query.page, revalidate]);
+	const { data: content, error } = useHomePageContent(prefetchedContent);
 
 	if (error) {
 		return <Broken height="20rem" errorText="Something went wrong" />;
@@ -66,8 +45,8 @@ const Index = ({
 			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>
 				Most viewed
 			</h2>
-			{/* TODO add views to these posts, make it trending/popular posts */}
-			<PostPreviewSet
+
+			<MostViewedPostSet
 				imageSizes="(min-width: 1020px) 25.61vw, (min-width: 680px) 40vw, (min-width: 640px) 80vw, 90vw"
 				posts={content.mostViewedPosts}
 			/>

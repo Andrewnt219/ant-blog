@@ -106,6 +106,7 @@ const Container = styled.div<ContainerProps>``;
 
 type RecentPostSetContainerProps = {};
 const RecentPostSetContainer = styled.ul<RecentPostSetContainerProps>`
+	${tw`mb-10`}
 	display: grid;
 
 	gap: 3rem 1.5rem;

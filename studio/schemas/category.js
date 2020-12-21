@@ -2,7 +2,17 @@ export default {
 	name: "category",
 	title: "Category",
 	type: "document",
+
+	initialValue: {
+		isFeatured: false,
+	},
+
 	fields: [
+		{
+			name: "isFeatured",
+			title: "Feature in home page",
+			type: "boolean",
+		},
 		{
 			name: "title",
 			title: "Title",
@@ -40,6 +50,22 @@ export default {
 		select: {
 			title: "title",
 			media: "image",
+			isFeatured: "isFeatured",
+		},
+
+		prepare(selection) {
+			const { title, media, isFeatured } = selection;
+
+			let attributedTitle = title;
+
+			if (isFeatured) {
+				attributedTitle = "🌟 " + attributedTitle;
+			}
+
+			return {
+				...selection,
+				title: attributedTitle,
+			};
 		},
 	},
 };

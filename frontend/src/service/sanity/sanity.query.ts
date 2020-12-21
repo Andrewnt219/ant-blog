@@ -1,7 +1,6 @@
 import {
 	categoryModelQuery,
 	homePostModelQuery,
-	imageModelQuery,
 	postModelQuery,
 	relatedPostsModelQuery,
 	sidePostModelQuery,
@@ -57,21 +56,26 @@ export const TOTAL_POSTS_QUERY = `
 	count(*[_type == "post" && !isArchived] {})
 `;
 
+export const CATEGORIES_QUERY = `
+			*[_type == "category"] ${categoryModelQuery}
+		`;
+
+export const SEARCHED_CATEGORIES_QUERY = `
+	*[_type == "category" in $categorySlugs ] ${categoryModelQuery}
+`;
+
+export const FEATURED_CATEGORY_QUERY = `
+	*[_type == "category" && isFeatured ] | order(_title asc) ${categoryModelQuery}
+`;
+
 export const HOME_PAGE_CONTENT_QUERY = `
 		{	
 			"pinnedPosts": ${PINNED_POSTS_QUERY},
 			"mostViewedPosts": ${MOST_VIEWED_POSTS_QUERY},
 			"recentPosts": ${RECENT_POSTS_QUERY},
-			"postsCount": ${TOTAL_POSTS_QUERY}
+			"postsCount": ${TOTAL_POSTS_QUERY},
+			"featuredCategories": ${FEATURED_CATEGORY_QUERY}
 		}`;
-
-export const CATEGORIES_QUERY = `
-			*[_type == "category"] {
-				title,
-				"slug": slug.current,
-				"thumbnail": image.asset ->  ${imageModelQuery}
-			}
-		`;
 
 export const POSTS_BY_CATEGORY_QUERY = `
 	*[_type == "post" 

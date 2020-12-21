@@ -22,6 +22,7 @@ import {
 	CATEGORY_QUERY,
 	HOME_PAGE_CONTENT_QUERY,
 	CATEGORY_PAGE_CONTENT_QUERY,
+	SEARCHED_CATEGORIES_QUERY,
 } from "./sanity.query";
 
 export class SanityDataService {
@@ -61,8 +62,16 @@ export class SanityDataService {
 	getHomePosts = () =>
 		SanityDataService.client.fetch<HomePostModel[]>(HOME_POSTS_QUERY);
 
-	getCategories = () =>
-		SanityDataService.client.fetch<CategoryModel[]>(CATEGORIES_QUERY);
+	getCategories = (categorySlugs?: string[]) => {
+		if (!categorySlugs) {
+			return SanityDataService.client.fetch<CategoryModel[]>(CATEGORIES_QUERY);
+		}
+
+		return SanityDataService.client.fetch<CategoryModel[]>(
+			SEARCHED_CATEGORIES_QUERY,
+			{ categorySlugs }
+		);
+	};
 
 	getPostsByCategory = (
 		categorySlug: string,
@@ -80,8 +89,7 @@ export class SanityDataService {
 			}
 		);
 	};
-
-	getCategory = (categorySlug: string) =>
+	public getCategory = (categorySlug: string) =>
 		SanityDataService.client.fetch<CategoryModel>(CATEGORY_QUERY, {
 			categorySlug,
 		});

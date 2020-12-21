@@ -15,12 +15,12 @@ import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 import { HomePageContent } from "@src/model/HomePageContent";
 import Loading from "@src/components/Loading";
 import { useHomePageContent } from "@src/hooks";
+import CategorySideBar from "@src/components/post/CategorySideBar";
 
 const Index = ({
 	prefetchedContent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { data: content, error } = useHomePageContent(prefetchedContent);
-
 	if (error) {
 		return <Broken height="20rem" errorText="Something went wrong" />;
 	}
@@ -67,12 +67,7 @@ const Index = ({
 					posts={content.recentPosts}
 				/>
 
-				{/* <SidePostSet
-					imageSizes=", 10vw"
-					posts={posts.filter((post) => !post.isPinned).slice(0, 3)}
-					title="Latest"
-				/> */}
-				<aside>ASIDE</aside>
+				<CategorySideBar data={content.featuredCategories} />
 			</Recent>
 
 			<h1>
@@ -111,6 +106,7 @@ export const getServerSideProps: GetServerSideProps<
 		const prefetchedContent = await SanityDataService.getInstance().getHomePageContent(
 			query.page ? +query.page : 1
 		);
+
 		return {
 			props: { prefetchedContent },
 		};

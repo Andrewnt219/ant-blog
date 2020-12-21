@@ -1,4 +1,5 @@
 import {
+	CategoryModel,
 	MostViewedPostModel,
 	PinnedPostModel,
 	RecentPostModel,
@@ -9,4 +10,5 @@ export type HomePageContent = {
 	mostViewedPosts: MostViewedPostModel[];
 	recentPosts: RecentPostModel[];
 	postsCount: number;
+	featuredCategories: CategoryModel[];
 };

@@ -30,6 +30,7 @@ import {
 } from "@src/utils";
 import SidebarLayout from "@src/layouts/SidebarLayout";
 import { useIncreasePostViews } from "@src/hooks/useIncreasePostViews";
+import { useRouter } from "next/router";
 
 // TODO add view count and react count to firebase
 // TODO: router.fallback
@@ -148,6 +149,7 @@ type Params = {
 	slug: string;
 };
 
+// TODO Refactor to one request
 export const getStaticProps: GetStaticProps<StaticProps, Params> = async ({
 	params,
 }) => {
@@ -175,6 +177,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 	return {
 		paths,
-		fallback: false,
+		fallback: true,
 	};
 };

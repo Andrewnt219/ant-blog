@@ -23,6 +23,7 @@ import {
 	HOME_PAGE_CONTENT_QUERY,
 	CATEGORY_PAGE_CONTENT_QUERY,
 	SEARCHED_CATEGORIES_QUERY,
+	FEATURED_CATEGORY_QUERY,
 } from "./sanity.query";
 
 export class SanityDataService {
@@ -89,10 +90,13 @@ export class SanityDataService {
 			}
 		);
 	};
-	public getCategory = (categorySlug: string) =>
+	getCategory = (categorySlug: string) =>
 		SanityDataService.client.fetch<CategoryModel>(CATEGORY_QUERY, {
 			categorySlug,
 		});
+
+	getFeaturedCategories = () =>
+		SanityDataService.client.fetch<CategoryModel[]>(FEATURED_CATEGORY_QUERY);
 
 	getHomePageContent = (
 		page: number | undefined,

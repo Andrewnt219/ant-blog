@@ -21,27 +21,27 @@ export const routesData: RouteProps[] = [
 		text: "Music",
 		href: "/music",
 	},
-	{
-		text: "Categories",
-		href: ENDPOINTS.category,
-		exact: true,
-		dropdown: [
-			{
-				href: ENDPOINTS.category + "/business",
-				text: "Business",
-			},
-			{
-				href: ENDPOINTS.category + "/thoughts",
-				text: "Thoughts",
-			},
-			{
-				href: ENDPOINTS.category + "/animals",
-				text: "Animals",
-			},
-			{
-				href: ENDPOINTS.category + "/music",
-				text: "Music",
-			},
-		],
-	},
+	// {
+	// 	text: "Categories",
+	// 	href: ENDPOINTS.category,
+	// 	exact: true,
+	// 	dropdown: [
+	// 		{
+	// 			href: ENDPOINTS.category + "/business",
+	// 			text: "Business",
+	// 		},
+	// 		{
+	// 			href: ENDPOINTS.category + "/thoughts",
+	// 			text: "Thoughts",
+	// 		},
+	// 		{
+	// 			href: ENDPOINTS.category + "/animals",
+	// 			text: "Animals",
+	// 		},
+	// 		{
+	// 			href: ENDPOINTS.category + "/music",
+	// 			text: "Music",
+	// 		},
+	// 	],
+	// },
 ];

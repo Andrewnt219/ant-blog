@@ -1,9 +1,12 @@
 import Link from "next/link";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import tw, { styled, theme } from "twin.macro";
 
-import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import {
+	ENDPOINTS,
+	STYLE_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
 import { RouteProps, routesData } from "@src/assets/data/routesData";
 import { useRouteMatch } from "@src/hooks";
 
@@ -11,6 +14,7 @@ import Logo from "./Logo";
 import SocialMediaIcon from "./SocialMediaIcon";
 import { SocialMedia } from "@src/assets/enums/IconEnum";
 import DropDown from "./DropDown";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 
 /* TODO add router loading. NProgress maybe? */
 // TODO make mobile navigations
@@ -20,6 +24,32 @@ const icons: SocialMedia[] = [
 	SocialMedia.LINKEDIN,
 ];
 function Appbar(): ReactElement {
+	const [dropDownData, setDropDownData] = useState<RouteProps[]>();
+
+	const categoryRoute: RouteProps = {
+		text: "Categories",
+		href: ENDPOINTS.category,
+		dropdown: dropDownData,
+	};
+
+	useEffect(() => {
+		SanityDataService.getInstance()
+			.getFeaturedCategories()
+			.then((categories) => {
+				const routes: RouteProps[] = [];
+
+				categories.forEach((category) => {
+					routes.push({
+						href: ENDPOINTS.category + "/" + category.slug,
+						text: category.title,
+					});
+
+					setDropDownData(routes);
+				});
+			})
+			.catch((err) => console.error(err));
+	}, []);
+
 	return (
 		<Header>
 			<Nav>
@@ -31,6 +61,9 @@ function Appbar(): ReactElement {
 							<MenuItem route={route} />
 						</li>
 					))}
+					<li>
+						<MenuItem route={categoryRoute} />
+					</li>
 				</MenuItemSet>
 
 				<SocialMediaSet>

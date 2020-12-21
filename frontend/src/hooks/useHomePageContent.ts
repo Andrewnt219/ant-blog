@@ -10,6 +10,7 @@ const defaultData: HomePageContent = {
 	mostViewedPosts: [],
 	recentPosts: [],
 	postsCount: 0,
+	featuredCategories: [],
 };
 
 export const useHomePageContent = (

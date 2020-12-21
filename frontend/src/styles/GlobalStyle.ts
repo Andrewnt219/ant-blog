@@ -1,6 +1,6 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
-import typographyStyle from './typographyStyle';
+import typographyStyle from "./typographyStyle";
 
 export default createGlobalStyle`
 :root {
@@ -64,6 +64,11 @@ textarea {
 }
 
 ${typographyStyle}
+
+/* NProgress */
+#nprogress .bar.bar {
+    background: var(--accent-color);
+}
 
 /* * { background-color: rgba(255,0,0,.2); }
 * * { background-color: rgba(0,255,0,.2); }

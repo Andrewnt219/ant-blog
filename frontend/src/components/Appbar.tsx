@@ -110,7 +110,7 @@ function MenuItem({ route }: { route: RouteProps }) {
 
 type HeaderProps = {};
 const Header = styled.header<HeaderProps>`
-	${tw`font-500 h-20`}
+	${tw`font-500 h-20 `}
 
 	box-shadow: 0 2px 9px -1px rgba(0, 0, 0, 0.04);
 	border-bottom: 1px solid #efefef;

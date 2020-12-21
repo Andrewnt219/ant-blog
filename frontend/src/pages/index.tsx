@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 import React from "react";
-import { styled, theme } from "twin.macro";
+import tw, { styled, theme } from "twin.macro";
 
 import {
 	NUMBER_CONSTANTS,
@@ -32,59 +32,42 @@ const Index = ({
 			<Head>
 				<title>Welcome to my blog</title>
 			</Head>
-
-			<PinnedPostSet
-				posts={content.pinnedPosts}
-				imageSizes={{
-					default:
-						"(min-width: 1280px) 22.79vw, (min-width: 640px) 40vw, (min-width: 480px) 45vw, 90vw",
-					main: "(min-width: 1280px) 34.19vw, (min-width: 640px) 80vw, 90.63vw",
-				}}
-			/>
-
-			<h2 style={{ fontSize: "1.5em", margin: "1.5em 0", marginLeft: ".5em" }}>
-				Most viewed
-			</h2>
-
-			<MostViewedPostSet
-				imageSizes="(min-width: 1020px) 25.61vw, (min-width: 680px) 40vw, (min-width: 640px) 80vw, 90vw"
-				posts={content.mostViewedPosts}
-			/>
-
-			<h2
-				style={{ fontSize: "1.5em", margin: "1.5em 0.5em 1.5em 0" }}
-				id="recent-posts-header"
-			>
-				Recent
-			</h2>
-
-			<Recent>
-				<RecentPostSet
-					numberOfPages={Math.ceil(
-						content.postsCount / NUMBER_CONSTANTS.defaultPerPage
-					)}
-					imageSizes={STYLE_CONSTANTS.recentPostSizes}
-					posts={content.recentPosts}
+			<section>
+				<PinnedPostSet
+					posts={content.pinnedPosts}
+					imageSizes={{
+						default:
+							"(min-width: 1280px) 22.79vw, (min-width: 640px) 40vw, (min-width: 480px) 45vw, 90vw",
+						main:
+							"(min-width: 1280px) 34.19vw, (min-width: 640px) 80vw, 90.63vw",
+					}}
 				/>
+			</section>
 
-				<CategorySideBar data={content.featuredCategories} />
-			</Recent>
+			<section>
+				<Heading>Most viewed</Heading>
 
-			<h1>
-				To start writing articles, go to{" "}
-				<a
-					href="http://rosedang.sanity.studio/"
-					target="_blank"
-					rel="noopener noreferrer"
-					style={{ textDecoration: "underline" }}
-				>
-					studio
-				</a>
-			</h1>
+				<MostViewedPostSet
+					imageSizes="(min-width: 1020px) 25.61vw, (min-width: 680px) 40vw, (min-width: 640px) 80vw, 90vw"
+					posts={content.mostViewedPosts}
+				/>
+			</section>
 
-			<h2>
-				This site is not mobile-friendly, yet. Color palette does not make sense
-			</h2>
+			<section>
+				<Heading id="recent-posts-header">Recent</Heading>
+
+				<Recent>
+					<RecentPostSet
+						numberOfPages={Math.ceil(
+							content.postsCount / NUMBER_CONSTANTS.defaultPerPage
+						)}
+						imageSizes={STYLE_CONSTANTS.recentPostSizes}
+						posts={content.recentPosts}
+					/>
+
+					<CategorySideBar data={content.featuredCategories} />
+				</Recent>
+			</section>
 		</Main>
 	);
 };
@@ -144,6 +127,16 @@ const Recent = styled.section<RecentProps>`
 		& > aside {
 			display: block;
 		}
+	}
+`;
+
+type HeadingProps = {};
+const Heading = styled.h1<HeadingProps>`
+	${tw`text-3xl my-8 ml-4 `}
+
+	::after {
+		content: "";
+		${tw`h-1 w-5 bg-accent block`}
 	}
 `;
 

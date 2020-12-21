@@ -62,6 +62,7 @@ const Container = styled.aside<ContainerProps>``;
 type PostSetTitleProps = {};
 const PostSetTitle = styled.h5<PostSetTitleProps>`
 	${tw`border-b border-solid border-borderColor mb-8 pb-2`}
+	font-size: larger;
 `;
 
 type SidePostSetContainerProps = {};

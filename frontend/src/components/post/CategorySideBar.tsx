@@ -32,6 +32,7 @@ const Container = styled.aside<ContainerProps>``;
 type Title = {};
 const Title = styled.h5<Title>`
 	${tw`border-b border-solid border-borderColor mb-8 pb-2`}
+	font-size: larger;
 `;
 
 type CategorySetContainerProps = {};
@@ -56,7 +57,7 @@ function Category({ data }: CategoryProps) {
 			</Link>
 
 			<Thumbnail lqip={thumbnail.metadata.lqip}>
-				<Image src={thumbnail.url} unsized sizes=", 20vw" />
+				<Image src={thumbnail.url} unsized sizes=", 24vw" quality={50} />
 			</Thumbnail>
 		</CategoryContainer>
 	);
@@ -70,7 +71,7 @@ const CategoryContainer = styled.article<CategoryContainerProps>`
 	transition: transform 150ms ease;
 
 	:hover,
-	:focus {
+	:focus-within {
 		transform: translateX(1rem);
 	}
 `;

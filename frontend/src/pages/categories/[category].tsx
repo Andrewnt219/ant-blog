@@ -1,62 +1,91 @@
-import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import {
+	NUMBER_CONSTANTS,
+	STYLE_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
 import { RecentPost } from "@src/components/post/RecentPostSet";
 import SidePostSet from "@src/components/post/SidePostSet";
-import { useSidePosts } from "@src/hooks";
+import { useCategoryPageContent, useQueryPaginationItems } from "@src/hooks";
 import SidebarLayout from "@src/layouts/SidebarLayout";
-import { CategoryModel, HomePostModel, SidePostModel } from "@src/model/sanity";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 import { createSrcSet, renderPosts } from "@src/utils";
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
-import React, { ReactElement, useMemo } from "react";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import React, { ReactElement, useMemo, useRef } from "react";
 import tw, { styled, theme } from "twin.macro";
 import { lqipBackground } from "@src/utils";
+import Pagination from "@src/components/Pagination";
+import { CategoryPageContent } from "@src/model/CategoryPageContent";
+import Loading from "@src/components/Loading";
+import Broken from "@src/components/Broken";
 
-type Props = InferGetStaticPropsType<typeof getStaticProps> & {};
+type Props = InferGetServerSidePropsType<typeof getServerSideProps> & {};
 
-function Category({
-	posts,
-	initialSidePosts,
-	currentCategory,
-}: Props): ReactElement {
-	const { data, error } = useSidePosts(initialSidePosts);
+function Category({ prefetchedContent }: Props): ReactElement {
+	const { data: content, error } = useCategoryPageContent(prefetchedContent);
+
+	const { items } = useQueryPaginationItems({
+		count: Math.ceil(content.postsCount / NUMBER_CONSTANTS.defaultPerPage),
+	});
+
+	const {
+		currentCategory: {
+			thumbnail: { url },
+		},
+	} = content;
+
+	const srcset = useMemo(
+		() =>
+			createSrcSet(url, {
+				format: "webp",
+				quality: 50,
+			}),
+		[url]
+	);
+
+	const headerRef = useRef<HTMLElement | null>(null);
+
+	const onPaginationItemClicked = () => {
+		setTimeout(() => {
+			headerRef.current?.scrollIntoView();
+		}, 300);
+	};
+
+	if (!content) {
+		return <Loading height="20rem" />;
+	}
+
+	if (error) {
+		return <Broken height="20rem" />;
+	}
 
 	const renderedSidePosts = renderPosts(
-		data,
+		content.sidePosts,
 		error,
 		<SidePostSet
-			posts={data!}
+			posts={content.sidePosts}
 			imageSizes={STYLE_CONSTANTS.sidePostsSizes}
 			title="Latest posts"
 		/>
 	);
 
-	const srcset = useMemo(
-		() =>
-			createSrcSet(currentCategory.thumbnail.url, {
-				format: "webp",
-				quality: 50,
-			}),
-		[currentCategory.thumbnail.url]
-	);
-
 	return (
 		<>
-			<Header>
+			<Header ref={headerRef}>
 				<Thumbnail
-					src={currentCategory.thumbnail.url}
+					src={content.currentCategory.thumbnail.url}
 					srcSet={srcset}
-					lqip={currentCategory.thumbnail.metadata.lqip}
+					lqip={content.currentCategory.thumbnail.metadata.lqip}
 					sizes="100vw"
 				/>
 				<Heading>
 					Category
-					<CategoryName>{currentCategory.title}</CategoryName>
+					<CategoryName>{content.currentCategory.title}</CategoryName>
 				</Heading>
 			</Header>
+
 			<SidebarLayout>
 				<Main>
 					<PostSetContainer>
-						{posts.map((post) => (
+						{content.posts.map((post) => (
 							<li key={post.slug}>
 								<RecentPost
 									isMain
@@ -70,7 +99,7 @@ function Category({
 
 				{renderedSidePosts}
 
-				{/* TODO add pagination */}
+				<Pagination items={items} onItemClicked={onPaginationItemClicked} />
 			</SidebarLayout>
 		</>
 	);
@@ -124,52 +153,34 @@ const CategoryName = styled.span<CategoryNameProps>`
 	}
 `;
 
-/* -------------------------------------------------------------------------- */
-/*                                 SERVER CODE                                */
-/* -------------------------------------------------------------------------- */
-
-type StaticProps = {
-	posts: HomePostModel[];
-	initialSidePosts: SidePostModel[];
-	currentCategory: CategoryModel;
-};
-
 type PostSetContainerProps = {};
 const PostSetContainer = styled.ul<PostSetContainerProps>`
 	${tw`space-y-10`}
 `;
 
+/* -------------------------------------------------------------------------- */
+/*                                 SERVER CODE                                */
+/* -------------------------------------------------------------------------- */
+
+type ServerProps = {
+	prefetchedContent: CategoryPageContent;
+};
 type Params = {
 	category: string;
 };
-export const getStaticProps: GetStaticProps<StaticProps, Params> = async ({
-	params,
-}) => {
-	const posts = await SanityDataService.getInstance().getPostsByCategory(
-		params!.category
-	);
 
-	const initialSidePosts = await SanityDataService.getInstance().getSidePosts();
-
-	const currentCategory = await SanityDataService.getInstance().getCategory(
-		params!.category
+export const getServerSideProps: GetServerSideProps<
+	ServerProps,
+	Params
+> = async ({ params, query }) => {
+	const prefetchedContent = await SanityDataService.getInstance().getCategoryPageContent(
+		params!.category,
+		query.page ? +query.page : 1,
+		NUMBER_CONSTANTS.defaultPerPage
 	);
 
 	return {
-		props: { posts, initialSidePosts, currentCategory },
-	};
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-	const categories = await SanityDataService.getInstance().getCategories();
-
-	const paths = categories.map((category) => ({
-		params: { category: category.slug },
-	}));
-
-	return {
-		paths,
-		fallback: false,
+		props: { prefetchedContent },
 	};
 };
 

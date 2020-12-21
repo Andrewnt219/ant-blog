@@ -88,3 +88,17 @@ export const createSrcSet = (
 
 	return srcset.join(", ");
 };
+
+export const calculateRange = (page: number | undefined, perPage: number) => {
+	let start: number;
+
+	if (!page || page < 0) {
+		start = 0;
+	} else {
+		start = (page - 1) * perPage; // -1 because index
+	}
+
+	const end = start + perPage;
+
+	return [start, end];
+};

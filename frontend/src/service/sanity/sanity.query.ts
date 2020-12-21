@@ -77,9 +77,26 @@ export const POSTS_BY_CATEGORY_QUERY = `
 	*[_type == "post" 
 		&& !isArchived 
 		&& categories[] -> slug.current match $categorySlug 
-	] | order(_createdAt desc) ${homePostModelQuery}
+	] | order(_createdAt desc) ${homePostModelQuery} [$start...$end]
 `;
 
 export const CATEGORY_QUERY = `
-		*[_type=="category" && slug.current==$categorySlug] ${categoryModelQuery}[0]
+	*[_type=="category" && slug.current==$categorySlug] ${categoryModelQuery}[0]
 `;
+
+export const TOTAL_CATEGORY_POSTS_QUERY = `
+count(
+	*[_type == "post" 
+		&& !isArchived 
+		&& categories[] -> slug.current match $categorySlug 
+	] {}
+)
+`;
+export const CATEGORY_PAGE_CONTENT_QUERY = `
+{
+	"posts": ${POSTS_BY_CATEGORY_QUERY},
+	"sidePosts": ${SIDE_POSTS_QUERY},
+	"currentCategory": ${CATEGORY_QUERY},
+	"postsCount": ${TOTAL_CATEGORY_POSTS_QUERY}
+}
+	`;

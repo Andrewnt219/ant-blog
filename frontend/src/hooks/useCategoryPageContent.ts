@@ -1,29 +1,22 @@
 import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { homePageContentFetcher } from "@src/lib/swr";
-import { HomePageContent } from "@src/model/HomePageContent";
+import { categoryPageContentFetcher } from "@src/lib/swr";
+import { CategoryPageContent } from "@src/model/CategoryPageContent";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useSWR, { ConfigInterface } from "swr";
 
-const defaultData: HomePageContent = {
-	pinnedPosts: [],
-	mostViewedPosts: [],
-	recentPosts: [],
-	postsCount: 0,
-};
-
-export const useHomePageContent = (
-	prefetchedContent: HomePageContent | null,
+export const useCategoryPageContent = (
+	prefetchedContent: CategoryPageContent,
 	config?: Omit<ConfigInterface, "initialData" | "refreshInterval">
 ) => {
 	const { query } = useRouter();
 
-	const result = useSWR<HomePageContent>(
-		[query.page ? +query.page : 1],
-		homePageContentFetcher,
+	const result = useSWR<CategoryPageContent>(
+		[prefetchedContent.currentCategory.slug, query.page ? +query.page : 1],
+		categoryPageContentFetcher,
 		{
 			...config,
-			initialData: prefetchedContent ?? defaultData,
+			initialData: prefetchedContent,
 			refreshInterval: NUMBER_CONSTANTS.refreshInterval,
 		}
 	);
@@ -34,5 +27,5 @@ export const useHomePageContent = (
 		revalidate();
 	}, [query.page, revalidate]);
 
-	return { ...result };
+	return { ...result, data: result.data ?? prefetchedContent };
 };

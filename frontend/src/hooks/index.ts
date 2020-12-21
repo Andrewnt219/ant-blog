@@ -10,3 +10,4 @@ export { default as useMuiPagination } from "./useMuiPagination";
 export * from "./useQueryPaginationItems";
 export * from "./usePageQuery";
 export * from "./useHomePageContent";
+export * from "./useCategoryPageContent";

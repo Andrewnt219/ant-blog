@@ -10,3 +10,19 @@ export const sanityFetcher = (...args: any[]) =>
 
 export const homePageContentFetcher = (page: number, perPage?: number) =>
 	SanityDataService.getInstance().getHomePageContent(page, perPage);
+
+export const categoryPageContentFetcher = (
+	categorySlug: string,
+	page: number,
+	perPage?: number
+) =>
+	SanityDataService.getInstance().getCategoryPageContent(
+		categorySlug,
+		page,
+		perPage
+	);
+
+export const sanityDataServiceFetcher = (
+	query: string,
+	params: { [key: string]: any }
+) => SanityDataService.getInstance().get(query, params);

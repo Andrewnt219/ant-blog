@@ -18,7 +18,9 @@ export const usePageQuery = ({ onPageChange }: Props) => {
 
 	const changeCurrentPage = useCallback(
 		(event: React.ChangeEvent<unknown>, page: number) => {
-			router.push({ query: { page } }, undefined, { shallow: true });
+			router.push({ query: { ...router.query, page } }, undefined, {
+				shallow: true,
+			});
 			setCurrentPage(page);
 		},
 		[router]

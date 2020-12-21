@@ -12,7 +12,7 @@ import PinnedPostSet from "@src/components/post/PinnedPostSet";
 import MostViewedPostSet from "@src/components/post/MostViewedPostSet";
 import RecentPostSet from "@src/components/post/RecentPostSet";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
-import { HomePageContent } from "@src/model/HomePageContentModel";
+import { HomePageContent } from "@src/model/HomePageContent";
 import Loading from "@src/components/Loading";
 import { useHomePageContent } from "@src/hooks";
 

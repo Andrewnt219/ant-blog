@@ -1,6 +1,7 @@
 import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import sanityClient from "@src/lib/sanity/client";
-import { HomePageContent } from "@src/model/HomePageContentModel";
+import { CategoryPageContent } from "@src/model/CategoryPageContent";
+import { HomePageContent } from "@src/model/HomePageContent";
 import {
 	HomePostModel,
 	PostModel,
@@ -8,6 +9,7 @@ import {
 	SidePostModel,
 	CategoryModel,
 } from "@src/model/sanity";
+import { calculateRange } from "@src/utils";
 
 import {
 	HOME_POSTS_QUERY,
@@ -19,6 +21,7 @@ import {
 	POSTS_BY_CATEGORY_QUERY,
 	CATEGORY_QUERY,
 	HOME_PAGE_CONTENT_QUERY,
+	CATEGORY_PAGE_CONTENT_QUERY,
 } from "./sanity.query";
 
 export class SanityDataService {
@@ -32,6 +35,9 @@ export class SanityDataService {
 
 		return SanityDataService.instance;
 	};
+
+	get = (query: string, params: { [key: string]: any }) =>
+		SanityDataService.client.fetch(query, params);
 
 	getRelatedPosts = (categorySlug: string, postId: string) =>
 		SanityDataService.client.fetch<RelatedPostsModel[]>(RELATED_POSTS_QUERY, {
@@ -58,10 +64,22 @@ export class SanityDataService {
 	getCategories = () =>
 		SanityDataService.client.fetch<CategoryModel[]>(CATEGORIES_QUERY);
 
-	getPostsByCategory = (categorySlug: string) =>
-		SanityDataService.client.fetch<HomePostModel[]>(POSTS_BY_CATEGORY_QUERY, {
-			categorySlug,
-		});
+	getPostsByCategory = (
+		categorySlug: string,
+		page: number | undefined,
+		perPage = NUMBER_CONSTANTS.defaultPerPage
+	) => {
+		const [start, end] = calculateRange(page, perPage);
+
+		return SanityDataService.client.fetch<HomePostModel[]>(
+			POSTS_BY_CATEGORY_QUERY,
+			{
+				categorySlug,
+				start,
+				end,
+			}
+		);
+	};
 
 	getCategory = (categorySlug: string) =>
 		SanityDataService.client.fetch<CategoryModel>(CATEGORY_QUERY, {
@@ -72,21 +90,30 @@ export class SanityDataService {
 		page: number | undefined,
 		perPage = NUMBER_CONSTANTS.defaultPerPage
 	) => {
-		let recentPostStart: number;
-
-		if (!page || page < 0) {
-			recentPostStart = 0;
-		} else {
-			recentPostStart = (page - 1) * perPage; // -1 because index
-		}
-
-		const recentPostsEnd = recentPostStart + perPage;
+		const [recentPostStart, recentPostEnd] = calculateRange(page, perPage);
 
 		return SanityDataService.client.fetch<HomePageContent>(
 			HOME_PAGE_CONTENT_QUERY,
 			{
 				start: recentPostStart,
-				end: recentPostsEnd,
+				end: recentPostEnd,
+			}
+		);
+	};
+
+	getCategoryPageContent = (
+		categorySlug: string,
+		page: number | undefined,
+		perPage = NUMBER_CONSTANTS.defaultPerPage
+	) => {
+		const [start, end] = calculateRange(page, perPage);
+
+		return SanityDataService.client.fetch<CategoryPageContent>(
+			CATEGORY_PAGE_CONTENT_QUERY,
+			{
+				categorySlug,
+				start,
+				end,
 			}
 		);
 	};

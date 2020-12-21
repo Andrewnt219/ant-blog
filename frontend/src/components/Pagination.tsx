@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import tw, { css, styled } from "twin.macro";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import { UsePaginationItem } from "@src/hooks/useMuiPagination";
 type Props = {
 	items: UsePaginationItem[];
@@ -51,7 +51,7 @@ function renderControllers(
 			case "next":
 				children = (
 					<Button type="button" {...item} onClick={handleItemClick}>
-						<FaArrowRight />
+						<MdKeyboardArrowRight />
 					</Button>
 				);
 				break;
@@ -59,7 +59,7 @@ function renderControllers(
 			case "previous":
 				children = (
 					<Button type="button" {...item} onClick={handleItemClick}>
-						<FaArrowLeft />
+						<MdKeyboardArrowLeft />
 					</Button>
 				);
 				break;
@@ -79,7 +79,16 @@ function renderControllers(
 
 type ContainerProps = {};
 const Container = styled.ul<ContainerProps>`
-	${tw`flex space-x-2`}
+	${tw`flex ml-2`}
+	font-size: smaller;
+
+	& > li:last-child button {
+		${tw`border-r rounded-r`}
+	}
+
+	& > li:first-child button {
+		${tw` rounded-l`}
+	}
 `;
 
 type ButtonProps = {
@@ -87,26 +96,31 @@ type ButtonProps = {
 	isEllipsis?: boolean;
 };
 const Button = styled.button<ButtonProps>`
-	${tw`w-10 h-10 bg-borderColor rounded`}
+	${tw`w-10 h-10 bg-transparent font-500 text-accent`}
+	${tw`border-t border-b border-l border-solid border-borderColor`}
 	${tw`flex items-center justify-center`}
+	${tw`hover:bg-lprimary`}
+
+	svg {
+		font-size: larger;
+	}
+
+	:disabled {
+		${tw`opacity-25`}
+		cursor: not-allowed;
+	}
 
 	${(p) =>
 		p.isEllipsis &&
 		css`
 			${tw`bg-transparent pointer-events-none`}
 		`}
-		
+
 	${(p) =>
 		p.selected &&
 		css`
-			${tw`bg-accent text-white`}
+			${tw`bg-accent text-white pointer-events-none`}
 		`}
-
-
-		:disabled {
-		${tw`opacity-25`}
-		cursor: not-allowed;
-	}
 `;
 
 export default Pagination;

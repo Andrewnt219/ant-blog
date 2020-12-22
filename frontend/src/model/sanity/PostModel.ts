@@ -1,5 +1,5 @@
-import { CategoriesModel, categoriesModelQuery } from "./CategoriesModel";
-import { ImageModel, imageModelQuery } from "./ImageModel";
+import { CategoriesModel, categoriesModelQuery } from './CategoriesModel';
+import { ImageModel, imageModelQuery } from './ImageModel';
 
 export type PostModel = {
 	_id: string;

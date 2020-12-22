@@ -1,11 +1,9 @@
-import React, { ReactElement, useState } from 'react';
-import tw, { styled } from 'twin.macro';
+import React, { ReactElement, useState } from "react";
+import { styled } from "twin.macro";
 
-import EmbeddedSpotify from '@src/components/EmbeddedSpotify';
+import EmbeddedSpotify from "@src/components/EmbeddedSpotify";
 
-type Props = {};
-
-function Music({}: Props): ReactElement {
+function Music(): ReactElement {
 	const [spotifyLink, setSpotifyLink] = useState(
 		"https://open.spotify.com/playlist/2AwCV9pHpQHFjn2UOeClsy?si=iQVkTAM1RS6F_p5P3ZHLTg"
 	);

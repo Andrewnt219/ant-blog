@@ -1,6 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next';
 
-import { writableClient } from "@src/lib/sanity/client";
+import { writableClient } from '@src/lib/sanity/client';
+
 export default async function increaseViews(
 	req: NextApiRequest,
 	res: NextApiResponse

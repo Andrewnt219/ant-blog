@@ -1,7 +1,9 @@
-import React, { ReactElement } from "react";
-import tw, { css, styled } from "twin.macro";
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
-import { UsePaginationItem } from "@src/hooks/useMuiPagination";
+import React, { ReactElement } from 'react';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+import tw, { css, styled } from 'twin.macro';
+
+import { UsePaginationItem } from '@src/hooks/useMuiPagination';
+
 type Props = {
 	items: UsePaginationItem[];
 	onItemClicked?(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;

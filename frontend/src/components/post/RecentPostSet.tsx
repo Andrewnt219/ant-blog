@@ -1,15 +1,15 @@
-import dayjs from "dayjs";
-import React, { forwardRef, ReactElement } from "react";
-import tw, { styled, theme } from "twin.macro";
+import dayjs from 'dayjs';
+import React, { forwardRef, ReactElement } from 'react';
+import tw, { styled, theme } from 'twin.macro';
 
-import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { RecentPostModel } from "@src/model/sanity";
-import { blocksToText, calculateReadingMinutes } from "@src/utils";
+import { FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { useQueryPaginationItems } from '@src/hooks';
+import { RecentPostModel } from '@src/model/sanity';
+import { blocksToText, calculateReadingMinutes } from '@src/utils';
 
-import { Post } from "../Post";
-import Pagination from "../Pagination";
-import { useQueryPaginationItems } from "@src/hooks";
-import Broken from "../Broken";
+import Broken from '../Broken';
+import Pagination from '../Pagination';
+import { Post } from '../Post';
 
 type RecentPostSetProps = {
 	posts: RecentPostProps["data"][];

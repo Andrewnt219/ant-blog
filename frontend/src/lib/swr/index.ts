@@ -1,5 +1,5 @@
-import sanityClient from "@src/lib/sanity/client";
-import { SanityDataService } from "@src/service/sanity/sanity.data-service";
+import sanityClient from '@src/lib/sanity/client';
+import { SanityDataService } from '@src/service/sanity/sanity.data-service';
 
 /**
  * Interface for useSWR

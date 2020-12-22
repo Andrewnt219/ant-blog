@@ -1,9 +1,10 @@
-import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { sanityFetcher } from "@src/lib/swr";
-import { SidePostModel } from "@src/model/sanity";
-import { SIDE_POSTS_QUERY } from "@src/service/sanity/sanity.query";
-import { SanityClientErrorResponse } from "sanity";
-import useSWR from "swr";
+import { SanityClientErrorResponse } from 'sanity';
+import useSWR from 'swr';
+
+import { NUMBER_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { sanityFetcher } from '@src/lib/swr';
+import { SidePostModel } from '@src/model/sanity';
+import { SIDE_POSTS_QUERY } from '@src/service/sanity/sanity.query';
 
 export const useSidePosts = (initialData: SidePostModel[]) => {
 	// fetch sidePosts

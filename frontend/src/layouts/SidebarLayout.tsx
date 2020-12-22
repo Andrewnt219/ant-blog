@@ -1,6 +1,7 @@
-import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import React, { ReactElement, ReactNode } from "react";
-import tw, { styled, theme } from "twin.macro";
+import React, { ReactElement, ReactNode } from 'react';
+import tw, { styled, theme } from 'twin.macro';
+
+import { STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
 
 type Props = {
 	children: ReactNode;

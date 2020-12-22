@@ -1,7 +1,8 @@
-import Pagination from "@src/components/Pagination";
-import { useQueryPaginationItems } from "@src/hooks";
-import Axios from "axios";
-import React, { useCallback } from "react";
+import Axios from 'axios';
+import React, { useCallback } from 'react';
+
+import Pagination from '@src/components/Pagination';
+import { useQueryPaginationItems } from '@src/hooks';
 
 const AboutMe = () => {
 	const onPageChange = useCallback((newPageNumber: number | null) => {

@@ -1,11 +1,11 @@
-import dayjs from "dayjs";
-import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import dayjs from 'dayjs';
+import React, { ReactElement } from 'react';
+import tw, { styled } from 'twin.macro';
 
-import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { SidePostModel } from "@src/model/sanity/SidePostModel";
+import { FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { SidePostModel } from '@src/model/sanity/SidePostModel';
 
-import { Post } from "../Post";
+import { Post } from '../Post';
 
 type SidePostSetProps = {
 	posts: SidePostModel[];

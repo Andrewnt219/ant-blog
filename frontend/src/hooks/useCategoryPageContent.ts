@@ -1,9 +1,10 @@
-import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { categoryPageContentFetcher } from "@src/lib/swr";
-import { CategoryPageContent } from "@src/model/CategoryPageContent";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import useSWR, { ConfigInterface } from "swr";
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import useSWR, { ConfigInterface } from 'swr';
+
+import { NUMBER_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { categoryPageContentFetcher } from '@src/lib/swr';
+import { CategoryPageContent } from '@src/model/CategoryPageContent';
 
 export const useCategoryPageContent = (
 	prefetchedContent: CategoryPageContent,

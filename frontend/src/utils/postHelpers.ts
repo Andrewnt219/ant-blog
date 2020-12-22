@@ -1,6 +1,6 @@
-import { ImageUrlBuilderOptions } from "@sanity/image-url/lib/types/types";
-import { OTHER_CONSTANTS, SizeKey } from "@src/assets/constants/StyleConstants";
-import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
+import { ImageUrlBuilderOptions } from '@sanity/image-url/lib/types/types';
+import { OTHER_CONSTANTS, SizeKey } from '@src/assets/constants/StyleConstants';
+import { urlFor } from '@src/lib/sanity/utils/sanityUtils';
 
 /**
  * @description with 265 WPM, calculate reading minutes from pargraph(s)

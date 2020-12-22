@@ -1,14 +1,14 @@
-import "tailwindcss/dist/base.min.css";
+import 'tailwindcss/dist/base.min.css';
+import 'nprogress/nprogress.css';
 
-import { AppProps } from "next/app";
-import { ReactNode } from "react";
-import { GlobalStyles } from "twin.macro";
+import { AppProps } from 'next/app';
+import { Router } from 'next/router';
+import NProgress from 'nprogress';
+import { ReactNode } from 'react';
+import { GlobalStyles } from 'twin.macro';
 
-import MainLayout from "@src/layouts/MainLayout";
-import GlobalStyle from "@src/styles/GlobalStyle";
-import NProgress from "nprogress";
-import "nprogress/nprogress.css";
-import { Router } from "next/router";
+import MainLayout from '@src/layouts/MainLayout';
+import GlobalStyle from '@src/styles/GlobalStyle';
 
 NProgress.configure({ showSpinner: false });
 

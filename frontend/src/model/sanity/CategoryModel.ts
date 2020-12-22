@@ -1,4 +1,4 @@
-import { ImageModel, imageModelQuery } from "./ImageModel";
+import { ImageModel, imageModelQuery } from './ImageModel';
 
 export type CategoryModel = {
 	thumbnail: ImageModel;

@@ -1,20 +1,17 @@
-import Link from "next/link";
-import React, { ReactElement, useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import tw, { styled, theme } from "twin.macro";
+import Link from 'next/link';
+import React, { ReactElement, useEffect, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import tw, { styled, theme } from 'twin.macro';
 
-import {
-	ENDPOINTS,
-	STYLE_CONSTANTS,
-} from "@src/assets/constants/StyleConstants";
-import { RouteProps, routesData } from "@src/assets/data/routesData";
-import { useRouteMatch } from "@src/hooks";
+import { ENDPOINTS, STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { RouteProps, routesData } from '@src/assets/data/routesData';
+import { SocialMedia } from '@src/assets/enums/IconEnum';
+import { useRouteMatch } from '@src/hooks';
+import { SanityDataService } from '@src/service/sanity/sanity.data-service';
 
-import Logo from "./Logo";
-import SocialMediaIcon from "./SocialMediaIcon";
-import { SocialMedia } from "@src/assets/enums/IconEnum";
-import DropDown from "./DropDown";
-import { SanityDataService } from "@src/service/sanity/sanity.data-service";
+import DropDown from './DropDown';
+import Logo from './Logo';
+import SocialMediaIcon from './SocialMediaIcon';
 
 // TODO make mobile navigations
 const icons: SocialMedia[] = [

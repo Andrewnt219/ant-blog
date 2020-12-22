@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 /**
  * @param linkHref the href of the link

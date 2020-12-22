@@ -1,9 +1,4 @@
-import {
-	CategoryModel,
-	MostViewedPostModel,
-	PinnedPostModel,
-	RecentPostModel,
-} from "./sanity";
+import { CategoryModel, MostViewedPostModel, PinnedPostModel, RecentPostModel } from './sanity';
 
 export type HomePageContent = {
 	pinnedPosts: PinnedPostModel[];

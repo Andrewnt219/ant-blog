@@ -1,6 +1,6 @@
-import { ApiError } from "api";
-import Axios, { AxiosError } from "axios";
-import { useEffect, useState } from "react";
+import { ApiError } from 'api';
+import Axios, { AxiosError } from 'axios';
+import { useEffect, useState } from 'react';
 
 export const useIncreasePostViews = (postId: string) => {
 	const [error, setError] = useState<string | undefined>(undefined);

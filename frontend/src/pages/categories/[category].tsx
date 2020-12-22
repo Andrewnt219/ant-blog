@@ -1,24 +1,12 @@
-import {
-	NUMBER_CONSTANTS,
-	STYLE_CONSTANTS,
-} from "@src/assets/constants/StyleConstants";
-import { RecentPost } from "@src/components/post/RecentPostSet";
-import SidePostSet from "@src/components/post/SidePostSet";
-import { useCategoryPageContent, useQueryPaginationItems } from "@src/hooks";
-import SidebarLayout from "@src/layouts/SidebarLayout";
-import { SanityDataService } from "@src/service/sanity/sanity.data-service";
-import { createSrcSet, renderPosts } from "@src/utils";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import React, { ReactElement, useMemo, useRef } from "react";
-import tw, { styled, theme } from "twin.macro";
-import { lqipBackground } from "@src/utils";
-import Pagination from "@src/components/Pagination";
-import { CategoryPageContent } from "@src/model/CategoryPageContent";
-import Loading from "@src/components/Loading";
-import Broken from "@src/components/Broken";
-import CategoryPage from "@src/components/page/CategoryPage";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { useRouter } from 'next/router';
+import React, { ReactElement } from 'react';
+
+import { NUMBER_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import Broken from '@src/components/Broken';
+import CategoryPage from '@src/components/page/CategoryPage';
+import { CategoryPageContent } from '@src/model/CategoryPageContent';
+import { SanityDataService } from '@src/service/sanity/sanity.data-service';
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps> & {};
 

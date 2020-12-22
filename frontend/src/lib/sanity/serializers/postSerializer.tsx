@@ -1,14 +1,14 @@
-import getYouTubeID from "get-youtube-id";
-import tw, { styled } from "twin.macro";
+import getYouTubeID from 'get-youtube-id';
+import tw, { styled } from 'twin.macro';
 
-import { BlockRenderer } from "@src/components/BlockRenderer";
-import ExternalLink from "@src/components/ExternalLink";
-import ListRenderer from "@src/components/ListRenderer";
-import PostImage from "@src/components/post/PostImage";
-import RenderedYoutube from "@src/components/RenderedYoutube";
+import { BlockRenderer } from '@src/components/BlockRenderer';
+import ExternalLink from '@src/components/ExternalLink';
+import ListRenderer from '@src/components/ListRenderer';
+import Breaker from '@src/components/post/Breaker';
+import PostImage from '@src/components/post/PostImage';
+import RenderedYoutube from '@src/components/RenderedYoutube';
 
-import InternalLink from "../../../components/InternalLink";
-import Breaker from "@src/components/post/Breaker";
+import InternalLink from '../../../components/InternalLink';
 
 export const postSerializer = {
 	marks: {

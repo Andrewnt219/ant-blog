@@ -1,11 +1,12 @@
-import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import Category from "@src/components/Category";
-import { CategoryModel } from "@src/model/sanity/CategoryModel";
-import { SanityDataService } from "@src/service/sanity/sanity.data-service";
-import { GetStaticProps, InferGetStaticPropsType } from "next";
-import Head from "next/head";
-import React, { ReactElement } from "react";
-import tw, { styled, theme } from "twin.macro";
+import { GetStaticProps, InferGetStaticPropsType } from 'next';
+import Head from 'next/head';
+import React, { ReactElement } from 'react';
+import tw, { styled, theme } from 'twin.macro';
+
+import { STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import Category from '@src/components/Category';
+import { CategoryModel } from '@src/model/sanity/CategoryModel';
+import { SanityDataService } from '@src/service/sanity/sanity.data-service';
 
 function Index({
 	categories,

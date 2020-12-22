@@ -1,6 +1,6 @@
-import { useRouter } from "next/router";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import queryString from "query-string";
+import { useRouter } from 'next/router';
+import queryString from 'query-string';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 type Props = {
 	onPageChange?(newPage: number | null): void;

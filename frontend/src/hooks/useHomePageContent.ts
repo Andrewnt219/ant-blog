@@ -1,9 +1,10 @@
-import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { homePageContentFetcher } from "@src/lib/swr";
-import { HomePageContent } from "@src/model/HomePageContent";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import useSWR, { ConfigInterface } from "swr";
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import useSWR, { ConfigInterface } from 'swr';
+
+import { NUMBER_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { homePageContentFetcher } from '@src/lib/swr';
+import { HomePageContent } from '@src/model/HomePageContent';
 
 const defaultData: HomePageContent = {
 	pinnedPosts: [],

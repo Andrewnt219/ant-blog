@@ -1,6 +1,6 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
-import typographyStyle from "./typographyStyle";
+import typographyStyle from './typographyStyle';
 
 export default createGlobalStyle`
 :root {

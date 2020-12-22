@@ -1,9 +1,10 @@
-import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { sanityFetcher } from "@src/lib/swr";
-import { PostModel, RelatedPostsModel } from "@src/model/sanity";
-import { RELATED_POSTS_QUERY } from "@src/service/sanity/sanity.query";
-import { SanityClientErrorResponse } from "sanity";
-import useSWR from "swr";
+import { SanityClientErrorResponse } from 'sanity';
+import useSWR from 'swr';
+
+import { NUMBER_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { sanityFetcher } from '@src/lib/swr';
+import { PostModel, RelatedPostsModel } from '@src/model/sanity';
+import { RELATED_POSTS_QUERY } from '@src/service/sanity/sanity.query';
 
 type Props = {
 	post: {

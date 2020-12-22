@@ -1,11 +1,12 @@
-import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
-import { CategoryModel } from "@src/model/sanity";
-import { lqipBackground } from "@src/utils";
-import Image from "next/image";
-import Link from "next/link";
-import React, { ReactElement } from "react";
-import { FaArrowRight } from "react-icons/fa";
-import tw, { styled } from "twin.macro";
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { ReactElement } from 'react';
+import { FaArrowRight } from 'react-icons/fa';
+import tw, { styled } from 'twin.macro';
+
+import { ENDPOINTS } from '@src/assets/constants/StyleConstants';
+import { CategoryModel } from '@src/model/sanity';
+import { lqipBackground } from '@src/utils';
 
 type CategorySideBarProps = {
 	data: CategoryProps["data"][];

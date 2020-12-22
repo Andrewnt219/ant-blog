@@ -1,31 +1,18 @@
-import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import sanityClient from "@src/lib/sanity/client";
-import { CategoryPageContent } from "@src/model/CategoryPageContent";
-import { HomePageContent } from "@src/model/HomePageContent";
-import { PostPageContent } from "@src/model/PostPageContent";
+import { NUMBER_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import sanityClient from '@src/lib/sanity/client';
+import { CategoryPageContent } from '@src/model/CategoryPageContent';
+import { HomePageContent } from '@src/model/HomePageContent';
+import { PostPageContent } from '@src/model/PostPageContent';
 import {
-	HomePostModel,
-	PostModel,
-	RelatedPostsModel,
-	SidePostModel,
-	CategoryModel,
-} from "@src/model/sanity";
-import { calculateRange } from "@src/utils";
+    CategoryModel, HomePostModel, PostModel, RelatedPostsModel, SidePostModel
+} from '@src/model/sanity';
+import { calculateRange } from '@src/utils';
 
 import {
-	HOME_POSTS_QUERY,
-	POST_QUERY,
-	POSTS_SLUG_QUERY,
-	RELATED_POSTS_QUERY,
-	SIDE_POSTS_QUERY,
-	CATEGORIES_QUERY,
-	POSTS_BY_CATEGORY_QUERY,
-	CATEGORY_QUERY,
-	HOME_PAGE_CONTENT_QUERY,
-	CATEGORY_PAGE_CONTENT_QUERY,
-	SEARCHED_CATEGORIES_QUERY,
-	FEATURED_CATEGORY_QUERY,
-} from "./sanity.query";
+    CATEGORIES_QUERY, CATEGORY_PAGE_CONTENT_QUERY, CATEGORY_QUERY, FEATURED_CATEGORY_QUERY,
+    HOME_PAGE_CONTENT_QUERY, HOME_POSTS_QUERY, POST_QUERY, POSTS_BY_CATEGORY_QUERY,
+    POSTS_SLUG_QUERY, RELATED_POSTS_QUERY, SEARCHED_CATEGORIES_QUERY, SIDE_POSTS_QUERY
+} from './sanity.query';
 
 export class SanityDataService {
 	private static instance: SanityDataService;

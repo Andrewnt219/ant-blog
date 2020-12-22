@@ -1,19 +1,16 @@
-import {
-	NUMBER_CONSTANTS,
-	STYLE_CONSTANTS,
-} from "@src/assets/constants/StyleConstants";
-import { RecentPost } from "@src/components/post/RecentPostSet";
-import SidePostSet from "@src/components/post/SidePostSet";
-import { useCategoryPageContent, useQueryPaginationItems } from "@src/hooks";
-import SidebarLayout from "@src/layouts/SidebarLayout";
-import { createSrcSet, renderPosts } from "@src/utils";
-import React, { ReactElement, useMemo, useRef } from "react";
-import tw, { styled, theme } from "twin.macro";
-import { lqipBackground } from "@src/utils";
-import Pagination from "@src/components/Pagination";
-import { CategoryPageContent } from "@src/model/CategoryPageContent";
-import Loading from "@src/components/Loading";
-import Broken from "@src/components/Broken";
+import React, { ReactElement, useMemo, useRef } from 'react';
+import tw, { styled, theme } from 'twin.macro';
+
+import { NUMBER_CONSTANTS, STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import Broken from '@src/components/Broken';
+import Loading from '@src/components/Loading';
+import Pagination from '@src/components/Pagination';
+import { RecentPost } from '@src/components/post/RecentPostSet';
+import SidePostSet from '@src/components/post/SidePostSet';
+import { useCategoryPageContent, useQueryPaginationItems } from '@src/hooks';
+import SidebarLayout from '@src/layouts/SidebarLayout';
+import { CategoryPageContent } from '@src/model/CategoryPageContent';
+import { createSrcSet, lqipBackground, renderPosts } from '@src/utils';
 
 type Props = {
 	prefetchedContent: CategoryPageContent;

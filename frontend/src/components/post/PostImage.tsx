@@ -1,11 +1,11 @@
-import Image from "next/image";
-import React, { ReactElement, ReactNode } from "react";
-import tw, { styled } from "twin.macro";
+import Image from 'next/image';
+import React, { ReactElement, ReactNode } from 'react';
+import tw, { styled } from 'twin.macro';
 
-import { urlFor } from "@src/lib/sanity/utils/sanityUtils";
-import { lqipBackground } from "@src/utils/cssHelpers";
+import { urlFor } from '@src/lib/sanity/utils/sanityUtils';
+import { lqipBackground } from '@src/utils/cssHelpers';
 
-import Loading from "../Loading";
+import Loading from '../Loading';
 
 type Props = {
 	node: {

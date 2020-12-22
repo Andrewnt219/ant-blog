@@ -1,8 +1,10 @@
-import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
-import { RouteProps } from "@src/assets/data/routesData";
-import Link from "next/link";
-import { useRouteMatch } from "@src/hooks";
+import Link from 'next/link';
+import React, { ReactElement } from 'react';
+import tw, { styled } from 'twin.macro';
+
+import { RouteProps } from '@src/assets/data/routesData';
+import { useRouteMatch } from '@src/hooks';
+
 type Props = {
 	data: RouteProps[];
 	handleMouseLeave?: (

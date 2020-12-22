@@ -1,4 +1,5 @@
-import { CategoryModel, categoryModelQuery } from "./CategoryModel";
+import { CategoryModel, categoryModelQuery } from './CategoryModel';
+
 export type CategoriesModel = {
 	main: CategoryModel;
 	subs: CategoryModel[];

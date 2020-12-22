@@ -1,4 +1,4 @@
-import { PostModel, RelatedPostsModel, SidePostModel } from "./sanity";
+import { PostModel, RelatedPostsModel, SidePostModel } from './sanity';
 
 export type PostPageContent = {
 	post: PostModel;

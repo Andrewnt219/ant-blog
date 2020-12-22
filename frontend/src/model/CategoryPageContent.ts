@@ -1,4 +1,4 @@
-import { CategoryModel, RecentPostModel, SidePostModel } from "./sanity";
+import { CategoryModel, RecentPostModel, SidePostModel } from './sanity';
 
 export type CategoryPageContent = {
 	posts: RecentPostModel[];

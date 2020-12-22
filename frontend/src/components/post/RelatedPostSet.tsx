@@ -1,10 +1,10 @@
-import dayjs from "dayjs";
-import React, { ReactElement } from "react";
-import tw, { styled, theme } from "twin.macro";
+import dayjs from 'dayjs';
+import React, { ReactElement } from 'react';
+import tw, { styled, theme } from 'twin.macro';
 
-import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { Post } from "@src/components/Post";
-import { RelatedPostsModel } from "@src/model/sanity/RelatedPostModel";
+import { FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
+import { Post } from '@src/components/Post';
+import { RelatedPostsModel } from '@src/model/sanity/RelatedPostModel';
 
 type RelatedPostSetProps = {
 	posts: RelatedPostsModel[];

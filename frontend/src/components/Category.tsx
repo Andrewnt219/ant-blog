@@ -1,10 +1,11 @@
-import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
-import { CategoryModel } from "@src/model/sanity";
-import { absoluteFullSize, lqipBackground } from "@src/utils";
-import Image from "next/image";
-import Link from "next/link";
-import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { ReactElement } from 'react';
+import tw, { styled } from 'twin.macro';
+
+import { ENDPOINTS } from '@src/assets/constants/StyleConstants';
+import { CategoryModel } from '@src/model/sanity';
+import { absoluteFullSize, lqipBackground } from '@src/utils';
 
 // TODO add imageSizes
 type Props = {

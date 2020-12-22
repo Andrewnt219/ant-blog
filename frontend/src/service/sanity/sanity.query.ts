@@ -1,13 +1,7 @@
 import {
-	categoryModelQuery,
-	homePostModelQuery,
-	postModelQuery,
-	relatedPostsModelQuery,
-	sidePostModelQuery,
-	pinnedPostModelQuery,
-	mostViewedPostModelQuery,
-	recentPostModelQuery,
-} from "@src/model/sanity";
+    categoryModelQuery, homePostModelQuery, mostViewedPostModelQuery, pinnedPostModelQuery,
+    postModelQuery, recentPostModelQuery, relatedPostsModelQuery, sidePostModelQuery
+} from '@src/model/sanity';
 
 export const RELATED_POSTS_QUERY = `
 	*[

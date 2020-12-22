@@ -1,7 +1,8 @@
-import Broken from "@src/components/Broken";
-import Loading from "@src/components/Loading";
-import { ReactElement } from "react";
-import { SanityClientErrorResponse } from "sanity";
+import { ReactElement } from 'react';
+import { SanityClientErrorResponse } from 'sanity';
+
+import Broken from '@src/components/Broken';
+import Loading from '@src/components/Loading';
 
 export function renderPosts<
 	P extends any[],

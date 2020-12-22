@@ -45,7 +45,7 @@ export const PINNED_POSTS_QUERY = `
 		`;
 
 export const MOST_VIEWED_POSTS_QUERY = `
-		*[_type == "post" && !isArchived] | order(views desc) | order(_createdAt desc) ${mostViewedPostModelQuery} [0...6]
+		*[_type == "post" && !isArchived] | order(views desc, _createdAt desc) ${mostViewedPostModelQuery} [0...6]
 	`;
 
 export const RECENT_POSTS_QUERY = `

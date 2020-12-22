@@ -25,7 +25,6 @@ import {
 	CATEGORY_PAGE_CONTENT_QUERY,
 	SEARCHED_CATEGORIES_QUERY,
 	FEATURED_CATEGORY_QUERY,
-	POST_PAGE_CONTENT_QUERY,
 } from "./sanity.query";
 
 export class SanityDataService {

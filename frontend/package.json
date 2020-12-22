@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node --inspect ./node_modules/next/dist/bin/next",
-    "build": "cross-env ANALYZE=\"true\" next build",
+    "dev": "next dev",
+    "dev:debug": "node --inspect ./node_modules/next/dist/bin/next",
+    "build": "next build",
+    "build:analyze": "cross-env ANALYZE=\"true\" next build",
     "start": "next start",
     "sanity": "cd .\\studio\\ && yarn start",
     "test": "jest --watch"

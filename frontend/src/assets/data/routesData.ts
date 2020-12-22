@@ -1,5 +1,4 @@
 import { LinkProps } from "next/link";
-import { ENDPOINTS } from "../constants/StyleConstants";
 
 export type RouteProps = Pick<LinkProps, "href" | "as"> & {
 	text: string;

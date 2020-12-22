@@ -21,6 +21,7 @@ const Index = ({
 	prefetchedContent,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 	const { data: content, error } = useHomePageContent(prefetchedContent);
+
 	if (error) {
 		return <Broken height="20rem" errorText="Something went wrong" />;
 	}

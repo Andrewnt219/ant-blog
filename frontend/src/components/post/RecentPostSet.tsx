@@ -9,6 +9,7 @@ import { blocksToText, calculateReadingMinutes } from "@src/utils";
 import { Post } from "../Post";
 import Pagination from "../Pagination";
 import { useQueryPaginationItems } from "@src/hooks";
+import Broken from "../Broken";
 
 type RecentPostSetProps = {
 	posts: RecentPostProps["data"][];
@@ -40,6 +41,9 @@ function RecentPostSet({
 
 	return (
 		<Container>
+			{posts.length === 0 && (
+				<Broken height="10rem" errorText="Wow, such empty, much space" />
+			)}
 			<RecentPostSetContainer>
 				{posts.map((post, index) => (
 					<li

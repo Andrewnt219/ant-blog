@@ -2,6 +2,7 @@ import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
 import sanityClient from "@src/lib/sanity/client";
 import { CategoryPageContent } from "@src/model/CategoryPageContent";
 import { HomePageContent } from "@src/model/HomePageContent";
+import { PostPageContent } from "@src/model/PostPageContent";
 import {
 	HomePostModel,
 	PostModel,
@@ -24,6 +25,7 @@ import {
 	CATEGORY_PAGE_CONTENT_QUERY,
 	SEARCHED_CATEGORIES_QUERY,
 	FEATURED_CATEGORY_QUERY,
+	POST_PAGE_CONTENT_QUERY,
 } from "./sanity.query";
 
 export class SanityDataService {
@@ -128,5 +130,18 @@ export class SanityDataService {
 				end,
 			}
 		);
+	};
+
+	getPostPageContent = async (slug: string): Promise<PostPageContent> => {
+		const post = await this.getPost(slug);
+
+		const relatedPosts = await this.getRelatedPosts(
+			post.categories.main.slug,
+			post._id
+		);
+
+		const sidePosts = await this.getSidePosts();
+
+		return { post, relatedPosts, sidePosts };
 	};
 }

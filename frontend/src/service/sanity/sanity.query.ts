@@ -97,10 +97,10 @@ count(
 )
 `;
 export const CATEGORY_PAGE_CONTENT_QUERY = `
-{
-	"posts": ${POSTS_BY_CATEGORY_QUERY},
-	"sidePosts": ${SIDE_POSTS_QUERY},
-	"currentCategory": ${CATEGORY_QUERY},
-	"postsCount": ${TOTAL_CATEGORY_POSTS_QUERY}
-}
-	`;
+	{
+		"posts": ${POSTS_BY_CATEGORY_QUERY},
+		"sidePosts": ${SIDE_POSTS_QUERY},
+		"currentCategory": ${CATEGORY_QUERY},
+		"postsCount": ${TOTAL_CATEGORY_POSTS_QUERY}
+	}
+`;

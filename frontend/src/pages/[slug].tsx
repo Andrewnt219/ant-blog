@@ -31,28 +31,27 @@ import {
 import SidebarLayout from "@src/layouts/SidebarLayout";
 import { useIncreasePostViews } from "@src/hooks/useIncreasePostViews";
 import { useRouter } from "next/router";
+import { PostPageContent } from "@src/model/PostPageContent";
 
 // TODO add view count and react count to firebase
 // TODO: router.fallback
 const Post = ({
-	post,
-	sidePosts: initialSidePosts,
-	relatedPosts: initialRelatedPosts,
+	prefetchedContent,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	/* --------------------------------- STATES --------------------------------- */
 	// Post's comments
-	const comments = usePostComments(post._id);
+	const comments = usePostComments(prefetchedContent.post._id);
 
 	// Full location to current page
 	const currentLocation = useCurrentLocation();
 
 	const { data: sidePosts, error: sidePostsError } = useSidePosts(
-		initialSidePosts
+		prefetchedContent.sidePosts
 	);
 
 	const { data: relatedPosts, error: relatedPostsError } = useRelatedPosts({
-		post,
-		initialRelatedPosts,
+		post: prefetchedContent.post,
+		initialRelatedPosts: prefetchedContent.relatedPosts,
 	});
 
 	/* --------------------------------- RENDER --------------------------------- */
@@ -77,21 +76,25 @@ const Post = ({
 	);
 
 	const heroSrcSet = useMemo(
-		() => createSrcSet(post.thumbnail.url, { format: "webp", quality: 50 }),
-		[post.thumbnail.url]
+		() =>
+			createSrcSet(prefetchedContent.post.thumbnail.url, {
+				format: "webp",
+				quality: 50,
+			}),
+		[prefetchedContent.post.thumbnail.url]
 	);
 
-	useIncreasePostViews(post._id);
+	useIncreasePostViews(prefetchedContent.post._id);
 
 	return (
 		<>
 			<Head>
-				<title>{post.title}</title>
+				<title>{prefetchedContent.post.title}</title>
 
 				<link
 					rel="preload"
 					as="image"
-					href={post.thumbnail.url}
+					href={prefetchedContent.post.thumbnail.url}
 					// @ts-ignore
 					imagesrcset={heroSrcSet}
 				/>
@@ -99,22 +102,24 @@ const Post = ({
 
 			<PostHeader
 				data={{
-					...post,
-					category: post.categories.main,
-					readMinute: calculateReadingMinutes(blocksToText(post.body)),
+					...prefetchedContent.post,
+					category: prefetchedContent.post.categories.main,
+					readMinute: calculateReadingMinutes(
+						blocksToText(prefetchedContent.post.body)
+					),
 				}}
 				srcset={heroSrcSet}
 			/>
 			<SidebarLayout>
 				<ShareSideBar sharingUrl={currentLocation?.href ?? ""} />
-				<PostBody data={post} />
+				<PostBody data={prefetchedContent.post} />
 				{renderedSidePosts}
 			</SidebarLayout>
 
 			<SidebarLayout>
-				<PostFooter data={post} />
+				<PostFooter data={prefetchedContent.post} />
 
-				<CommentSet _postId={post._id} comments={comments} />
+				<CommentSet _postId={prefetchedContent.post._id} comments={comments} />
 
 				{relatedPosts && relatedPosts.length > 0 && (
 					<>
@@ -140,30 +145,22 @@ export default Post;
 /*                                 SERVER-SIDE                                */
 /* -------------------------------------------------------------------------- */
 type StaticProps = {
-	post: PostModel;
-	sidePosts: SidePostModel[];
-	relatedPosts: RelatedPostsModel[];
+	prefetchedContent: PostPageContent;
 };
 
 type Params = {
 	slug: string;
 };
 
-// TODO Refactor to one request
 export const getStaticProps: GetStaticProps<StaticProps, Params> = async ({
 	params,
 }) => {
-	const post = await SanityDataService.getInstance().getPost(params!.slug);
-
-	const relatedPosts = await SanityDataService.getInstance().getRelatedPosts(
-		post.categories.main.slug,
-		post._id
+	const prefetchedContent = await SanityDataService.getInstance().getPostPageContent(
+		params!.slug
 	);
 
-	const sidePosts = await SanityDataService.getInstance().getSidePosts();
-
 	return {
-		props: { post, sidePosts, relatedPosts },
+		props: { prefetchedContent },
 		revalidate: 1,
 	};
 };

@@ -125,11 +125,11 @@ type ReadMoreButtonProps = {};
 const ReadMoreButton = styled.button<ReadMoreButtonProps>`
 	${tw`capitalize border-b-2 border-solid border-accent`}
 
-	transform: filter 300ms ease;
+	transition: color 200ms ease, border-color 200ms ease;
 
 	:hover,
 	:focus {
-		filter: grayscale(1);
+		${tw`text-accent border-transparent`}
 	}
 `;
 

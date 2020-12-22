@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { ReactElement } from "react";
 import tw, { styled } from "twin.macro";
 
+// TODO add imageSizes
 type Props = {
 	data: CategoryModel;
 };

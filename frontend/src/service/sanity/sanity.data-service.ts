@@ -131,8 +131,14 @@ export class SanityDataService {
 		);
 	};
 
-	getPostPageContent = async (slug: string): Promise<PostPageContent> => {
+	getPostPageContent = async (
+		slug: string
+	): Promise<PostPageContent | null> => {
 		const post = await this.getPost(slug);
+
+		if (!post) {
+			return null;
+		}
 
 		const relatedPosts = await this.getRelatedPosts(
 			post.categories.main.slug,

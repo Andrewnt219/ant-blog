@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import Loading from "@src/components/Loading";
 import PostPage from "@src/components/page/PostPage";
 import NProgress from "nprogress";
+import Broken from "@src/components/Broken";
 
 // TODO add view count and react count to firebase
 // TODO: router.fallback
@@ -22,7 +23,11 @@ const Post = ({
 	}, [isFallback]);
 
 	if (isFallback) {
-		return <Loading height="25rem" />;
+		return <Loading height="20rem" loadingText="I smelt something" />;
+	}
+
+	if (!prefetchedContent) {
+		return <Broken height="20rem" errorText="Post not found or is deleted" />;
 	}
 
 	return <PostPage content={prefetchedContent} />;
@@ -34,7 +39,7 @@ export default Post;
 /*                                 SERVER-SIDE                                */
 /* -------------------------------------------------------------------------- */
 type StaticProps = {
-	prefetchedContent: PostPageContent;
+	prefetchedContent: PostPageContent | null;
 };
 
 type Params = {

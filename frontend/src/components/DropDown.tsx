@@ -27,7 +27,7 @@ type MenuItemProps = {
 };
 
 function MenuItem({ data }: MenuItemProps): ReactElement {
-	const isActive = useRouteMatch(data.href.toString());
+	const isActive = useRouteMatch(data.href.toString(), data.exact);
 
 	return (
 		<Link href={data.href} passHref>

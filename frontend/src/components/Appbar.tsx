@@ -16,7 +16,6 @@ import { SocialMedia } from "@src/assets/enums/IconEnum";
 import DropDown from "./DropDown";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 
-/* TODO add router loading. NProgress maybe? */
 // TODO make mobile navigations
 const icons: SocialMedia[] = [
 	SocialMedia.FACEBOOK,
@@ -43,11 +42,20 @@ function Appbar(): ReactElement {
 						href: ENDPOINTS.category + "/" + category.slug,
 						text: category.title,
 					});
-
-					setDropDownData(routes);
 				});
+
+				routes.push({
+					href: ENDPOINTS.category,
+					text: "All",
+					exact: true,
+				});
+
+				setDropDownData(routes);
 			})
-			.catch((err) => console.error(err));
+			.catch((err) => {
+				console.error(err);
+				setDropDownData([]);
+			});
 	}, []);
 
 	return (

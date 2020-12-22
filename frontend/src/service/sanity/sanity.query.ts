@@ -57,7 +57,7 @@ export const TOTAL_POSTS_QUERY = `
 `;
 
 export const CATEGORIES_QUERY = `
-			*[_type == "category"] ${categoryModelQuery}
+			*[_type == "category"] | order(title asc) ${categoryModelQuery}
 		`;
 
 export const SEARCHED_CATEGORIES_QUERY = `
@@ -65,7 +65,7 @@ export const SEARCHED_CATEGORIES_QUERY = `
 `;
 
 export const FEATURED_CATEGORY_QUERY = `
-	*[_type == "category" && isFeatured ] | order(_title asc) ${categoryModelQuery}
+	*[_type == "category" && isFeatured ] | order(title asc) ${categoryModelQuery}
 `;
 
 export const HOME_PAGE_CONTENT_QUERY = `

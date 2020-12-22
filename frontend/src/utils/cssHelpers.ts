@@ -1,6 +1,6 @@
-import { css, theme } from 'twin.macro';
+import { css, theme } from "twin.macro";
 
-import { SizeKey } from '@src/assets/constants/StyleConstants';
+import { SizeKey } from "@src/assets/constants/StyleConstants";
 
 export const lqipBackground = (lqip: string) => css`
 	background-image: url(${lqip});
@@ -67,4 +67,12 @@ export const responsiveBackground = (
 		background-image: ${additional ? additional + ", " : null}
 			url("${sources.get(7680)}");
 	}
+`;
+
+export const absoluteFullSize = css`
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 `;

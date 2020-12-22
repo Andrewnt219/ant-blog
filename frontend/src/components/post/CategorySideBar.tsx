@@ -4,6 +4,7 @@ import { lqipBackground } from "@src/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React, { ReactElement } from "react";
+import { FaArrowRight } from "react-icons/fa";
 import tw, { styled } from "twin.macro";
 
 type CategorySideBarProps = {
@@ -21,6 +22,13 @@ function CategorySideBar({ data }: CategorySideBarProps): ReactElement {
 						<Category data={category} />
 					</li>
 				))}
+				<li>
+					<Link href={ENDPOINTS.category} passHref>
+						<SeeAllLink>
+							All categories <FaArrowRight />
+						</SeeAllLink>
+					</Link>
+				</li>
 			</CategorySetContainer>
 		</Container>
 	);
@@ -38,6 +46,28 @@ const Title = styled.h5<Title>`
 type CategorySetContainerProps = {};
 const CategorySetContainer = styled.ul<CategorySetContainerProps>`
 	${tw`space-y-2`}
+`;
+
+type SeeAllLinkProps = {};
+const SeeAllLink = styled.a<SeeAllLinkProps>`
+	${tw`flex items-center justify-center mt-5`}
+	${tw`underline font-500 text-right`}
+
+	text-decoration-color: transparent;
+	transition: text-decoration-color 200ms ease;
+
+	svg {
+		${tw`ml-1`}
+		transition: transform 200ms ease;
+	}
+
+	:hover,
+	:focus {
+		text-decoration-color: currentColor;
+		svg {
+			transform: translateX(0.3rem);
+		}
+	}
 `;
 
 /* -------------------------------------------------------------------------- */

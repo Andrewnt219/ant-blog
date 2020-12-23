@@ -1,15 +1,16 @@
-import dayjs from 'dayjs';
-import React, { forwardRef, ReactElement } from 'react';
-import tw, { styled, theme } from 'twin.macro';
+import dayjs from "dayjs";
+import React, { forwardRef, ReactElement } from "react";
+import tw, { styled, theme } from "twin.macro";
 
-import { FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import { useQueryPaginationItems } from '@src/hooks';
-import { RecentPostModel } from '@src/model/sanity';
-import { blocksToText, calculateReadingMinutes } from '@src/utils';
+import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import { useQueryPaginationItems } from "@src/hooks";
+import { RecentPostModel } from "@src/model/sanity";
+import { blocksToText, calculateReadingMinutes } from "@src/utils";
 
-import Broken from '../Broken';
-import Pagination from '../Pagination';
-import { Post } from '../Post';
+import Broken from "../Broken";
+import Pagination from "../Pagination";
+import { Post } from "../Post";
+import Link from "next/link";
 
 type RecentPostSetProps = {
 	posts: RecentPostProps["data"][];
@@ -96,7 +97,9 @@ export const RecentPost = forwardRef<Ref, RecentPostProps>(
 					{isMain && (
 						<>
 							<Snippet>{snippet}</Snippet>
-							<ReadMoreButton>Read more</ReadMoreButton>
+							<Link href={"/" + slug} passHref>
+								<ReadMoreButton>Read more</ReadMoreButton>
+							</Link>
 						</>
 					)}
 				</InfoContainer>
@@ -126,8 +129,8 @@ const RecentPostContainer = styled.article<RecentPostContainerProps>``;
 const { Category, Title, Thumbnail, SubInfo, Snippet, InfoContainer } = Post;
 
 type ReadMoreButtonProps = {};
-const ReadMoreButton = styled.button<ReadMoreButtonProps>`
-	${tw`capitalize border-b-2 border-solid border-accent`}
+const ReadMoreButton = styled.a<ReadMoreButtonProps>`
+	${tw`capitalize border-b-2 border-solid border-accent inline-block`}
 
 	transition: color 200ms ease, border-color 200ms ease;
 

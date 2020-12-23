@@ -1,13 +1,17 @@
-import dayjs from 'dayjs';
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { ReactElement } from 'react';
-import tw, { css, styled, theme } from 'twin.macro';
+import dayjs from "dayjs";
+import Image from "next/image";
+import Link from "next/link";
+import React, { ReactElement } from "react";
+import tw, { css, styled, theme } from "twin.macro";
 
-import { ENDPOINTS, FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import { PinnedPostModel } from '@src/model/sanity';
-import { trimLastWord } from '@src/utils';
-import { lqipBackground } from '@src/utils/cssHelpers';
+import {
+	ENDPOINTS,
+	FORMAT_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
+import { PinnedPostModel } from "@src/model/sanity";
+import { trimLastWord } from "@src/utils";
+import { lqipBackground } from "@src/utils/cssHelpers";
+import { motion } from "framer-motion";
 
 type PinnedPostSetProps = {
 	posts: PinnedPostProps["data"][];
@@ -61,7 +65,7 @@ function PinnedPost({
 	const linkToPost = `/${slug}`;
 
 	return (
-		<Container>
+		<Container layoutId={title} transition={{ type: "spring" }}>
 			<Info>
 				<Link href={`${ENDPOINTS.category}/${category.slug}`} passHref>
 					<Category>{category.title}</Category>
@@ -125,7 +129,7 @@ const StyledPinnedPostSet = styled.ul<StyledPinnedPostSetProps>`
 `;
 
 type ContainerProps = {};
-const Container = styled.article<ContainerProps>`
+const Container = styled(motion.article)<ContainerProps>`
 	${tw`relative text-primary text-sm font-500 flex items-end p-5`}
 	width: 100%;
 	height: 100%;
@@ -209,7 +213,7 @@ const Date = styled.time<DateProps>``;
 type ThumbnailProps = {
 	lqip: string;
 };
-const Thumbnail = styled.a<ThumbnailProps>`
+const Thumbnail = styled(motion.a)<ThumbnailProps>`
 	position: absolute;
 	top: 0;
 	left: 0;

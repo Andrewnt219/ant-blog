@@ -1,14 +1,18 @@
-import dayjs from 'dayjs';
-import React, { ReactElement } from 'react';
-import tw, { styled, theme } from 'twin.macro';
+import dayjs from "dayjs";
+import React, { ReactElement } from "react";
+import tw, { styled, theme } from "twin.macro";
 
-import { FORMAT_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import { SocialMedia } from '@src/assets/enums/IconEnum';
-import { MostViewedPostModel } from '@src/model/sanity';
-import { blocksToText, calculateReadingMinutes, formatQuantityWithUnit } from '@src/utils';
+import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import { SocialMedia } from "@src/assets/enums/IconEnum";
+import { MostViewedPostModel } from "@src/model/sanity";
+import {
+	blocksToText,
+	calculateReadingMinutes,
+	formatQuantityWithUnit,
+} from "@src/utils";
 
-import { Post } from '../Post';
-import SocialMediaIcon from '../SocialMediaIcon';
+import { Post } from "../Post";
+import SocialMediaIcon from "../SocialMediaIcon";
 
 type MostViewedPostSetProps = {
 	posts: MostViewedPostProps["data"][];

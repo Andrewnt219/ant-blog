@@ -1,14 +1,15 @@
-import 'tailwindcss/dist/base.min.css';
-import 'nprogress/nprogress.css';
+import "tailwindcss/dist/base.min.css";
+import "nprogress/nprogress.css";
 
-import { AppProps } from 'next/app';
-import { Router } from 'next/router';
-import NProgress from 'nprogress';
-import { ReactNode } from 'react';
-import { GlobalStyles } from 'twin.macro';
+import { AppProps } from "next/app";
+import { Router } from "next/router";
+import NProgress from "nprogress";
+import { ReactNode } from "react";
+import { GlobalStyles } from "twin.macro";
 
-import MainLayout from '@src/layouts/MainLayout';
-import GlobalStyle from '@src/styles/GlobalStyle';
+import MainLayout from "@src/layouts/MainLayout";
+import GlobalStyle from "@src/styles/GlobalStyle";
+import { AnimateSharedLayout } from "framer-motion";
 
 NProgress.configure({ showSpinner: false });
 
@@ -28,7 +29,9 @@ function MyApp({ Component, pageProps }: AppProps): ReactNode {
 			<GlobalStyles />
 			<GlobalStyle />
 			<MainLayout>
-				<Component {...pageProps} />
+				<AnimateSharedLayout>
+					<Component {...pageProps} />
+				</AnimateSharedLayout>
 			</MainLayout>
 		</>
 	);

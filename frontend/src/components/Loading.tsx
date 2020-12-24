@@ -1,21 +1,22 @@
-import React from 'react';
-import Lottie from 'react-lottie';
-import tw, { styled } from 'twin.macro';
+import React from "react";
+import Lottie from "react-lottie";
+import tw, { styled } from "twin.macro";
 
-import animationData from '@src/assets/lottie/Dog smell.json';
-import { useLoadingDots } from '@src/hooks';
+import animationData from "@src/assets/lottie/Dog smell.json";
+import { useLoadingDots } from "@src/hooks";
 
 type Props = {
 	width?: string;
-	height: string;
+	height?: string;
 	loadingText?: string;
+	className?: string;
 };
 
-const Loading = ({ width, height, loadingText }: Props) => {
+const Loading = ({ width, height, loadingText, className }: Props) => {
 	const dots = useLoadingDots({ intervalInMs: 500 });
 
 	return (
-		<Container>
+		<Container className={className}>
 			<Lottie
 				width={width}
 				height={height}

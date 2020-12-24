@@ -1,6 +1,6 @@
 export const STYLE_CONSTANTS = {
-	mobileBodyPadding: "5vw",
-	bodyPadding: "10vw",
+	mobileBodyPadding: "5%",
+	bodyPadding: "10%",
 	recentPostSizes: {
 		main:
 			"(min-width: 1280px) 51.98vw, (min-width: 640px) 80vw, calc(87.19vw + 17px)",

@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
+import tw, { styled, theme } from "twin.macro";
 import {
 	ENDPOINTS,
 	STYLE_CONSTANTS,
@@ -68,6 +68,8 @@ function Footer({ featuredCategories }: Props): ReactElement {
 			</FooterLinksContainer>
 
 			<CopyRightContainer>
+				<CustomLoading width="2em" />
+
 				<CopyRight>
 					&copy; 2020 Powered by{" "}
 					<Emphasis
@@ -79,7 +81,7 @@ function Footer({ featuredCategories }: Props): ReactElement {
 						Andrew
 					</Emphasis>
 				</CopyRight>
-				<Loading height="5em" />
+
 				<PagesContainer>
 					{routesData.map((route) => (
 						<li key={route.text}>
@@ -98,6 +100,7 @@ function Footer({ featuredCategories }: Props): ReactElement {
 		</Container>
 	);
 }
+const fullCssBreakpoint = theme`screens.smTablet`;
 
 const hoveredLink = css`
 	text-decoration: underline transparent;
@@ -121,17 +124,31 @@ const Container = styled.footer<ContainerProps>`
 	height: ${STYLE_CONSTANTS.footerHeight};
 `;
 
+const CustomLoading = styled(Loading)`
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	${tw`z-10`}
+`;
+
 // TODO one column on mobile
 type FooterLinksContainerProps = {};
 const FooterLinksContainer = styled.div<FooterLinksContainerProps>`
 	${tw` flex items-start font-300`}
 	color: #747e91;
 	background-color: #1c2433;
-	padding: 3% 10%;
+	padding: 5% ${STYLE_CONSTANTS.mobileBodyPadding};
 
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
 	gap: 3rem;
+
+	@media screen and (min-width: ${fullCssBreakpoint}) {
+		padding: 3% ${STYLE_CONSTANTS.bodyPadding};
+	}
+
+	@media screen and (min-width: ${fullCssBreakpoint}) {
+		grid-template-columns: repeat(3, 1fr);
+	}
 `;
 
 type HeaderProps = {};
@@ -185,8 +202,9 @@ const CategoryContainer = styled.div<CategoryContainerProps>``;
 type CategorySetProps = {};
 const CategorySet = styled.ul<CategorySetProps>`
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 0.5rem;
+	grid-template-columns: auto auto;
+	justify-content: flex-start;
+	gap: 0.5rem 2rem;
 `;
 
 type CategoryProps = {};
@@ -225,9 +243,14 @@ const StyledSocialMedia = styled.li<StyledSocialMediaProps>`
 type CopyRightContainerProps = {};
 const CopyRightContainer = styled.div<CopyRightContainerProps>`
 	${tw`text-white flex items-center justify-between font-500`}
+	${tw`relative`}
 	background-color: #212a39;
 	color: #98a5b9;
-	padding: 1% 10%;
+	padding: 5% ${STYLE_CONSTANTS.mobileBodyPadding};
+
+	@media screen and (min-width: ${fullCssBreakpoint}) {
+		padding: 3% ${STYLE_CONSTANTS.bodyPadding};
+	}
 `;
 
 type CopyRightProps = {};
@@ -235,7 +258,12 @@ const CopyRight = styled.p<CopyRightProps>``;
 
 type PagesContainerProps = {};
 const PagesContainer = styled.ul<PagesContainerProps>`
-	${tw`space-x-5 flex`}
+	display: none;
+
+	@media screen and (min-width: ${theme`screens.lgTablet`}) {
+		display: flex;
+		${tw`space-x-5 `}
+	}
 `;
 
 type PageLinkProps = {};

@@ -1,18 +1,21 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import Head from 'next/head';
-import React from 'react';
-import tw, { styled, theme } from 'twin.macro';
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Head from "next/head";
+import React from "react";
+import tw, { styled, theme } from "twin.macro";
 
-import { NUMBER_CONSTANTS, STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import Broken from '@src/components/Broken';
-import Loading from '@src/components/Loading';
-import CategorySideBar from '@src/components/post/CategorySideBar';
-import MostViewedPostSet from '@src/components/post/MostViewedPostSet';
-import PinnedPostSet from '@src/components/post/PinnedPostSet';
-import RecentPostSet from '@src/components/post/RecentPostSet';
-import { useHomePageContent } from '@src/hooks';
-import { HomePageContent } from '@src/model/HomePageContent';
-import { SanityDataService } from '@src/service/sanity/sanity.data-service';
+import {
+	NUMBER_CONSTANTS,
+	STYLE_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
+import Broken from "@src/components/Broken";
+import Loading from "@src/components/Loading";
+import CategorySideBar from "@src/components/post/CategorySideBar";
+import MostViewedPostSet from "@src/components/post/MostViewedPostSet";
+import PinnedPostSet from "@src/components/post/PinnedPostSet";
+import RecentPostSet from "@src/components/post/RecentPostSet";
+import { useHomePageContent } from "@src/hooks";
+import { HomePageContent } from "@src/model/HomePageContent";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 
 const Index = ({
 	prefetchedContent,

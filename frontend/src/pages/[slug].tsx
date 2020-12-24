@@ -1,16 +1,15 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
-import { useRouter } from 'next/router';
-import NProgress from 'nprogress';
-import React, { useEffect } from 'react';
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
+import NProgress from "nprogress";
+import React, { useEffect } from "react";
 
-import Broken from '@src/components/Broken';
-import Loading from '@src/components/Loading';
-import PostPage from '@src/components/page/PostPage';
-import { PostPageContent } from '@src/model/PostPageContent';
-import { SanityDataService } from '@src/service/sanity/sanity.data-service';
+import Broken from "@src/components/Broken";
+import Loading from "@src/components/Loading";
+import PostPage from "@src/components/page/PostPage";
+import { PostPageContent } from "@src/model/PostPageContent";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 
 // TODO add view count and react count to firebase
-// TODO: router.fallback
 const Post = ({
 	prefetchedContent,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {

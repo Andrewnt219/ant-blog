@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import tw, { styled, theme } from "twin.macro";
 
@@ -10,7 +10,6 @@ import {
 import { RouteProps, routesData } from "@src/assets/data/routesData";
 import { SocialMedia } from "@src/assets/enums/IconEnum";
 import { useRouteMatch } from "@src/hooks";
-import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 
 import DropDown from "./DropDown";
 import Logo from "./Logo";

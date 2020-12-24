@@ -1,6 +1,9 @@
 import React, { ReactElement } from "react";
 import tw, { styled } from "twin.macro";
-import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import {
+	ENDPOINTS,
+	STYLE_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
 import Loading from "./Loading";
 import { RouteProps, routesData } from "@src/assets/data/routesData";
 import Link from "next/link";
@@ -65,7 +68,17 @@ function Footer({ featuredCategories }: Props): ReactElement {
 			</FooterLinksContainer>
 
 			<CopyRightContainer>
-				<CopyRight>&copy; 2020 Powered by Andrew</CopyRight>
+				<CopyRight>
+					&copy; 2020 Powered by{" "}
+					<Emphasis
+						variants="white"
+						href="http://andrewnt.dev"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Andrew
+					</Emphasis>
+				</CopyRight>
 				<Loading height="5em" />
 				<PagesContainer>
 					{routesData.map((route) => (
@@ -75,6 +88,11 @@ function Footer({ featuredCategories }: Props): ReactElement {
 							</Link>
 						</li>
 					))}
+					<li>
+						<Link href={ENDPOINTS.category} passHref>
+							<PageLink>Category</PageLink>
+						</Link>
+					</li>
 				</PagesContainer>
 			</CopyRightContainer>
 		</Container>
@@ -103,6 +121,7 @@ const Container = styled.footer<ContainerProps>`
 	height: ${STYLE_CONSTANTS.footerHeight};
 `;
 
+// TODO one column on mobile
 type FooterLinksContainerProps = {};
 const FooterLinksContainer = styled.div<FooterLinksContainerProps>`
 	${tw` flex items-start font-300`}

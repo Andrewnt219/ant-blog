@@ -56,6 +56,7 @@ textarea {
     transition: all 1000ms ease;
     position: relative;
     padding-bottom: calc( ${STYLE_CONSTANTS.footerHeight} + 5rem);
+    min-height: 100%;
 }
 
 .no-scroll {

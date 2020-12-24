@@ -9,7 +9,6 @@ import { GlobalStyles } from "twin.macro";
 
 import MainLayout from "@src/layouts/MainLayout";
 import GlobalStyle from "@src/styles/GlobalStyle";
-import { AnimateSharedLayout } from "framer-motion";
 
 NProgress.configure({ showSpinner: false });
 
@@ -29,9 +28,7 @@ function MyApp({ Component, pageProps }: AppProps): ReactNode {
 			<GlobalStyles />
 			<GlobalStyle />
 			<MainLayout>
-				<AnimateSharedLayout>
-					<Component {...pageProps} />
-				</AnimateSharedLayout>
+				<Component {...pageProps} />
 			</MainLayout>
 		</>
 	);

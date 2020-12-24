@@ -11,7 +11,6 @@ import { ImageModel } from "@src/model/sanity";
 import { CategoryModel } from "@src/model/sanity/CategoryModel";
 import { preventOrphanText } from "@src/utils";
 import { lqipBackground } from "@src/utils/cssHelpers";
-import { motion } from "framer-motion";
 
 type Props = {
 	data: {
@@ -32,7 +31,7 @@ function PostHeader({ data, srcset }: Props): ReactElement {
 	const { category, title, author, publishedAt, readMinute, thumbnail } = data;
 
 	return (
-		<Container layoutId={title} transition={{ type: "spring" }}>
+		<Container>
 			<Thumbnail
 				src={thumbnail.url}
 				srcSet={srcset}
@@ -67,7 +66,7 @@ function PostHeader({ data, srcset }: Props): ReactElement {
 }
 
 type ContainerProps = {};
-const Container = styled(motion.header)<ContainerProps>`
+const Container = styled.header<ContainerProps>`
 	${tw`relative`}
 	padding-bottom: max(37.5%, 25rem);
 	background-size: cover;

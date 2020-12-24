@@ -11,7 +11,6 @@ import {
 import { PinnedPostModel } from "@src/model/sanity";
 import { trimLastWord } from "@src/utils";
 import { lqipBackground } from "@src/utils/cssHelpers";
-import { motion } from "framer-motion";
 
 type PinnedPostSetProps = {
 	posts: PinnedPostProps["data"][];
@@ -65,7 +64,7 @@ function PinnedPost({
 	const linkToPost = `/${slug}`;
 
 	return (
-		<Container layoutId={title} transition={{ type: "spring" }}>
+		<Container>
 			<Info>
 				<Link href={`${ENDPOINTS.category}/${category.slug}`} passHref>
 					<Category>{category.title}</Category>
@@ -129,7 +128,7 @@ const StyledPinnedPostSet = styled.ul<StyledPinnedPostSetProps>`
 `;
 
 type ContainerProps = {};
-const Container = styled(motion.article)<ContainerProps>`
+const Container = styled.article<ContainerProps>`
 	${tw`relative text-primary text-sm font-500 flex items-end p-5`}
 	width: 100%;
 	height: 100%;
@@ -213,7 +212,7 @@ const Date = styled.time<DateProps>``;
 type ThumbnailProps = {
 	lqip: string;
 };
-const Thumbnail = styled(motion.a)<ThumbnailProps>`
+const Thumbnail = styled.a<ThumbnailProps>`
 	position: absolute;
 	top: 0;
 	left: 0;

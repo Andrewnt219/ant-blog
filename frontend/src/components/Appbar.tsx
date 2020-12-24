@@ -1,17 +1,20 @@
-import Link from 'next/link';
-import React, { ReactElement, useEffect, useState } from 'react';
-import { FaSearch } from 'react-icons/fa';
-import tw, { styled, theme } from 'twin.macro';
+import Link from "next/link";
+import React, { ReactElement, useEffect, useState } from "react";
+import { FaSearch } from "react-icons/fa";
+import tw, { styled, theme } from "twin.macro";
 
-import { ENDPOINTS, STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import { RouteProps, routesData } from '@src/assets/data/routesData';
-import { SocialMedia } from '@src/assets/enums/IconEnum';
-import { useRouteMatch } from '@src/hooks';
-import { SanityDataService } from '@src/service/sanity/sanity.data-service';
+import {
+	ENDPOINTS,
+	STYLE_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
+import { RouteProps, routesData } from "@src/assets/data/routesData";
+import { SocialMedia } from "@src/assets/enums/IconEnum";
+import { useRouteMatch } from "@src/hooks";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 
-import DropDown from './DropDown';
-import Logo from './Logo';
-import SocialMediaIcon from './SocialMediaIcon';
+import DropDown from "./DropDown";
+import Logo from "./Logo";
+import SocialMediaIcon from "./SocialMediaIcon";
 
 // TODO make mobile navigations
 const icons: SocialMedia[] = [
@@ -19,41 +22,15 @@ const icons: SocialMedia[] = [
 	SocialMedia.INSTAGRAM,
 	SocialMedia.LINKEDIN,
 ];
-function Appbar(): ReactElement {
-	const [dropDownData, setDropDownData] = useState<RouteProps[]>();
-
+type Props = {
+	featuredCategories: RouteProps[];
+};
+function Appbar({ featuredCategories }: Props): ReactElement {
 	const categoryRoute: RouteProps = {
 		text: "Categories",
 		href: ENDPOINTS.category,
-		dropdown: dropDownData,
+		dropdown: featuredCategories,
 	};
-
-	useEffect(() => {
-		SanityDataService.getInstance()
-			.getFeaturedCategories()
-			.then((categories) => {
-				const routes: RouteProps[] = [];
-
-				categories.forEach((category) => {
-					routes.push({
-						href: ENDPOINTS.category + "/" + category.slug,
-						text: category.title,
-					});
-				});
-
-				routes.push({
-					href: ENDPOINTS.category,
-					text: "All",
-					exact: true,
-				});
-
-				setDropDownData(routes);
-			})
-			.catch((err) => {
-				console.error(err);
-				setDropDownData([]);
-			});
-	}, []);
 
 	return (
 		<Header>

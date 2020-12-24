@@ -1,11 +1,14 @@
-import { createGlobalStyle } from 'styled-components';
+import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import { createGlobalStyle } from "styled-components";
 
-import typographyStyle from './typographyStyle';
+import typographyStyle from "./typographyStyle";
 
 export default createGlobalStyle`
 :root {
     --accent-color: #2d53fe;
     --accent-color-rgb: 45, 83, 254;
+    --accent-color-light: #7A93FF;
+    --accent-color-light-rgb: 122, 147, 255;
     --primary-color: #fff;
     --primary-color-rgb:   255, 255, 255;
     --primary-color-light: #F6f6f6;
@@ -52,6 +55,7 @@ textarea {
     background: var(--primary-color);
     transition: all 1000ms ease;
     position: relative;
+    padding-bottom: calc( ${STYLE_CONSTANTS.footerHeight} + 5rem);
 }
 
 .no-scroll {

@@ -24,6 +24,7 @@ module.exports = {
 			current: "currentColor",
 
 			accent: "var(--accent-color)",
+			laccent: "var(--accent-color-light)",
 			primary: "var(--primary-color)",
 			lprimary: "var(--primary-color-light)",
 			textColor: "var(--text-color)",
@@ -269,6 +270,7 @@ module.exports = {
 			"6xl": "4rem",
 		},
 		fontWeight: {
+			"300": "300",
 			"400": "400",
 			"500": "500",
 			"600": "600",

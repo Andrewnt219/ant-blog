@@ -8,6 +8,7 @@ export const STYLE_CONSTANTS = {
 			"(min-width: 1280px) 25.06vw, (min-width: 780px) 40vw, (min-width: 640px) 80vw, 90vw",
 	},
 	sidePostsSizes: "(min-width: 1280px) 11.51vw",
+	footerHeight: "15rem",
 };
 
 export const FORMAT_CONSTANTS = {

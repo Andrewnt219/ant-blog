@@ -1,20 +1,227 @@
-import React, { ReactElement } from 'react';
-import { styled } from 'twin.macro';
+import React, { ReactElement } from "react";
+import tw, { styled } from "twin.macro";
+import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import Loading from "./Loading";
+import { RouteProps, routesData } from "@src/assets/data/routesData";
+import Link from "next/link";
+import { css } from "styled-components";
+import { SocialMedia } from "@src/assets/enums/IconEnum";
+import SocialMediaIcon from "./SocialMediaIcon";
+import { contactData } from "@src/assets/data/contactData";
 
-import Loading from './Loading';
+const icons: SocialMedia[] = [
+	SocialMedia.FACEBOOK,
+	SocialMedia.INSTAGRAM,
+	SocialMedia.LINKEDIN,
+];
 
-type Props = {};
+type Props = {
+	featuredCategories: RouteProps[];
+};
 
-function Footer(): ReactElement {
+function Footer({ featuredCategories }: Props): ReactElement {
 	return (
 		<Container>
-			<Loading height="10rem" />
-			&copy; 2020
+			<FooterLinksContainer>
+				<AuthorContainer>
+					<Header>Rose Dang</Header>
+					<AuthorText>
+						Lorem ipsum dolor sit amet consectetur adipisicing elit.
+						Accusantium, nisi?
+						<br />
+						<Emphasis variants="white" href={`tel:${contactData.phone}`}>
+							{contactData.phone}
+						</Emphasis>
+						<br />
+						<Emphasis variants="primary" href={`mailto:${contactData.email}`}>
+							{contactData.email}
+						</Emphasis>
+					</AuthorText>
+				</AuthorContainer>
+
+				<CategoryContainer>
+					<Header>Category</Header>
+					<CategorySet>
+						{featuredCategories.map((category) => (
+							<li key={category.text}>
+								<Link href={category.href} passHref>
+									<Category>{category.text}</Category>
+								</Link>
+							</li>
+						))}
+					</CategorySet>
+				</CategoryContainer>
+
+				<SocialMediasContainer>
+					<Header>Follow Me</Header>
+					<SocialMediaSet>
+						{icons.map((icon) => (
+							<StyledSocialMedia key={icon}>
+								<SocialMediaIcon variants={icon} />
+							</StyledSocialMedia>
+						))}
+					</SocialMediaSet>
+				</SocialMediasContainer>
+			</FooterLinksContainer>
+
+			<CopyRightContainer>
+				<CopyRight>&copy; 2020 Powered by Andrew</CopyRight>
+				<Loading height="5em" />
+				<PagesContainer>
+					{routesData.map((route) => (
+						<li key={route.text}>
+							<Link href={route.href} passHref>
+								<PageLink>{route.text}</PageLink>
+							</Link>
+						</li>
+					))}
+				</PagesContainer>
+			</CopyRightContainer>
 		</Container>
 	);
 }
 
+const hoveredLink = css`
+	text-decoration: underline transparent;
+
+	transition: color 300ms ease, text-decoration-color 300ms ease;
+
+	:hover,
+	:focus {
+		color: white;
+		text-decoration-color: currentColor;
+	}
+`;
+
 type ContainerProps = {};
-const Container = styled.footer<ContainerProps>``;
+const Container = styled.footer<ContainerProps>`
+	${tw`w-full`}
+
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: ${STYLE_CONSTANTS.footerHeight};
+`;
+
+type FooterLinksContainerProps = {};
+const FooterLinksContainer = styled.div<FooterLinksContainerProps>`
+	${tw` flex items-start font-300`}
+	color: #747e91;
+	background-color: #1c2433;
+	padding: 3% 10%;
+
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 3rem;
+`;
+
+type HeaderProps = {};
+const Header = styled.h3<HeaderProps>`
+	${tw`text-white font-700 mb-8`}
+	font-size: 1.05em;
+`;
+
+type AuthorContainerProps = {};
+const AuthorContainer = styled.div<AuthorContainerProps>``;
+
+type AuthorTextProps = {};
+const AuthorText = styled.p<AuthorTextProps>``;
+
+type EmphasisProps = {
+	variants: "white" | "primary";
+};
+const Emphasis = styled.a<EmphasisProps>`
+	${(p) =>
+		p.variants === "primary" &&
+		css`
+			${tw`font-500 text-laccent`};
+
+			:hover,
+			:focus {
+				text-decoration-color: currentColor;
+			}
+		`}
+
+	${(p) =>
+		p.variants === "white" &&
+		css`
+			${tw`font-400`}
+			color: inherit;
+
+			:hover,
+			:focus {
+				${tw`text-white`}
+				text-decoration-color: currentColor;
+			}
+		`}
+
+	text-decoration: underline transparent;
+	transition: color 300ms ease, text-decoration-color 300ms ease;
+	user-select: all;
+`;
+
+type CategoryContainerProps = {};
+const CategoryContainer = styled.div<CategoryContainerProps>``;
+
+type CategorySetProps = {};
+const CategorySet = styled.ul<CategorySetProps>`
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.5rem;
+`;
+
+type CategoryProps = {};
+const Category = styled.a<CategoryProps>`
+	${hoveredLink}
+`;
+
+type SocialMediasContainerProps = {};
+const SocialMediasContainer = styled.div<SocialMediasContainerProps>``;
+
+type SocialMediaSetProps = {};
+const SocialMediaSet = styled.ul<SocialMediaSetProps>`
+	${tw`flex space-x-5 text-white`}
+	${tw`-ml-1`} // This equals the padding of StyledSocialMedia
+`;
+
+type StyledSocialMediaProps = {};
+const StyledSocialMedia = styled.li<StyledSocialMediaProps>`
+	${tw`p-1 rounded-sm`}
+	transition: background-color 300ms ease;
+
+	svg {
+		transition: fill 300ms ease;
+	}
+
+	:hover,
+	:focus-within {
+		${tw`bg-white`}
+
+		svg {
+			fill: #1c2433;
+		}
+	}
+`;
+
+type CopyRightContainerProps = {};
+const CopyRightContainer = styled.div<CopyRightContainerProps>`
+	${tw`text-white flex items-center justify-between font-500`}
+	background-color: #212a39;
+	color: #98a5b9;
+	padding: 1% 10%;
+`;
+
+type CopyRightProps = {};
+const CopyRight = styled.p<CopyRightProps>``;
+
+type PagesContainerProps = {};
+const PagesContainer = styled.ul<PagesContainerProps>`
+	${tw`space-x-5 flex`}
+`;
+
+type PageLinkProps = {};
+const PageLink = styled.a<PageLinkProps>`
+	${hoveredLink}
+`;
 
 export default Footer;

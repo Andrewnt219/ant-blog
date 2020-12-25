@@ -6,6 +6,7 @@ import { useFeaturedCategories } from "@src/hooks";
 import Hamburger from "@src/components/Hamburger";
 import MobileMenu from "@src/components/MobileMenu";
 import { AnimatePresence } from "framer-motion";
+import { styled } from "twin.macro";
 
 type Props = {
 	children: ReactNode;
@@ -25,16 +26,20 @@ function MainLayout({ children }: Props): ReactElement {
 			<AnimatePresence>
 				{isMenuOpened && (
 					<MobileMenu
-						isOpen={isMenuOpened}
 						handleBackdropClicked={() => setIsMenuOpened((prev) => !prev)}
 					/>
 				)}
 			</AnimatePresence>
 			<Appbar featuredCategories={featuredCategories} />
-			{children}
+			<Main>{children}</Main>
 			<Footer featuredCategories={featuredCategories} />
 		</>
 	);
 }
+
+type MainProps = {};
+const Main = styled.main<MainProps>`
+	overflow-x: hidden;
+`;
 
 export default MainLayout;

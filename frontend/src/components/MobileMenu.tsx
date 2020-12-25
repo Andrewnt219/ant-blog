@@ -1,4 +1,3 @@
-import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
 import { RouteProps } from "@src/assets/data/routesData";
 import { useRouteMatch, useRoutesData } from "@src/hooks";
 import NextLink from "next/link";
@@ -14,11 +13,10 @@ import {
 	dropDownVariants,
 } from "@src/assets/variants";
 type Props = {
-	isOpen: boolean;
 	handleBackdropClicked(): void;
 };
 
-function MobileMenu({ isOpen, handleBackdropClicked }: Props): ReactElement {
+function MobileMenu({ handleBackdropClicked }: Props): ReactElement {
 	const routesData = useRoutesData();
 
 	const handleEnter = (event: React.KeyboardEvent<HTMLDivElement>) => {

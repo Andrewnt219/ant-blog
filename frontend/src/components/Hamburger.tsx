@@ -1,7 +1,7 @@
 import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement } from "react";
 import { css } from "styled-components";
-import tw, { styled, theme } from "twin.macro";
+import tw, { styled } from "twin.macro";
 
 type Props = {
 	isOpen: boolean;

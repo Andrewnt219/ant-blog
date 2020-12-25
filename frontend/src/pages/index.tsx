@@ -104,7 +104,7 @@ export const getServerSideProps: GetServerSideProps<
 };
 
 type MainProps = {};
-const Main = styled.main<MainProps>`
+const Main = styled.div<MainProps>`
 	padding: 2rem ${STYLE_CONSTANTS.mobileBodyPadding};
 	margin: 0 auto;
 

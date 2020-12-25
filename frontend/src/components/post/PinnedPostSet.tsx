@@ -11,7 +11,7 @@ import {
 import { PinnedPostModel } from "@src/model/sanity";
 import { trimLastWord } from "@src/utils";
 import { lqipBackground } from "@src/utils/cssHelpers";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { pinnedPostsVariants } from "@src/assets/variants";
 
 type PinnedPostSetProps = {

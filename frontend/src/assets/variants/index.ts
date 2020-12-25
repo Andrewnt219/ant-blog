@@ -1,4 +1,4 @@
-import { TargetAndTransition, Variant, Variants } from "framer-motion";
+import { TargetAndTransition, Variants } from "framer-motion";
 
 export const headerVariants: Variants = {
 	hidden: {

@@ -28,12 +28,15 @@ export default createGlobalStyle`
 
 html, body {
     width: 100%;
-    height: 100%; 
-    overflow-x: hidden;
+    height: 100%;
+
+    // Cannot use scroll() if height: 100% and overflow
+    /* overflow-x: hidden;  */
 }
 
+
 body {
-    color: var(--text-color);
+    color: var(--text-color);    
 }
 
 *, *::before, *::after {
@@ -58,6 +61,7 @@ textarea {
     position: relative;
     padding-bottom: calc( ${STYLE_CONSTANTS.footerHeight} + 5rem);
     min-height: 100%;
+    width: 100%;
 }
 
 .no-scroll {

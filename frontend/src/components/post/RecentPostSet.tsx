@@ -11,7 +11,7 @@ import Broken from "../Broken";
 import Pagination from "../Pagination";
 import { Post } from "../Post";
 import Link from "next/link";
-import { AnimatePresence, motion, Variants } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { recentPostsVariants } from "@src/assets/variants";
 
 type RecentPostSetProps = {

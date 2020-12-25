@@ -11,7 +11,7 @@ import { ImageModel } from "@src/model/sanity";
 import { CategoryModel } from "@src/model/sanity/CategoryModel";
 import { preventOrphanText } from "@src/utils";
 import { lqipBackground } from "@src/utils/cssHelpers";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import { headerVariants } from "@src/assets/variants";
 
 type Props = {

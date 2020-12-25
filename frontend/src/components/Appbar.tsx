@@ -15,6 +15,7 @@ import DropDown from "./DropDown";
 import Logo from "./Logo";
 import SocialMediaIcon from "./SocialMediaIcon";
 import { AnimatePresence } from "framer-motion";
+import { IoIosArrowDown } from "react-icons/io";
 
 // TODO make mobile navigations
 const icons: SocialMedia[] = [
@@ -71,12 +72,10 @@ function MenuItem({ route }: { route: RouteProps }) {
 
 	const handleMouseEnter = () => {
 		setShowDropdown(true);
-		console.log("focus");
 	};
 
 	const handleMouseLeave = () => {
 		setShowDropdown(false);
-		console.log("blur");
 	};
 
 	return (
@@ -86,9 +85,16 @@ function MenuItem({ route }: { route: RouteProps }) {
 			onFocus={handleMouseEnter}
 			onBlur={handleMouseLeave}
 		>
-			<Link passHref href={route.href}>
-				<StyledMenuItem isActive={isActive}>{route.text}</StyledMenuItem>
-			</Link>
+			<MenuItemLinkContainer>
+				<Link passHref href={route.href}>
+					<StyledMenuItem isActive={isActive}>{route.text}</StyledMenuItem>
+				</Link>
+				{route.dropdown && (
+					<DropDownButton tabIndex={-1}>
+						<IoIosArrowDown />
+					</DropDownButton>
+				)}
+			</MenuItemLinkContainer>
 			<AnimatePresence>
 				{route.dropdown && showDropdown && <DropDown data={route.dropdown} />}
 			</AnimatePresence>
@@ -127,14 +133,13 @@ const MenuItemSet = styled.ul<MenuItemSetProps>`
 
 type MenuItemContainerProps = {};
 const MenuItemContainer = styled.div<MenuItemContainerProps>`
-	position: relative;
+	${tw`mx-4`}
 `;
 
 type StyledMenuItem = {
 	isActive: boolean;
 };
 const StyledMenuItem = styled.a<StyledMenuItem>`
-	${tw`mx-4`}
 	color: ${(p) => p.isActive && "var(--accent-color)"};
 
 	transition: color 250ms ease;
@@ -143,6 +148,17 @@ const StyledMenuItem = styled.a<StyledMenuItem>`
 	:focus {
 		${tw`text-accent`}
 	}
+`;
+
+type MenuItemLinkContainerProps = {};
+const MenuItemLinkContainer = styled.div<MenuItemLinkContainerProps>`
+	position: relative;
+	${tw`flex items-center justify-start`}
+`;
+
+type DropDownButtonProps = {};
+const DropDownButton = styled.div<DropDownButtonProps>`
+	${tw`text-ltextColor border-none pointer-events-none ml-2 `}
 `;
 
 type SocialMediaSetProps = {};

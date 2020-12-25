@@ -3,7 +3,6 @@ import React, { ReactElement } from "react";
 import tw, { styled, theme } from "twin.macro";
 
 import { FORMAT_CONSTANTS } from "@src/assets/constants/StyleConstants";
-import { SocialMedia } from "@src/assets/enums/IconEnum";
 import { MostViewedPostModel } from "@src/model/sanity";
 import {
 	blocksToText,
@@ -12,7 +11,13 @@ import {
 } from "@src/utils";
 
 import { Post } from "../Post";
-import SocialMediaIcon from "../SocialMediaIcon";
+import {
+	FacebookShareButton,
+	LinkedinShareButton,
+	TwitterShareButton,
+} from "react-share";
+import { useCurrentLocation } from "@src/hooks";
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 
 type MostViewedPostSetProps = {
 	posts: MostViewedPostProps["data"][];
@@ -53,6 +58,10 @@ function MostViewedPost({
 
 	const linkToPost = "/" + slug;
 
+	const location = useCurrentLocation();
+
+	const shareUrl = location?.href + slug;
+
 	return (
 		<MostViewedPostContainer>
 			<Thumbnail data={{ linkToPost, thumbnail }} sizes={imageSizes} />
@@ -75,15 +84,25 @@ function MostViewedPost({
 				<Snippet>{snippet}</Snippet>
 
 				<Footer>
+					<ViewCount>
+						{formatQuantityWithUnit(views, "view", "views")}
+					</ViewCount>
 					<SocialMediaSet>
-						<ViewCount>
-							{formatQuantityWithUnit(views, "view", "views")}
-						</ViewCount>
-						{[SocialMedia.FACEBOOK, SocialMedia.INSTAGRAM].map((icon) => (
-							<li key={icon}>
-								<SocialMediaIcon variants={icon} />
-							</li>
-						))}
+						<li title="Share to Facebook">
+							<FacebookShareButton url={shareUrl}>
+								<FaFacebookF />
+							</FacebookShareButton>
+						</li>
+						<li title="Share to LinkedIn">
+							<LinkedinShareButton url={shareUrl}>
+								<FaLinkedinIn />
+							</LinkedinShareButton>
+						</li>
+						<li title="Share to Twitter">
+							<TwitterShareButton url={shareUrl}>
+								<FaTwitter />
+							</TwitterShareButton>
+						</li>
 					</SocialMediaSet>
 				</Footer>
 			</CustomInfoContainer>
@@ -128,14 +147,24 @@ const Footer = styled.footer<FooterProps>`
 	bottom: 0;
 	left: 0;
 	width: 100%;
-`;
-
-type SocialMediaSetProps = {};
-const SocialMediaSet = styled.ul<SocialMediaSetProps>`
 	font-size: smaller;
 	${tw`flex items-center justify-center `}
 	${tw`border-t border-lborderColor border-b border-solid`}
 	${tw`mt-5 p-3 space-x-3`}
+`;
+
+type SocialMediaSetProps = {};
+const SocialMediaSet = styled.ul<SocialMediaSetProps>`
+	${tw`flex items-center justify-center space-x-3`}
+
+	svg {
+		transition: fill 200ms ease;
+
+		:hover,
+		:focus {
+			fill: var(--accent-color);
+		}
+	}
 `;
 
 type ViewCountProps = {};

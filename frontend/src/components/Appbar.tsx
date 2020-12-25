@@ -14,6 +14,7 @@ import { useRouteMatch } from "@src/hooks";
 import DropDown from "./DropDown";
 import Logo from "./Logo";
 import SocialMediaIcon from "./SocialMediaIcon";
+import { AnimatePresence } from "framer-motion";
 
 // TODO make mobile navigations
 const icons: SocialMedia[] = [
@@ -70,21 +71,27 @@ function MenuItem({ route }: { route: RouteProps }) {
 
 	const handleMouseEnter = () => {
 		setShowDropdown(true);
+		console.log("focus");
 	};
 
 	const handleMouseLeave = () => {
 		setShowDropdown(false);
+		console.log("blur");
 	};
 
 	return (
 		<MenuItemContainer
 			onMouseEnter={handleMouseEnter}
 			onMouseLeave={handleMouseLeave}
+			onFocus={handleMouseEnter}
+			onBlur={handleMouseLeave}
 		>
 			<Link passHref href={route.href}>
 				<StyledMenuItem isActive={isActive}>{route.text}</StyledMenuItem>
 			</Link>
-			{route.dropdown && showDropdown && <DropDown data={route.dropdown} />}
+			<AnimatePresence>
+				{route.dropdown && showDropdown && <DropDown data={route.dropdown} />}
+			</AnimatePresence>
 		</MenuItemContainer>
 	);
 }

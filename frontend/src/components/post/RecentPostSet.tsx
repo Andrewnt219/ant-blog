@@ -47,7 +47,7 @@ function RecentPostSet({
 			{posts.length === 0 && (
 				<Broken height="10rem" errorText="Wow, such empty, much space" />
 			)}
-			<AnimatePresence>
+			<AnimatePresence exitBeforeEnter>
 				<RecentPostSetContainer
 					variants={recentPostsVariants.postSet}
 					initial="hidden"

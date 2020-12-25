@@ -28,6 +28,7 @@ export const pinnedPostsVariants: Record<"post" | "postSet", Variants> = {
 			opacity: 1,
 			transition: {
 				type: "spring",
+				duration: 1,
 			},
 		},
 	},
@@ -36,8 +37,8 @@ export const pinnedPostsVariants: Record<"post" | "postSet", Variants> = {
 		hidden: {},
 		visible: {
 			transition: {
-				delayChildren: 0.3,
-				staggerChildren: 0.2,
+				delayChildren: 0.5,
+				staggerChildren: 0.5,
 			},
 		},
 	},
@@ -53,7 +54,7 @@ export const recentPostsVariants: Record<"post" | "postSet", Variants> = {
 			x: 0,
 			opacity: 1,
 			transition: {
-				type: "tween",
+				type: "spring",
 				duration: 1,
 			},
 		},

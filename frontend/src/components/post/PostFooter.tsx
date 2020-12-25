@@ -45,7 +45,7 @@ function PostFooter({ data, className, shareUrl }: Props): ReactElement {
 		...categories.subs,
 		categories.main,
 	];
-	console.log(shareUrl);
+
 	return (
 		<Footer className={className}>
 			<AdditionalInfo>

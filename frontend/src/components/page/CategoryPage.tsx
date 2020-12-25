@@ -94,7 +94,7 @@ function CategoryPage({ prefetchedContent }: Props): ReactElement {
 
 			<SidebarLayout>
 				<Main>
-					<AnimatePresence>
+					<AnimatePresence exitBeforeEnter>
 						<PostSetContainer
 							variants={recentPostsVariants.postSet}
 							animate="visible"

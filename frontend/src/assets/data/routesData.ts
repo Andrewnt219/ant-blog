@@ -1,4 +1,4 @@
-import { LinkProps } from 'next/link';
+import { LinkProps } from "next/link";
 
 export type RouteProps = Pick<LinkProps, "href" | "as"> & {
 	text: string;
@@ -16,10 +16,10 @@ export const routesData: RouteProps[] = [
 		text: "About me",
 		href: "/about-me",
 	},
-	{
-		text: "Music",
-		href: "/music",
-	},
+	// {
+	// 	text: "Music",
+	// 	href: "/music",
+	// },
 	// {
 	// 	text: "Categories",
 	// 	href: ENDPOINTS.category,

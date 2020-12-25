@@ -1,14 +1,14 @@
-import { useRouter } from 'next/router';
-import React, { ReactElement } from 'react';
-import { styled, theme } from 'twin.macro';
+import { useRouter } from "next/router";
+import React, { ReactElement } from "react";
+import tw, { styled, theme } from "twin.macro";
 
-import BlockContent from '@sanity/block-content-to-react';
-import { ENDPOINTS } from '@src/assets/constants/StyleConstants';
-import sanityClient from '@src/lib/sanity/client';
-import { postSerializer } from '@src/lib/sanity/serializers/postSerializer';
-import { CategoriesModel } from '@src/model/sanity/CategoriesModel';
+import BlockContent from "@sanity/block-content-to-react";
+import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
+import sanityClient from "@src/lib/sanity/client";
+import { postSerializer } from "@src/lib/sanity/serializers/postSerializer";
+import { CategoriesModel } from "@src/model/sanity/CategoriesModel";
 
-import Breadcrumb from '../Breadcrumb';
+import Breadcrumb from "../Breadcrumb";
 
 type Props = {
 	data: {
@@ -63,7 +63,10 @@ const Container = styled.div<ContainerProps>`
 	}
 
 	@media screen and (min-width: ${theme`screens.smDesktop`}) {
-		display: block;
+		& > header {
+			display: block;
+			${tw`mb-6`}
+		}
 	}
 `;
 

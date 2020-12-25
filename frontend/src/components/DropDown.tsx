@@ -1,20 +1,31 @@
-import Link from 'next/link';
-import React, { ReactElement } from 'react';
-import tw, { styled } from 'twin.macro';
+import Link from "next/link";
+import React, { ReactElement } from "react";
+import tw, { styled } from "twin.macro";
 
-import { RouteProps } from '@src/assets/data/routesData';
-import { useRouteMatch } from '@src/hooks';
+import { RouteProps } from "@src/assets/data/routesData";
+import { useRouteMatch } from "@src/hooks";
+import { motion } from "framer-motion";
+import { dropDownVariants } from "@src/assets/variants";
 
 type Props = {
 	data: RouteProps[];
-	handleMouseLeave?: (
-		event: React.MouseEvent<HTMLUListElement, MouseEvent>
-	) => void;
+	handleMouseLeave?: () => void;
 };
 
 function DropDown({ data, handleMouseLeave }: Props): ReactElement {
+	const handleBlur = () => {
+		handleMouseLeave && handleMouseLeave();
+	};
+
 	return (
-		<Container onMouseLeave={handleMouseLeave}>
+		<Container
+			onMouseLeave={handleMouseLeave}
+			//
+			variants={dropDownVariants.container}
+			animate="visible"
+			initial="initial"
+			exit="exit"
+		>
 			{data.map((link) => (
 				<li key={link.text}>
 					<MenuItem data={link} />
@@ -33,13 +44,15 @@ function MenuItem({ data }: MenuItemProps): ReactElement {
 
 	return (
 		<Link href={data.href} passHref>
-			<StyledLink isActive={isActive}>{data.text}</StyledLink>
+			<StyledLink variants={dropDownVariants.item} isActive={isActive}>
+				{data.text}
+			</StyledLink>
 		</Link>
 	);
 }
 
 type ContainerProps = {};
-const Container = styled.ul<ContainerProps>`
+const Container = styled(motion.ul)<ContainerProps>`
 	${tw`absolute z-50  rounded  text-black `};
 
 	/* transform: translateY(0.5rem); */
@@ -53,7 +66,7 @@ const Container = styled.ul<ContainerProps>`
 type StyledLinkProps = {
 	isActive: boolean;
 };
-const StyledLink = styled.a<StyledLinkProps>`
+const StyledLink = styled(motion.a)<StyledLinkProps>`
 	${tw`inline-block pl-4 py-2 pr-20 `}
 
 	// NOTE necessary for all links fill the container

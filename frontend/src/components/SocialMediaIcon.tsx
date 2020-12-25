@@ -4,6 +4,7 @@ import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import { styled } from "twin.macro";
 
 import { SocialMedia } from "@src/assets/enums/IconEnum";
+import { contactData } from "@src/assets/data/contactData";
 
 type Props = {
 	variants: SocialMedia;
@@ -17,22 +18,17 @@ function SocialMediaIcon({ variants, className }: Props): ReactElement {
 	switch (variants) {
 		case SocialMedia.FACEBOOK:
 			Icon = FaFacebookF;
-			linkToProfile = "facebook.com";
+			linkToProfile = contactData.facebook;
 			break;
 
 		case SocialMedia.INSTAGRAM:
 			Icon = AiFillInstagram;
-			linkToProfile = "instagram.com";
+			linkToProfile = contactData.instagram;
 			break;
 
 		case SocialMedia.LINKEDIN:
 			Icon = FaLinkedinIn;
-			linkToProfile = "linkedin.com";
-			break;
-
-		case SocialMedia.TWITTER:
-			Icon = FaTwitter;
-			linkToProfile = "twitter.com";
+			linkToProfile = contactData.linkedin;
 			break;
 
 		default:

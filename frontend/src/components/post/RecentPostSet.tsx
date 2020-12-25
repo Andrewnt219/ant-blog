@@ -11,6 +11,8 @@ import Broken from "../Broken";
 import Pagination from "../Pagination";
 import { Post } from "../Post";
 import Link from "next/link";
+import { AnimatePresence, motion, Variants } from "framer-motion";
+import { recentPostsVariants } from "@src/assets/variants";
 
 type RecentPostSetProps = {
 	posts: RecentPostProps["data"][];
@@ -45,20 +47,29 @@ function RecentPostSet({
 			{posts.length === 0 && (
 				<Broken height="10rem" errorText="Wow, such empty, much space" />
 			)}
-			<RecentPostSetContainer>
-				{posts.map((post, index) => (
-					<li
-						key={post.slug}
-						style={{ gridColumn: index === 0 ? "1/-1" : undefined }}
-					>
-						<RecentPost
-							imageSizes={imageSizes}
-							data={post}
-							isMain={index === 0}
-						/>
-					</li>
-				))}
-			</RecentPostSetContainer>
+			<AnimatePresence>
+				<RecentPostSetContainer
+					variants={recentPostsVariants.postSet}
+					initial="hidden"
+					animate="visible"
+					exit="exit"
+					key={posts[0].slug}
+				>
+					{posts.map((post, index) => (
+						<li
+							key={post.slug}
+							style={{ gridColumn: index === 0 ? "1/-1" : undefined }}
+						>
+							<RecentPost
+								imageSizes={imageSizes}
+								data={post}
+								isMain={index === 0}
+							/>
+						</li>
+					))}
+				</RecentPostSetContainer>
+			</AnimatePresence>
+
 			<Pagination items={items} onItemClicked={onPaginationItemClicked} />
 		</Container>
 	);
@@ -79,7 +90,11 @@ export const RecentPost = forwardRef<Ref, RecentPostProps>(
 		const linkToPost = "/" + slug;
 
 		return (
-			<RecentPostContainer ref={articleRef}>
+			<RecentPostContainer
+				ref={articleRef}
+				variants={recentPostsVariants.post}
+				key={slug}
+			>
 				<Thumbnail
 					data={{ linkToPost, thumbnail }}
 					sizes={isMain ? imageSizes.main : imageSizes.default}
@@ -112,7 +127,7 @@ type ContainerProps = {};
 const Container = styled.div<ContainerProps>``;
 
 type RecentPostSetContainerProps = {};
-const RecentPostSetContainer = styled.ul<RecentPostSetContainerProps>`
+const RecentPostSetContainer = styled(motion.ul)<RecentPostSetContainerProps>`
 	${tw`mb-10`}
 	display: grid;
 
@@ -124,7 +139,7 @@ const RecentPostSetContainer = styled.ul<RecentPostSetContainerProps>`
 `;
 
 type RecentPostContainerProps = {};
-const RecentPostContainer = styled.article<RecentPostContainerProps>``;
+const RecentPostContainer = styled(motion.article)<RecentPostContainerProps>``;
 
 const { Category, Title, Thumbnail, SubInfo, Snippet, InfoContainer } = Post;
 

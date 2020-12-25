@@ -1,16 +1,21 @@
-import React, { ReactElement, useMemo, useRef } from 'react';
-import tw, { styled, theme } from 'twin.macro';
+import React, { ReactElement, useMemo, useRef } from "react";
+import tw, { styled, theme } from "twin.macro";
 
-import { NUMBER_CONSTANTS, STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import Broken from '@src/components/Broken';
-import Loading from '@src/components/Loading';
-import Pagination from '@src/components/Pagination';
-import { RecentPost } from '@src/components/post/RecentPostSet';
-import SidePostSet from '@src/components/post/SidePostSet';
-import { useCategoryPageContent, useQueryPaginationItems } from '@src/hooks';
-import SidebarLayout from '@src/layouts/SidebarLayout';
-import { CategoryPageContent } from '@src/model/CategoryPageContent';
-import { createSrcSet, lqipBackground, renderPosts } from '@src/utils';
+import {
+	NUMBER_CONSTANTS,
+	STYLE_CONSTANTS,
+} from "@src/assets/constants/StyleConstants";
+import Broken from "@src/components/Broken";
+import Loading from "@src/components/Loading";
+import Pagination from "@src/components/Pagination";
+import { RecentPost } from "@src/components/post/RecentPostSet";
+import SidePostSet from "@src/components/post/SidePostSet";
+import { useCategoryPageContent, useQueryPaginationItems } from "@src/hooks";
+import SidebarLayout from "@src/layouts/SidebarLayout";
+import { CategoryPageContent } from "@src/model/CategoryPageContent";
+import { createSrcSet, lqipBackground, renderPosts } from "@src/utils";
+import { AnimatePresence, motion } from "framer-motion";
+import { headerVariants, recentPostsVariants } from "@src/assets/variants";
 
 type Props = {
 	prefetchedContent: CategoryPageContent;
@@ -64,9 +69,17 @@ function CategoryPage({ prefetchedContent }: Props): ReactElement {
 		/>
 	);
 
+	const { posts, currentCategory } = content;
+
 	return (
 		<>
-			<Header ref={headerRef}>
+			<Header
+				ref={headerRef}
+				variants={headerVariants}
+				animate="visible"
+				initial="hidden"
+				key={currentCategory.slug}
+			>
 				<Thumbnail
 					src={content.currentCategory.thumbnail.url}
 					srcSet={srcset}
@@ -81,17 +94,25 @@ function CategoryPage({ prefetchedContent }: Props): ReactElement {
 
 			<SidebarLayout>
 				<Main>
-					<PostSetContainer>
-						{content.posts.map((post) => (
-							<li key={post.slug}>
-								<RecentPost
-									isMain
-									data={post}
-									imageSizes={STYLE_CONSTANTS.recentPostSizes}
-								/>
-							</li>
-						))}
-					</PostSetContainer>
+					<AnimatePresence>
+						<PostSetContainer
+							variants={recentPostsVariants.postSet}
+							animate="visible"
+							initial="hidden"
+							exit="exit"
+							key={currentCategory.slug + posts[0].slug}
+						>
+							{content.posts.map((post) => (
+								<li key={post.slug}>
+									<RecentPost
+										isMain
+										data={post}
+										imageSizes={STYLE_CONSTANTS.recentPostSizes}
+									/>
+								</li>
+							))}
+						</PostSetContainer>
+					</AnimatePresence>
 				</Main>
 
 				{renderedSidePosts}
@@ -108,7 +129,7 @@ const Main = styled.main<MainProps>`
 `;
 
 type HeaderProps = {};
-const Header = styled.header<HeaderProps>`
+const Header = styled(motion.header)<HeaderProps>`
 	${tw`relative`}
 	padding-bottom: min(45%, 15rem);
 	width: 100%;
@@ -151,7 +172,7 @@ const CategoryName = styled.span<CategoryNameProps>`
 `;
 
 type PostSetContainerProps = {};
-const PostSetContainer = styled.ul<PostSetContainerProps>`
+const PostSetContainer = styled(motion.ul)<PostSetContainerProps>`
 	${tw`space-y-10`}
 `;
 

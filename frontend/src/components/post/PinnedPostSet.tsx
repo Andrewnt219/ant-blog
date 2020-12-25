@@ -11,6 +11,8 @@ import {
 import { PinnedPostModel } from "@src/model/sanity";
 import { trimLastWord } from "@src/utils";
 import { lqipBackground } from "@src/utils/cssHelpers";
+import { motion, Variants } from "framer-motion";
+import { pinnedPostsVariants } from "@src/assets/variants";
 
 type PinnedPostSetProps = {
 	posts: PinnedPostProps["data"][];
@@ -28,7 +30,11 @@ type PinnedPostProps = {
 
 function PinnedPostSet({ posts, imageSizes }: PinnedPostSetProps) {
 	return (
-		<StyledPinnedPostSet>
+		<StyledPinnedPostSet
+			variants={pinnedPostsVariants.postSet}
+			initial="hidden"
+			animate="visible"
+		>
 			{posts.map((post, index) => (
 				<li key={post.slug}>
 					<PinnedPost
@@ -64,7 +70,7 @@ function PinnedPost({
 	const linkToPost = `/${slug}`;
 
 	return (
-		<Container>
+		<Container variants={pinnedPostsVariants.post}>
 			<Info>
 				<Link href={`${ENDPOINTS.category}/${category.slug}`} passHref>
 					<Category>{category.title}</Category>
@@ -101,7 +107,7 @@ function PinnedPost({
 const _3columnsThreshold = theme`screens.smDesktop`;
 
 type StyledPinnedPostSetProps = {};
-const StyledPinnedPostSet = styled.ul<StyledPinnedPostSetProps>`
+const StyledPinnedPostSet = styled(motion.ul)<StyledPinnedPostSetProps>`
 	display: grid;
 	gap: 0.1rem;
 	grid-template-rows: 1.5fr 1fr 1fr;
@@ -128,7 +134,7 @@ const StyledPinnedPostSet = styled.ul<StyledPinnedPostSetProps>`
 `;
 
 type ContainerProps = {};
-const Container = styled.article<ContainerProps>`
+const Container = styled(motion.article)<ContainerProps>`
 	${tw`relative text-primary text-sm font-500 flex items-end p-5`}
 	width: 100%;
 	height: 100%;

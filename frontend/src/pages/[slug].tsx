@@ -10,6 +10,7 @@ import { PostPageContent } from "@src/model/PostPageContent";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
 
 // TODO add view count and react count to firebase
+// TODO og stuffs for sharing
 const Post = ({
 	prefetchedContent,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {

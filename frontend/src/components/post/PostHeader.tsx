@@ -11,6 +11,8 @@ import { ImageModel } from "@src/model/sanity";
 import { CategoryModel } from "@src/model/sanity/CategoryModel";
 import { preventOrphanText } from "@src/utils";
 import { lqipBackground } from "@src/utils/cssHelpers";
+import { motion, Variants } from "framer-motion";
+import { headerVariants } from "@src/assets/variants";
 
 type Props = {
 	data: {
@@ -31,7 +33,12 @@ function PostHeader({ data, srcset }: Props): ReactElement {
 	const { category, title, author, publishedAt, readMinute, thumbnail } = data;
 
 	return (
-		<Container>
+		<Container
+			variants={headerVariants}
+			animate="visible"
+			initial="hidden"
+			key={title}
+		>
 			<Thumbnail
 				src={thumbnail.url}
 				srcSet={srcset}
@@ -66,17 +73,11 @@ function PostHeader({ data, srcset }: Props): ReactElement {
 }
 
 type ContainerProps = {};
-const Container = styled.header<ContainerProps>`
+const Container = styled(motion.header)<ContainerProps>`
 	${tw`relative`}
 	padding-bottom: max(37.5%, 25rem);
-	background-size: cover;
-	background-position: center center;
 	width: 100%;
 	${tw`mb-12`}
-
-	@media screen and (min-width: ${theme`screens.smDesktop`}) {
-		background-attachment: fixed;
-	}
 `;
 
 type ThumbnailProps = {

@@ -71,3 +71,27 @@ export const recentPostsVariants: Record<"post" | "postSet", Variants> = {
 		exit: { x: "50%", opacity: 0 },
 	},
 };
+
+export const categoriesVariants: Record<"item" | "container", Variants> = {
+	item: {
+		hidden: {
+			opacity: 0.1,
+		},
+		visible: {
+			opacity: 1,
+			transition: {
+				type: "tween",
+				duration: 1,
+			},
+		},
+	},
+	container: {
+		hidden: {},
+		visible: {
+			transition: {
+				delayChildren: 0.3,
+				staggerChildren: 0.25,
+			},
+		},
+	},
+};

@@ -1,11 +1,13 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React, { ReactElement } from 'react';
-import tw, { styled } from 'twin.macro';
+import Image from "next/image";
+import Link from "next/link";
+import React, { ReactElement } from "react";
+import tw, { styled } from "twin.macro";
 
-import { ENDPOINTS } from '@src/assets/constants/StyleConstants';
-import { CategoryModel } from '@src/model/sanity';
-import { absoluteFullSize, lqipBackground } from '@src/utils';
+import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
+import { CategoryModel } from "@src/model/sanity";
+import { absoluteFullSize, lqipBackground } from "@src/utils";
+import { motion } from "framer-motion";
+import { categoriesVariants } from "@src/assets/variants";
 
 // TODO add imageSizes
 type Props = {
@@ -16,7 +18,7 @@ function Category({ data }: Props): ReactElement {
 	const { slug, title, thumbnail } = data;
 
 	return (
-		<Container>
+		<Container variants={categoriesVariants.item} key={data.slug}>
 			<Link href={ENDPOINTS.category + "/" + slug} passHref>
 				<a>
 					<Title>{title}</Title>
@@ -30,7 +32,7 @@ function Category({ data }: Props): ReactElement {
 }
 
 type ContainerProps = {};
-const Container = styled.article<ContainerProps>`
+const Container = styled(motion.article)<ContainerProps>`
 	${tw`relative rounded overflow-hidden`}
 	padding-bottom: 25%;
 

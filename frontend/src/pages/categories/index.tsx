@@ -1,12 +1,14 @@
-import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import Head from 'next/head';
-import React, { ReactElement } from 'react';
-import tw, { styled, theme } from 'twin.macro';
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import Head from "next/head";
+import React, { ReactElement } from "react";
+import tw, { styled, theme } from "twin.macro";
 
-import { STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import Category from '@src/components/Category';
-import { CategoryModel } from '@src/model/sanity/CategoryModel';
-import { SanityDataService } from '@src/service/sanity/sanity.data-service';
+import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import Category from "@src/components/Category";
+import { CategoryModel } from "@src/model/sanity/CategoryModel";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
+import { motion } from "framer-motion";
+import { categoriesVariants } from "@src/assets/variants";
 
 function Index({
 	categories,
@@ -21,7 +23,11 @@ function Index({
 				<header>
 					<Heading>All categories</Heading>
 				</header>
-				<CategoriesContainer>
+				<CategoriesContainer
+					variants={categoriesVariants.container}
+					animate="visible"
+					initial="hidden"
+				>
 					{categories.map((category) => (
 						<li key={category.slug}>
 							<Category data={category} />
@@ -49,7 +55,7 @@ const Heading = styled.h1<HeadingProps>`
 `;
 
 type CategoriesContainerProps = {};
-const CategoriesContainer = styled.article<CategoriesContainerProps>`
+const CategoriesContainer = styled(motion.ul)<CategoriesContainerProps>`
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
 	gap: 1rem;

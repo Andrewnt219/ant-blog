@@ -1,4 +1,4 @@
-import { Variants } from "framer-motion";
+import { TargetAndTransition, Variant, Variants } from "framer-motion";
 
 export const headerVariants: Variants = {
 	hidden: {
@@ -91,6 +91,81 @@ export const categoriesVariants: Record<"item" | "container", Variants> = {
 			transition: {
 				delayChildren: 0.3,
 				staggerChildren: 0.25,
+			},
+		},
+	},
+};
+
+export const sliderVariants: Variants = {
+	hidden: {
+		x: "-100%",
+		opacity: 0,
+	},
+	visible: {
+		x: 0,
+		opacity: 1,
+		transition: {
+			type: "tween",
+			duration: 0.5,
+		},
+	},
+};
+
+export const backdropVariants: Variants = {
+	hidden: {
+		opacity: 0,
+	},
+	visible: {
+		opacity: 1,
+		transition: {
+			type: "tween",
+			duration: 0.55,
+		},
+	},
+};
+
+export const dropDownButtonVariants: TargetAndTransition = {
+	y: ["0%", "15%"],
+	transition: {
+		type: "spring",
+		repeat: Infinity,
+		repeatType: "reverse",
+	},
+};
+
+export const dropDownVariants: Record<"container" | "item", Variants> = {
+	container: {
+		initial: {},
+		visible: {
+			transition: {
+				staggerChildren: 0.1,
+			},
+		},
+		exit: {
+			transition: {
+				staggerChildren: 0.1,
+			},
+		},
+	},
+	item: {
+		initial: {
+			y: "-1rem",
+			opacity: 0,
+		},
+		visible: {
+			y: 0,
+			opacity: 1,
+			transition: {
+				type: "tween",
+				duration: 0.15,
+			},
+		},
+		exit: {
+			y: "-1rem",
+			opacity: 0,
+			transition: {
+				type: "tween",
+				duration: 0.15,
 			},
 		},
 	},

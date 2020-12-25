@@ -12,3 +12,4 @@ export * from "./usePageQuery";
 export * from "./useHomePageContent";
 export * from "./useCategoryPageContent";
 export * from "./useFeaturedCategories";
+export * from "./useRoutesData";

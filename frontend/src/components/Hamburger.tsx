@@ -3,15 +3,12 @@ import React, { ReactElement, useState } from "react";
 import { css } from "styled-components";
 import tw, { styled, theme } from "twin.macro";
 
-type Props = {};
+type Props = {
+	isOpen: boolean;
+	handleClick(): void;
+};
 
-function Hamburger({}: Props): ReactElement {
-	const [isOpen, setIsOpen] = useState(false);
-
-	const handleClick = () => {
-		setIsOpen((prev) => !prev);
-	};
-
+function Hamburger({ handleClick, isOpen }: Props): ReactElement {
 	const handleEnter = (event: React.KeyboardEvent<HTMLDivElement>): void => {
 		if (event.key === "Enter") {
 			handleClick();
@@ -44,7 +41,7 @@ const Wrapper = styled.nav<WrapperProps>`
 
 	position: fixed;
 	bottom: 5%;
-	right: max(1rem, 2%);
+	right: ${STYLE_CONSTANTS.mobileBodyPadding};
 	${tw`z-40`}
 
 	@media screen and (min-width: ${STYLE_CONSTANTS.fullAppbarBreakpoint}) {
@@ -60,8 +57,8 @@ const Bun = styled.div<BunProps>`
 	${tw`flex items-center justify-center flex-col space-y-1`};
 	${tw`bg-white p-2 rounded-sm overflow-hidden shadow `};
 
-	transition: background-color 300ms ease, transform 300ms ease,
-		shadow 300ms ease;
+	transition: background-color 400ms ease, transform 400ms ease,
+		shadow 400ms ease;
 
 	:hover,
 	:focus {
@@ -94,7 +91,7 @@ type MeatProps = {};
 const Meat = styled.div<MeatProps>`
 	${tw`w-6 h-1 bg-textColor`}
 	transform-origin: 1px;
-	transition: transform 300ms ease, opacity 300ms ease;
+	transition: transform 400ms ease, opacity 400ms ease;
 	pointer-events: none;
 `;
 

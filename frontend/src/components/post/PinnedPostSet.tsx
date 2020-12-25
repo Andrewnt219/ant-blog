@@ -226,6 +226,7 @@ const Thumbnail = styled.a<ThumbnailProps>`
 	height: 100%;
 	overflow: hidden;
 	display: block;
+	${tw`rounded-sm overflow-hidden`}
 
 	/* NOTE: this is a fix for next/image */
 	div {

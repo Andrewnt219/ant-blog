@@ -1,17 +1,22 @@
-import Link from 'next/link';
-import React, { ReactElement, useMemo } from 'react';
-import { FaFacebookF, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
-import tw, { styled, theme } from 'twin.macro';
+import Link from "next/link";
+import React, { ReactElement, useMemo } from "react";
+import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import tw, { styled, theme } from "twin.macro";
 
-import { ENDPOINTS } from '@src/assets/constants/StyleConstants';
-import { ImageModel } from '@src/model/sanity';
-import { CategoriesModel } from '@src/model/sanity/CategoriesModel';
-import { CategoryModel } from '@src/model/sanity/CategoryModel';
-import { createSrcSet } from '@src/utils';
-import { lqipBackground } from '@src/utils/cssHelpers';
+import { ENDPOINTS } from "@src/assets/constants/StyleConstants";
+import { ImageModel } from "@src/model/sanity";
+import { CategoriesModel } from "@src/model/sanity/CategoriesModel";
+import { CategoryModel } from "@src/model/sanity/CategoryModel";
+import { createSrcSet } from "@src/utils";
+import { lqipBackground } from "@src/utils/cssHelpers";
 
-import CenteredElementWithLine from '../CenteredElementWithLine';
-import { PostReactionSet } from './PostReactionSet';
+import CenteredElementWithLine from "../CenteredElementWithLine";
+import { PostReactionSet } from "./PostReactionSet";
+import {
+	FacebookShareButton,
+	LinkedinShareButton,
+	TwitterShareButton,
+} from "react-share";
 
 type Props = {
 	data: {
@@ -24,11 +29,11 @@ type Props = {
 			slug: string;
 		};
 	};
-
+	shareUrl: string;
 	className?: string;
 };
 
-function PostFooter({ data, className }: Props): ReactElement {
+function PostFooter({ data, className, shareUrl }: Props): ReactElement {
 	const { categories, author } = data;
 
 	const srcset = useMemo(
@@ -40,9 +45,8 @@ function PostFooter({ data, className }: Props): ReactElement {
 		...categories.subs,
 		categories.main,
 	];
-
+	console.log(shareUrl);
 	return (
-		// TODO add margin-top in case post does not end with a paragraph
 		<Footer className={className}>
 			<AdditionalInfo>
 				<CategorySet>
@@ -58,13 +62,27 @@ function PostFooter({ data, className }: Props): ReactElement {
 				</CategorySet>
 
 				<ShareButtonSet>
-					{[FaFacebookF, FaTwitter, FaLinkedinIn].map((Icon, index) => (
-						<li key={index}>
-							<ShareButton>
-								<Icon />
-							</ShareButton>
-						</li>
-					))}
+					<li>
+						<ShareButtonContainer>
+							<FacebookShareButton url={shareUrl}>
+								<FaFacebookF />
+							</FacebookShareButton>
+						</ShareButtonContainer>
+					</li>
+					<li>
+						<ShareButtonContainer>
+							<TwitterShareButton url={shareUrl}>
+								<FaTwitter />
+							</TwitterShareButton>
+						</ShareButtonContainer>
+					</li>
+					<li>
+						<ShareButtonContainer>
+							<LinkedinShareButton url={shareUrl}>
+								<FaLinkedinIn />
+							</LinkedinShareButton>
+						</ShareButtonContainer>
+					</li>
 				</ShareButtonSet>
 			</AdditionalInfo>
 			<PostReactionSet itemHeight="3rem" />
@@ -97,7 +115,7 @@ function PostFooter({ data, className }: Props): ReactElement {
 
 type FooterProps = {};
 const Footer = styled.footer<FooterProps>`
-	${tw`space-y-10`}
+	${tw`space-y-10 mt-6`}
 `;
 
 type AdditionalInfoProps = {};
@@ -141,8 +159,8 @@ const ShareButtonSet = styled.ul<ShareButtonSetProps>`
 	${tw`flex items-center space-x-1`}
 `;
 
-type ShareButtonProps = {};
-const ShareButton = styled.button<ShareButtonProps>`
+type ShareButtonContainerProps = {};
+const ShareButtonContainer = styled.div<ShareButtonContainerProps>`
 	${tw`flex items-center justify-center`}
 	${tw`border-lborderColor border border-solid rounded-full p-2`}
 	font-size: smaller;

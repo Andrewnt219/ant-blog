@@ -1,21 +1,31 @@
-import Head from 'next/head';
-import React, { useMemo } from 'react';
-import tw, { styled } from 'twin.macro';
+import Head from "next/head";
+import React, { useMemo } from "react";
+import tw, { styled } from "twin.macro";
 
-import { STYLE_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import CenteredElementWithLine from '@src/components/CenteredElementWithLine';
-import CommentSet from '@src/components/post/CommentSet';
-import PostBody from '@src/components/post/PostBody';
-import PostFooter from '@src/components/post/PostFooter';
-import PostHeader from '@src/components/post/PostHeader';
-import RelatedPostSet from '@src/components/post/RelatedPostSet';
-import SidePostSet from '@src/components/post/SidePostSet';
-import ShareSideBar from '@src/components/ShareSideBar';
-import { useCurrentLocation, usePostComments, useRelatedPosts, useSidePosts } from '@src/hooks';
-import { useIncreasePostViews } from '@src/hooks/useIncreasePostViews';
-import SidebarLayout from '@src/layouts/SidebarLayout';
-import { PostPageContent } from '@src/model/PostPageContent';
-import { blocksToText, calculateReadingMinutes, createSrcSet, renderPosts } from '@src/utils';
+import { STYLE_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import CenteredElementWithLine from "@src/components/CenteredElementWithLine";
+import CommentSet from "@src/components/post/CommentSet";
+import PostBody from "@src/components/post/PostBody";
+import PostFooter from "@src/components/post/PostFooter";
+import PostHeader from "@src/components/post/PostHeader";
+import RelatedPostSet from "@src/components/post/RelatedPostSet";
+import SidePostSet from "@src/components/post/SidePostSet";
+import ShareSideBar from "@src/components/ShareSideBar";
+import {
+	useCurrentLocation,
+	usePostComments,
+	useRelatedPosts,
+	useSidePosts,
+} from "@src/hooks";
+import { useIncreasePostViews } from "@src/hooks/useIncreasePostViews";
+import SidebarLayout from "@src/layouts/SidebarLayout";
+import { PostPageContent } from "@src/model/PostPageContent";
+import {
+	blocksToText,
+	calculateReadingMinutes,
+	createSrcSet,
+	renderPosts,
+} from "@src/utils";
 
 type Props = {
 	content: PostPageContent;
@@ -98,7 +108,10 @@ const PostPage = ({ content }: Props) => {
 			</SidebarLayout>
 
 			<SidebarLayout>
-				<PostFooter data={content.post} />
+				<PostFooter
+					data={content.post}
+					shareUrl={currentLocation?.href ?? ""}
+				/>
 
 				<CommentSet _postId={content.post._id} comments={comments} />
 

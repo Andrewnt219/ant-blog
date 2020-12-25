@@ -1,38 +1,14 @@
-import React, { ReactElement } from 'react';
-import tw, { styled } from 'twin.macro';
-
+import React, { ReactElement } from "react";
+import tw, { styled } from "twin.macro";
+import {
+	FacebookShareButton,
+	LinkedinShareButton,
+	TwitterShareButton,
+} from "react-share";
+import { iconData } from "@src/assets/data/iconData";
 type Props = {
 	sharingUrl: string;
 };
-
-type iconData = {
-	shadowColor: string;
-	src: string;
-	alt: string;
-	href: string;
-};
-
-// TODO: implementing sharing links
-const data: iconData[] = [
-	{
-		shadowColor: "19, 92, 182",
-		alt: "facebook-logo",
-		src: "/svg/facebook.svg",
-		href: "https://www.facebook.com/sharer/sharer.php?u=",
-	},
-	{
-		shadowColor: "8, 159, 197",
-		alt: "twitter-logo",
-		src: "/svg/twitter.svg",
-		href: "https://www.twitter.com/sharer/sharer.php?u=",
-	},
-	{
-		shadowColor: "40, 103, 178",
-		alt: "linkedIn-logo",
-		src: "/svg/linkedin.svg",
-		href: "https://www.linkedin.com/sharer/sharer.php?u=",
-	},
-];
 
 function ShareToolbar({ sharingUrl }: Props): ReactElement {
 	return (
@@ -40,13 +16,22 @@ function ShareToolbar({ sharingUrl }: Props): ReactElement {
 			<span>Share</span>
 
 			<IconSetContainer>
-				{data.map((icon) => (
-					<IconContainer key={icon.href} shadowColor={icon.shadowColor}>
-						<a href={icon.href + encodeURIComponent(sharingUrl)}>
-							<img src={icon.src} alt={icon.alt} />
-						</a>
-					</IconContainer>
-				))}
+				<IconContainer shadowColor={iconData.facebook.shadowColor}>
+					<FacebookShareButton url={sharingUrl}>
+						<img src={iconData.facebook.src} alt={iconData.facebook.alt} />
+					</FacebookShareButton>
+				</IconContainer>
+
+				<IconContainer shadowColor={iconData.linkedin.shadowColor}>
+					<LinkedinShareButton url={sharingUrl}>
+						<img src={iconData.linkedin.src} alt={iconData.linkedin.alt} />
+					</LinkedinShareButton>
+				</IconContainer>
+				<IconContainer shadowColor={iconData.twitter.shadowColor}>
+					<TwitterShareButton url={sharingUrl}>
+						<img src={iconData.twitter.src} alt={iconData.twitter.alt} />
+					</TwitterShareButton>
+				</IconContainer>
 			</IconSetContainer>
 		</Container>
 	);

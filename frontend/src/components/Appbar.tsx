@@ -112,7 +112,7 @@ type MenuItemSetProps = {};
 const MenuItemSet = styled.ul<MenuItemSetProps>`
 	display: none;
 
-	@media screen and (min-width: ${theme`screens.mdTablet`}) {
+	@media screen and (min-width: ${STYLE_CONSTANTS.fullAppbarBreakpoint}) {
 		${tw`ml-4 flex justify-center`}
 		flex: 1;
 	}

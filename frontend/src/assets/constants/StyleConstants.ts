@@ -1,5 +1,7 @@
+import { theme } from "twin.macro";
+
 export const STYLE_CONSTANTS = {
-	mobileBodyPadding: "5%",
+	mobileBodyPadding: "7%",
 	bodyPadding: "10%",
 	recentPostSizes: {
 		main:
@@ -9,6 +11,7 @@ export const STYLE_CONSTANTS = {
 	},
 	sidePostsSizes: "(min-width: 1280px) 11.51vw",
 	footerHeight: "15rem",
+	fullAppbarBreakpoint: theme`screens.lgTablet`,
 };
 
 export const FORMAT_CONSTANTS = {

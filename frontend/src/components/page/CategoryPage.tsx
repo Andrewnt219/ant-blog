@@ -52,11 +52,11 @@ function CategoryPage({ prefetchedContent }: Props): ReactElement {
 	};
 
 	if (!content) {
-		return <Loading height="20rem" />;
+		return <Loading height="20rem" loadingText="Fetching posts" />;
 	}
 
 	if (error) {
-		return <Broken height="20rem" />;
+		return <Broken height="20rem" errorText="Cannot fetch posts" />;
 	}
 
 	const renderedSidePosts = renderPosts(
@@ -94,25 +94,29 @@ function CategoryPage({ prefetchedContent }: Props): ReactElement {
 
 			<SidebarLayout>
 				<Main>
-					<AnimatePresence exitBeforeEnter>
-						<PostSetContainer
-							variants={recentPostsVariants.postSet}
-							animate="visible"
-							initial="hidden"
-							exit="exit"
-							key={currentCategory.slug + posts[0].slug}
-						>
-							{content.posts.map((post) => (
-								<li key={post.slug}>
-									<RecentPost
-										isMain
-										data={post}
-										imageSizes={STYLE_CONSTANTS.recentPostSizes}
-									/>
-								</li>
-							))}
-						</PostSetContainer>
-					</AnimatePresence>
+					{content.posts.length === 0 ? (
+						<Broken height="10rem" errorText="Wow, such empty, much space" />
+					) : (
+						<AnimatePresence exitBeforeEnter>
+							<PostSetContainer
+								variants={recentPostsVariants.postSet}
+								animate="visible"
+								initial="hidden"
+								exit="exit"
+								key={currentCategory.slug + posts[0].slug}
+							>
+								{content.posts.map((post) => (
+									<li key={post.slug}>
+										<RecentPost
+											isMain
+											data={post}
+											imageSizes={STYLE_CONSTANTS.recentPostSizes}
+										/>
+									</li>
+								))}
+							</PostSetContainer>
+						</AnimatePresence>
+					)}
 				</Main>
 
 				{renderedSidePosts}

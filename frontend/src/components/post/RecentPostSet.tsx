@@ -44,31 +44,32 @@ function RecentPostSet({
 
 	return (
 		<Container>
-			{posts.length === 0 && (
+			{posts.length === 0 ? (
 				<Broken height="10rem" errorText="Wow, such empty, much space" />
+			) : (
+				<AnimatePresence exitBeforeEnter>
+					<RecentPostSetContainer
+						variants={recentPostsVariants.postSet}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+						key={posts[0].slug}
+					>
+						{posts.map((post, index) => (
+							<li
+								key={post.slug}
+								style={{ gridColumn: index === 0 ? "1/-1" : undefined }}
+							>
+								<RecentPost
+									imageSizes={imageSizes}
+									data={post}
+									isMain={index === 0}
+								/>
+							</li>
+						))}
+					</RecentPostSetContainer>
+				</AnimatePresence>
 			)}
-			<AnimatePresence exitBeforeEnter>
-				<RecentPostSetContainer
-					variants={recentPostsVariants.postSet}
-					initial="hidden"
-					animate="visible"
-					exit="exit"
-					key={posts[0].slug}
-				>
-					{posts.map((post, index) => (
-						<li
-							key={post.slug}
-							style={{ gridColumn: index === 0 ? "1/-1" : undefined }}
-						>
-							<RecentPost
-								imageSizes={imageSizes}
-								data={post}
-								isMain={index === 0}
-							/>
-						</li>
-					))}
-				</RecentPostSetContainer>
-			</AnimatePresence>
 
 			<Pagination items={items} onItemClicked={onPaginationItemClicked} />
 		</Container>

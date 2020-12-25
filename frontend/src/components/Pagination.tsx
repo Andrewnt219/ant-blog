@@ -81,7 +81,7 @@ function renderControllers(
 
 type ContainerProps = {};
 const Container = styled.ul<ContainerProps>`
-	${tw`flex ml-2 justify-center`}
+	${tw`flex mt-6 justify-center`}
 	font-size: smaller;
 
 	& > li:last-child button {

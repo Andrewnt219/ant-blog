@@ -1,25 +1,17 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import { useRouter } from 'next/router';
-import React, { ReactElement } from 'react';
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import React, { ReactElement } from "react";
 
-import { NUMBER_CONSTANTS } from '@src/assets/constants/StyleConstants';
-import Broken from '@src/components/Broken';
-import CategoryPage from '@src/components/page/CategoryPage';
-import { CategoryPageContent } from '@src/model/CategoryPageContent';
-import { SanityDataService } from '@src/service/sanity/sanity.data-service';
+import { NUMBER_CONSTANTS } from "@src/assets/constants/StyleConstants";
+import CategoryPage from "@src/components/page/CategoryPage";
+import { CategoryPageContent } from "@src/model/CategoryPageContent";
+import { SanityDataService } from "@src/service/sanity/sanity.data-service";
+import BrokenPage from "@src/components/page/BrokenPage";
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps> & {};
 
 function Category({ prefetchedContent }: Props): ReactElement {
-	const { back } = useRouter();
 	if (prefetchedContent.postsCount === 0) {
-		return (
-			<>
-				<Broken height="20rem" errorText="Wow, such empty, much space" />
-				{/* TODO style button */}
-				<button onClick={back}>Go back</button>
-			</>
-		);
+		return <BrokenPage />;
 	}
 
 	return <CategoryPage prefetchedContent={prefetchedContent} />;

@@ -7,7 +7,6 @@ import {
 	NUMBER_CONSTANTS,
 	STYLE_CONSTANTS,
 } from "@src/assets/constants/StyleConstants";
-import Broken from "@src/components/Broken";
 import Loading from "@src/components/Loading";
 import CategorySideBar from "@src/components/post/CategorySideBar";
 import MostViewedPostSet from "@src/components/post/MostViewedPostSet";
@@ -16,6 +15,7 @@ import RecentPostSet from "@src/components/post/RecentPostSet";
 import { useHomePageContent } from "@src/hooks";
 import { HomePageContent } from "@src/model/HomePageContent";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
+import BrokenPage from "@src/components/page/BrokenPage";
 
 const Index = ({
 	prefetchedContent,
@@ -23,7 +23,7 @@ const Index = ({
 	const { data: content, error } = useHomePageContent(prefetchedContent);
 
 	if (error) {
-		return <Broken height="20rem" errorText="Something went wrong" />;
+		return <BrokenPage errorText="Something went wrong" />;
 	}
 
 	return !content ? (

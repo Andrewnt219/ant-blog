@@ -8,6 +8,7 @@ import Loading from "@src/components/Loading";
 import PostPage from "@src/components/page/PostPage";
 import { PostPageContent } from "@src/model/PostPageContent";
 import { SanityDataService } from "@src/service/sanity/sanity.data-service";
+import BrokenPage from "@src/components/page/BrokenPage";
 
 // TODO add view count and react count to firebase
 // TODO og stuffs for sharing
@@ -27,7 +28,7 @@ const Post = ({
 	}
 
 	if (!prefetchedContent) {
-		return <Broken height="20rem" errorText="Post not found or is deleted" />;
+		return <BrokenPage />;
 	}
 
 	return <PostPage content={prefetchedContent} />;

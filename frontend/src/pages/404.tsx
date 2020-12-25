@@ -1,18 +1,10 @@
-import Link from 'next/link';
-import React from 'react';
+import React from "react";
 
-import Broken from '@src/components/Broken';
+import BrokenPage from "@src/components/page/BrokenPage";
 
+// TODO 404 page
 const PageNotFound = () => {
-	return (
-		<div>
-			<Broken height="20rem" />
-			<h1 style={{ textAlign: "center" }}>Oops... My dog ate the page</h1>
-			<Link href="/">
-				<a style={{ textAlign: "center", display: "block" }}>Go back</a>
-			</Link>
-		</div>
-	);
+	return <BrokenPage />;
 };
 
 export default PageNotFound;

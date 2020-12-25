@@ -13,10 +13,6 @@ type Props = {
 };
 
 function DropDown({ data, handleMouseLeave }: Props): ReactElement {
-	const handleBlur = () => {
-		handleMouseLeave && handleMouseLeave();
-	};
-
 	return (
 		<Container
 			onMouseLeave={handleMouseLeave}

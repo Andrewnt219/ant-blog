@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { AiFillInstagram } from "react-icons/ai";
-import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { styled } from "twin.macro";
 
 import { SocialMedia } from "@src/assets/enums/IconEnum";

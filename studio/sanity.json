@@ -1,11 +1,11 @@
 {
   "root": true,
-  "project": {
-    "name": "Blog"
-  },
   "api": {
-    "projectId": "3c8xizwy",
+    "projectId": "dind53ik",
     "dataset": "production"
+  },
+  "project": {
+    "name": "Ant-blog"
   },
   "plugins": [
     "@sanity/base",
@@ -19,9 +19,7 @@
   ],
   "env": {
     "development": {
-      "plugins": [
-        "@sanity/vision"
-      ]
+      "plugins": ["@sanity/vision"]
     }
   },
   "parts": [
@@ -34,7 +32,7 @@
       "path": "./initialValueTemplates.js"
     },
     {
-      "implements": "part:@sanity/base/document-actions/resolver", 
+      "implements": "part:@sanity/base/document-actions/resolver",
       "path": "./document-actions/"
     }
   ]

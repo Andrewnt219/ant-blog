@@ -1,11 +1,10 @@
-import Link from "next/link";
-import React, { ReactElement } from "react";
-import tw, { styled } from "twin.macro";
-
-import { RouteProps } from "@src/assets/data/routesData";
-import { useRouteMatch } from "@src/hooks";
-import { motion } from "framer-motion";
-import { dropDownVariants } from "@src/assets/variants";
+import { RouteProps } from '@src/assets/data/routesData';
+import { dropDownVariants } from '@src/assets/variants';
+import { useRouteMatch } from '@src/hooks';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import React, { ReactElement } from 'react';
+import tw, { styled } from 'twin.macro';
 
 type Props = {
 	data: RouteProps[];
@@ -69,7 +68,7 @@ const StyledLink = styled(motion.a)<StyledLinkProps>`
 	width: 100%;
 
 	transition: color 100ms ease;
-	color: ${(p) => p.isActive && "var(--accent-color)"};
+	color: ${(p) => p.isActive && 'var(--accent-color)'};
 
 	:hover,
 	:focus {

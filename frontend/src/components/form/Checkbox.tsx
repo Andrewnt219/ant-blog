@@ -12,7 +12,7 @@ type Props<
 	name: keyof FormKeys;
 	register: (instance: HTMLInputElement | null) => void;
 	labelText: string;
-	errors: UseFormMethods["errors"];
+	errors: UseFormMethods['errors'];
 	showCheckbox: boolean;
 	setCheckbox(checked: boolean): void;
 };
@@ -107,7 +107,7 @@ const FakeInput = styled.div<FakeInputProps>`
 
 type TickProps = {};
 const Tick = styled.div<TickProps>`
-	background-image: url("/svg/checkbox-icon.svg");
+	background-image: url('/svg/checkbox-icon.svg');
 	background-size: contain;
 	background-position: center center;
 `;

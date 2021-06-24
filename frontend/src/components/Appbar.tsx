@@ -1,23 +1,21 @@
-import Link from "next/link";
-import React, { ReactElement, useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import tw, { styled, theme } from "twin.macro";
-
 import {
 	ENDPOINTS,
 	STYLE_CONSTANTS,
-} from "@src/assets/constants/StyleConstants";
-import { RouteProps, routesData } from "@src/assets/data/routesData";
-import { SocialMedia } from "@src/assets/enums/IconEnum";
-import { useRouteMatch } from "@src/hooks";
+} from '@src/assets/constants/StyleConstants';
+import { RouteProps, routesData } from '@src/assets/data/routesData';
+import { SocialMedia } from '@src/assets/enums/IconEnum';
+import { useRouteMatch } from '@src/hooks';
+import { AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import React, { ReactElement, useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import { IoIosArrowDown } from 'react-icons/io';
+import tw, { styled, theme } from 'twin.macro';
+import DropDown from './DropDown';
+import Logo from './Logo';
+import SocialMediaIcon from './SocialMediaIcon';
 
-import DropDown from "./DropDown";
-import Logo from "./Logo";
-import SocialMediaIcon from "./SocialMediaIcon";
-import { AnimatePresence } from "framer-motion";
-import { IoIosArrowDown } from "react-icons/io";
-
-// TODO make mobile navigations
+// TODO position sticky, reappear when scroll up
 const icons: SocialMedia[] = [
 	SocialMedia.FACEBOOK,
 	SocialMedia.INSTAGRAM,
@@ -28,7 +26,7 @@ type Props = {
 };
 function Appbar({ featuredCategories }: Props): ReactElement {
 	const categoryRoute: RouteProps = {
-		text: "Categories",
+		text: 'Categories',
 		href: ENDPOINTS.category,
 		dropdown: featuredCategories,
 	};
@@ -140,7 +138,7 @@ type StyledMenuItem = {
 	isActive: boolean;
 };
 const StyledMenuItem = styled.a<StyledMenuItem>`
-	color: ${(p) => p.isActive && "var(--accent-color)"};
+	color: ${(p) => p.isActive && 'var(--accent-color)'};
 
 	transition: color 250ms ease;
 

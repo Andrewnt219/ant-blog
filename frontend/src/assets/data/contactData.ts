@@ -1,7 +1,7 @@
 export const contactData = {
-	email: "maiphuongbeu@gmail.com",
-	phone: "777-777-7777",
-	facebook: "https://www.facebook.com/phuong.mie.18",
-	instagram: "https://www.instagram.com/yanefang/",
-	linkedin: "https://www.linkedin.com/in/rosedang82",
+  email: 'hey@andrewnt.dev',
+  phone: '647-###-####',
+  facebook: 'https://www.facebook.com/phong.nguyentuan.108/',
+  instagram: 'https://www.instagram.com/phong_nguyentuan/',
+  linkedin: 'https://www.linkedin.com/in/andrewnt219/',
 };

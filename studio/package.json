@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "package.json",
-  "author": "Rose Dang <phongnguyentuan20@gmail.com>",
+  "author": "Andrew Nguyen <phongnguyentuan20@gmail.com>",
   "license": "UNLICENSED",
   "scripts": {
     "start": "sanity start",
